@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Loading the image. J-Painter. Developer's Guide</title>
+    <link rel="stylesheet" href="guide.css" media="screen">
+</head>
+
+<body>
+
+<h3>Loading the image</h3>
+
+<p>To load the image for editing use the method: <code>loadImage(url)</code>, for example:</p>
+<pre>
+    painter.loadImage('some_image.gif');
+</pre>
+
+<p>The image is loaded to the DrawArea.
+If the image size exceeds the DrawArea it is cropped at the right and bottom sides.
+If the image size is less than the DrawArea size it is positioned at the upper-left corner.
+</p>
+
+<h3>Loading the background image</h3>
+
+<p>The background image is a separate image displayed under the main (editable) image.
+To load the background image use the method: <code>loadBackgroundImage(url)</code>, for example:</p>
+<pre>
+    painter.loadBackgroundImage('picture.jpg');
+</pre>
+
+Since the editable image covers the background one the background color of the image
+must be transparent. To specify the background color of the image use the option
+<code>background</code> when setting the DrawArea, for example;
+<pre>
+    setDrawArea( document.getElementById("drawarea"), { background:'rgba(0,0,0,0)' } );
+</pre>
+
+<!--
+Also, take into account that if you load an editable image that is fully opaque
+you won't be able to see the background image.
+-->
+</body>
+</html>

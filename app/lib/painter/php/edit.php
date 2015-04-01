@@ -1,0 +1,155 @@
+<?PHP
+require_once("/blocnotes/include/membersite_config.php");
+
+if(!$fgmembersite->CheckLogin())
+{
+    $fgmembersite->RedirectToURL("login.php");
+    exit;
+}
+if(isset($_GET['imagepng']))
+{
+	$image = "../../../data/".$fgmembersite->UserFullName()."/".$_GET['imagepng'];
+}
+else
+{
+	$image = "image.png";
+}
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit image</title>
+</head>
+
+<script language="javascript" src="http://izhuk.com/painter/8"></script>
+<script language="javascript" src="lib/painter/cliparts/cliparts.js"></script>
+
+<style>
+    canvas { outline: none; }
+</style>
+
+<body bgcolor="#e0e0e0">
+
+<table><tr>
+
+<td valign="top">
+
+<!-- Painter -->
+<table border="0" cellspacing="2" cellpadding="0">
+<tr>
+    <td colspan="3"><table width="100%"><tr>
+	<td align="left" valign="bottom"><canvas id="actionpanel" width="131" height="32"></canvas></td>
+	<td align="center" valign="bottom"><input type="button" value="Save" onclick="save()"></td>
+    </tr></table></td>
+</tr>
+<tr>
+    <td valign="top"><canvas id="toolpanel" width="65" height="362"></canvas><br />
+    <canvas id="actionpanel2" width="65" height="32"></canvas></td>
+    <td valign="top"><canvas id="drawcanvas" width="600" height="400" style="border: 1px solid black;">Your browser
+			doesn't support canvas tag. Please use IE9 or Firefox or Chrome or Safary</canvas></td>
+    <td valign="top"><table>
+	<!-- Cliparts (see ../cliparts/cliparts.js for details) -->
+	<tr><td><img src="./lib/painter/clipartsapple.gif"    draggable="true"></td></tr>
+	<tr><td><img src="./lib/painter/clipartscherry.gif"   draggable="true"></td></tr>
+	<tr><td><img src="./lib/painter/clipartsladybird.gif" draggable="true"></td></tr>
+	<tr><td><img src="./lib/painter/clipartsflower.gif"   draggable="true"></td></tr>
+	<tr><td><img src="./lib/painter/clipartsraisin.gif"   draggable="true"></td></tr>
+	<tr><td><img src="./lib/painter/clipartscarrot.gif"   draggable="true"></td></tr>
+    </table></td>
+</tr>
+<tr>
+    <td valign="top" colspan="3">
+	<canvas id="colorpanel" width="449" height="49"></canvas>
+	<canvas id="penpanel"   width="73"  height="49"></canvas>
+	<canvas id="patternpanel" width="123" height="49"></canvas>
+    </td>
+</tr>
+</table>
+
+<!-- Save Form -->
+<form id="save_form" action="save.php" method="POST"><input id="image_data" name="image_data" type="hidden" value=""></form>
+
+</td>
+
+<td valign="top">
+  Since <code>save.php</code> saves the image in the example's directory on your server
+  ensure write permissions for this directory before pressing the button "Save".
+</td>
+</tr></table>
+
+<script language="javascript">
+
+var painter;
+
+function initPainter() {
+    painter = new Painter();
+
+    var drawArea = document.getElementById('drawcanvas');
+    painter.setDrawArea(drawArea);
+
+    painter.addControlPanel(document.getElementById('actionpanel'),{
+	'actions':'clear,undo,redo,font',
+	'rows' : 1,
+	'cols' : 0,
+	background : '#e0e0e0'
+    });
+
+    painter.addControlPanel(document.getElementById('actionpanel2'),{
+	'actions':'ctrl',
+	'rows' : 1,
+	'cols' : 1,
+	background : '#e0e0e0'
+    });
+
+    painter.addControlPanel(document.getElementById('penpanel'),{
+	'pens' : 'solid1,dashed1,zigzag2,solid4,dashed2,zigzag4',
+	'rows' : 2,
+	'cols' : 3,
+	background : '#e0e0e0'
+    });
+
+    painter.addControlPanel(document.getElementById('toolpanel'),{
+	'tools':'line,arrow,arrow_path,arrow_dim,curve,area,rect,filled_rect,round_rect,filled_round_rect,'+
+		'oval,filled_oval,polyline,polygon,select_rect,bezier,eraser,color_picker,text,flood_fill,'+
+		'move_rect,copy_rect',
+	'rows' : 0,
+	'cols' : 2,
+	background : '#e0e0e0'
+    });
+
+    painter.addControlPanel(document.getElementById('colorpanel'),{
+	'colors': '#ff0000,#ffff00,#c0c000,#00ff00,#00ffff,#0000ff,#c000ff,#ff00ff,#ff00c0,'+
+		'#ffc0c0,#ffffc0,#f0f080,#c0ffc0,#c0ffff,#c0c0ff,#f080ff,#ffc0ff,#ffe0e0,'+
+		'#cc0000,#888800,#606000,#008800,#008888,#000088,#8000cc,#880088,#cc0080,'+
+		'#ffffff,#e0e0e0,#d0d0d0,#c0c0c0,#b0b0b0,#a0a0a0,#808080,#404040,#000000',
+	'rows' : 2,
+	'cols' : 0,
+	background : '#e0e0e0'
+    });
+
+    painter.addControlPanel(document.getElementById('patternpanel'),{
+	'patterns': 'solid, hatching, crosshatch, dots, grid, saw, bricks, wave',
+	'rows' : 2,
+	'cols' : 0,
+	background : '#e0e0e0'
+    });
+
+    initCliparts(painter, drawArea, 600-1-40,0);
+
+    painter.loadImage('<?php echo $image ; ?>');
+}
+
+initPainter();
+
+function save() {
+    var dataURI = painter.getImageData();
+    var base64data = dataURI.substring(dataURI.indexOf('base64,')+'base64,'.length);
+    document.getElementById('image_data').value = base64data;
+    document.getElementById('save_form').submit();
+}
+
+</script>
+
+</body>
+</html>
