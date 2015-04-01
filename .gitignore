@@ -21,6 +21,6 @@ extras/documentation
 
 #Privacy
 data/
-nbproject/
-public/
+nbproject/private/*
+public/*
 app/pass.php
