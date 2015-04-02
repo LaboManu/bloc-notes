@@ -5,7 +5,10 @@ require_once("../../config.php");
 $document1 = filter_input(INPUT_GET, 'document');
 
 $document = rawurldecode($document1);
-
+if(substr($document, 0, 2)=="./")
+{
+        $document = substr($document, 2);
+}
 $CLASS = filter_input(INPUT_GET, 'CLASS');
 
 $classeur = rawurldecode($CLASS);
