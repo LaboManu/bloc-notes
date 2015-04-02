@@ -1,45 +1,96 @@
-.code
-{
-	display: none;
-}
 .mainmenu
 {
-	font-size: 24pt;
-	background-color: pink;
+    font-size: 24pt;
+    background-color: pink;
 }
 img.mainmenu
 {
-	width: 24px;
-	height: 24px;
+    width: 24px;
+    height: 24px;
 
 }
 div#userid a
 {
-	display: block;
+    display: block;
 
-	float: right;
+    float: right;
 }
 ul#fg_membersite_content, ul#fg_membersite_content li
 {
-	display: inline;
-	font-size: 12pt;
+    display: inline;
+    font-size: 12pt;
 }
 .icon-32
 {
-	width: 32px;
-	height: 32px;
+    width: 32px;
+    height: 32px;
 } 
 
 li.button_appdoc 
 
 {
-	display: float;
-	padding: 5pt;
-	margin : 5pt;
-	color: black;
-	background-color: white;
+    display: float;
+    padding: 5pt;
+    margin : 5pt;
+    color: black;
+    background-color: white;
 }
 li.button_appdoc a
 {
     text-decoration: none;
 }
+div#fg_membersite {
+    height:200px;
+    line-height:200px;
+    text-align:center; /* centrage horizontal */
+}
+
+#fg_membersite fieldset {
+    width:100px;
+    border:1px solid #fff;
+    vertical-align:middle;
+    display:inline-block;
+    line-height:normal; /* on rétablit le line-height */
+    text-align:left; /* ... et l'alignement du texte */
+}
+#user_frame
+{
+    float: right; 
+    height: 50px; 
+    background-color: #00ffff; 
+    color: #ff0000;  
+    border: 3px #009;}
+#context_menu_bar
+{
+    height: 200px; 
+    background-color: #ffff00; 
+    color: #0000ff;  
+    border: 3px #009;}
+#appdoc_menu{ 
+    height: 800px; 
+    float: left; 
+    width: 20%; 
+    background-color: #C0C0C0; 
+    color: #0C0C0C; 
+    border: 3px #009;
+}
+#contents{
+    height: 800px; 
+    background-color: #FFFDDD; 
+    color: #000444;  
+    border: 3px #009;}
+#error{
+
+}
+img.miniImg
+{
+   width: 200px; 
+   height: 200px; 
+}
+ a.miniImg
+ {
+     display: block;
+     float: left;
+     width: 220px;
+     height: 240px;
+ }

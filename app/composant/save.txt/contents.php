@@ -17,5 +17,6 @@ fwrite($fp, $contenu);
 
 echo "<h1>Fichier sauvegardé avec succès.</h1>";
 
+updateFile($document);
 
 ?>

@@ -10,6 +10,7 @@ $document = rawurldecode($document1);
 if(unlink($dataDir.$pathSep.$document))
 {
     echo "<h1>Fichier <strong>SUPPRIME</strong> avec succès.</h1>";
+    deleteFile($document);
 }
 
 

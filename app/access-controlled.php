@@ -13,13 +13,11 @@ if(!$fgmembersite->CheckLogin())
 <head>
       <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
       <title>Bloc-notes</title>
-      <!--<link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css">-->
-      <link rel="STYLESHEET" type="text/css" href="css/style.css">
-<script language="javascript">
-
-url = "<?php echo $urldir; ?>";
-function erreurs()
-{
+      <link rel="STYLESHEET" type="text/css" href="css/style.css"/>
+      <script language="javascript" type="text/javascript" >
+        url = "<?php echo $urldir; ?>";
+        function erreurs()
+        {
 	var showErrors = ~showErrors;
         var elem = document.getElementById('code');
 	if(showErrors)

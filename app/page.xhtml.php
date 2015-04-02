@@ -25,6 +25,8 @@ else {
     
     
 }
+
+$waiterString = "Loading and not load that is definitively not the question.--MD";
 ?>
 
 <?php echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" ; ?>
@@ -38,14 +40,14 @@ else {
     </head>
     <body>
         <!-- Barre du dessus -->
-        <div id="user_frame" style="float: right; height: 50px; background-color: #00ffff; color: #ff0000;  border: 3px #009;">${"user_frame"}</div>
+        <div id="user_frame" ><?php echo $waiterString ?></div>
         <!-- Barre du dessus -->
-        <div id="context_menu_bar" style="height: 200px; background-color: #ffff00; color: #0000ff;  border: 3px #009;">${"context_menu_bar"}</div>
+        <div id="context_menu_bar"><?php echo $waiterString ?></div>
         <!-- Barre de gauche -->
-        <div id="appdoc_menu" style="height: 800px; float: left; width: 20%; background-color: #C0C0C0; color: #0C0C0C; border: 3px #009;">${"appdoc_menu"}</div>
+        <div id="appdoc_menu"><?php echo $waiterString ?></div>
         <!-- Barre de gauche -->
-        <div id="contents" style="height: 800px; background-color: #990000; color: #009999;  border: 3px #009;">${"contents"}</div>
-        <div id="error"></div>
+        <div id="contents"><?php echo $waiterString ?></div>
+        <div id="error"><?php echo $waiterString ?></div>
     <script>
 var urlAppJS = "<?php echo $urlApp; ?>";
 $( "#contents" ).load( url=urlAppJS+"/composant/<?php echo $composant;?>/contents.php?document=<?php echo $document .$paramsSuppl; ?>" , function( response, status, xhr ) {

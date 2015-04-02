@@ -4,7 +4,7 @@ require_once("../../config.php");
 
 $document1 = filter_input(INPUT_GET, 'document');
 
-$newname = strtolower("note.txt");
+$newname = strtolower("note");
         // replace spaces with hyphens and remove funny characters
         $newname = str_replace(' ', '-', $newname);
         //$newname = preg_replace('/[^\d\w\._-]/', '', $newname);
@@ -12,10 +12,10 @@ $newname = strtolower("note.txt");
         $newname = $newname ? $newname : 'file';
         // prevent renaming over an existing file
         $i = 1;
-        $testnewname = $newname."_".$i;
+        $testnewname = $newname."_".$i.".txt";
         while ($testnewname !== $nom && file_exists($dataDir . '/' . $testnewname)) {
             $i++;
-            $testnewname = $newname."_".$i;
+            $testnewname = $newname."_".$i.".txt";
         }
         $newname = $testnewname;
 
@@ -23,6 +23,10 @@ if(touch($dataDir.$pathSep.$newname))
 {
     echo "<h1>Note créée avec succès</h1>";
     echo "<p>$newname</p>";
+    
+    require_once("../../event/DB.tables.file.php");
+
+    createFile($newname);
 }
 
 ?>

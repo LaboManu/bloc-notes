@@ -33,6 +33,8 @@ $newname = $dataDir.$pathSep.$newname;
 if(rename($oldname, $newname))
 {
     echo "<h1>Fichier renommé avec succès.</h1>";
+    
+    renameFile($document);
 }
 
 

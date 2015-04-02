@@ -20,7 +20,7 @@ function listerImage($action="list-view", $classeur=".")
 		if(strtolower(substr($f,-4)) == ".png" 
                         or strtolower(substr($f,-4) == ".jpg"))
 		{?>
-                    <a href="<?= $actionurl ?>"><img src='<?= "$userdataurl/./$f" ?>' height='100px' width='100px'><!--<?= $f ?>--></a>
+                    <a  class='miniImg'  href="<?= $actionurl ?>"><img src='<?= "$userdataurl/./$f" ?>' class="miniImg"><?php echo $classeur."/".$f; ?></a>
 		<?php
                 
                 }
@@ -44,7 +44,7 @@ function listerTexte($action="list", $classeur=".")
 }	
 		if(strtolower(substr($f,-4)) == ".txt")
 		{?>
-                    <a href="<?= $urlaction ?>"><img src='<?= "$urlApp/composant/reader.txt/txt.jpg" ?>' height='100px' width='100px'><?php echo $classeur."/".$f; ?></a>
+                    <a class='miniImg' href="<?= $urlaction ?>"><img src='<?= "$urlApp/composant/reader.txt/txt.jpg" ?>' class='miniImg' alt='Test Type File'/><?php echo $classeur."/".$f; ?></a>
 		<?php
                 
                 }
