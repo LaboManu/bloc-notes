@@ -7,16 +7,16 @@ function listerImage($action="list-view")
 	global $dataDir;
 	global $userdataurl;
 	global $userdataurl;
-	global $bnf;
+	global $document;
 
 	$dirh = opendir($dataDir);
 	while(($f=readdir($dirh))!=NULL)
 	{
-	$actionurl="page.xhtml.php?composant=reader.img&bnf=$f";
+	$actionurl="page.xhtml.php?composant=reader.img&document=$f";
 	if($action=="link")
 
 {
-		$actionurl .= "&bnflink=$bnf";
+		$actionurl .= "&documentlink=$document";
 }	
 		if(strtolower(substr($f,-4)) == ".png" 
                         or strtolower(substr($f,-4) == ".jpg"))
@@ -32,20 +32,20 @@ function listerTexte($action="list")
         global $urlApp;
 	global $dataDir;
 	global $userdataurl;
-	global $bnf;
-	global $bnflink;
+	global $document;
+	global $documentlink;
 	$dirh = opendir($dataDir);
 	while(($f=readdir($dirh))!=NULL)
 	{
-	$urlaction = "page.xhtml.php?composant=reader.txt&bnf=$bnf";
+	$urlaction = "page.xhtml.php?composant=reader.txt&document=$f";
 	if($action=="link")
 
 {
-		$urlaction.= "&bnflink=$bnf";
+		$urlaction.= "&documentlink=$f";
 }	
 		if(strtolower(substr($f,-4)) == ".txt")
 		{?>
-                    <a href="<?= $urlaction ?>"><img src='<?= "$urlApp/composant/reader.txt/txt.jpg" ?>' height='100px' width='100px'><?= $f ?></a>
+                    <a href="<?= $urlaction ?>"><img src='<?= "$urlApp/composant/reader.txt/txt.jpg" ?>' height='100px' width='100px'><?php echo $f; ?></a>
 		<?php
                 
                 }
@@ -54,8 +54,8 @@ function listerTexte($action="list")
 function listerBN()
 {
 	global $uploadDir;
-	global $bnf;
-	global $bnflink;
+	global $document;
+	global $documentlink;
 	global $Tables;
 	global $fgmembersite;
 	echo "<select id='listebn' name='listebn'>";
@@ -69,7 +69,7 @@ function listerBN()
 		if(true/*substr($f,-4) == ".txt" or substr($f,-4) == ".TXT" or substr($f,-4) == ".jpg" or substr($f,-4) == ".JPG"*/) 
 		{
 		
-			 if($bnf==$f) 
+			 if($document==$f) 
 			 {
 				$selected="selected";
 			 }
@@ -105,16 +105,16 @@ function listerModeles3D($action="list")
 {
 	global $dataDir;
 	global $userdataurl;
-	global $bnf;
-	global $bnflink;
+	global $document;
+	global $documentlink;
 	$dirh = opendir($dataDir);
 	
 	while(($f=readdir($dirh))!=NULL)
 	{
-	$urlaction = "page.xhtml.php?compsant=reader.stl&bnf=$bnf";
+	$urlaction = "page.xhtml.php?compsant=reader.stl&document=$document";
 	if($action=="link")
 	{
-		$urlaction .= "&bnflink=$bnf";
+		$urlaction .= "&documentlink=$document";
 	}
 
 		if(strtolower(substr($f,-4)) == ".stl")

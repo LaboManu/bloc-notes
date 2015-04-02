@@ -33,7 +33,7 @@ function erreurs()
 }
 function openblocnote(f)
 {
-	document.location.replace(url+'?bnf='+f);
+	document.location.replace(url+'?document='+f);
 	
 }
 function htmlView()

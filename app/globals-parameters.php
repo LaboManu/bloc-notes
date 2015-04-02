@@ -2,16 +2,16 @@
 	$isNew = false;
 	$cmd = $_POST['cmd'];
 	$id = $_POST['id'];
-	$bnf = $_POST['bnf'];
+	$document = $_POST['document'];
 	$download = $_GET['download'];
-	$bnf_new=$_POST['bnf_new'];
+	$document_new=$_POST['document_new'];
 	$cmdexec = $_POST['cmdexec'];
 	$download = $_POST['download'];
 	$rename = $_POST['rename'];
 	$rename_to = $_POST['rename_to'];
-	if($bnf=="")
+	if($document=="")
 	{
-		$bnf = $_GET['bnf'];
+		$document = $_GET['document'];
 	}
 	$action = $_POST['action'];
 	if($action=="")
@@ -32,14 +32,14 @@
 	else
 		$id = 1;
 
-	if($content=="" and $bnf=="")
+	if($content=="" and $document=="")
 	{
 		$content = "Note " . $id;
 	}
 	
-	if($bnf=="")
+	if($document=="")
 	{
-		$bnf = "note " . rand() . ".TXT";
+		$document = "note " . rand() . ".TXT";
 		$isNew = true;
 	}
 
