@@ -11,9 +11,3 @@ $document = rawurldecode($document1);
 ?>
 
 
-
-<ul>
-    
-<li class="button_appdoc"><a href="?composant=edit.txt&document=<?php echo rawurlencode($document); ?>">Modifier, renommer, supprimer une note</a></li>
-
-</ul>

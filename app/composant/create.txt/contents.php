@@ -11,12 +11,13 @@ $newname = strtolower("note.txt");
         // make sure there's something left
         $newname = $newname ? $newname : 'file';
         // prevent renaming over an existing file
-        $i = 0;
-        while ($newname !== $nom && file_exists($dataDir . '/' . $newname)) {
-            $newname ="_".$i."_".$newname;
+        $i = 1;
+        $testnewname = $newname."_".$i;
+        while ($testnewname !== $nom && file_exists($dataDir . '/' . $testnewname)) {
             $i++;
+            $testnewname = $newname."_".$i;
         }
-
+        $newname = $testnewname;
 
 if(touch($dataDir.$pathSep.$newname))
 {
@@ -25,3 +26,10 @@ if(touch($dataDir.$pathSep.$newname))
 }
 
 ?>
+
+<ul>
+    
+<li class="button_appdoc"><a href="?composant=edit.txt&document=<?php echo rawurlencode($newname); ?>">Modifier, renommer, supprimer une note</a></li>
+
+</ul>
+
