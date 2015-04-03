@@ -94,3 +94,18 @@ img.miniImg
      width: 220px;
      height: 240px;
  }
+ #document pre
+ {
+     display: block;
+     font-size: 18pt;
+     font-family: serif Whitney, Comics Sans;
+     margin: 2px solid green;
+ }
+ #document
+ {
+     display: block;
+     font-size: 18pt;
+     font-family: serif Whitney, Comics Sans;
+     margin: 2px solid orange;
+ }
+    
