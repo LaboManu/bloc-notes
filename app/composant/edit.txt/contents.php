@@ -32,19 +32,17 @@ echo "(($dataDir.$pathSep))<strong>$document</strong>";
         <select name="CLASS">
 <?php
 $fh = opendir($dataDir);
-while(($f=readdir($fh)!=NULL))
+while(($f=readdir($fh)!==NULL))
 {
     ?>
             <?php 
-            if(substr($f,0, 5)=="CLASS")
+            if(strlen($f)>5 && substr($f,0, 5)=="CLASS")
                 {
             ?>
             <option name="<?php echo $f; ?>" value="<?php echo substr($f, 5); ?>"></option>
             <?php
                 }
-            ?>
-<?php
-}
+ }
         ?>
             </select>
     <input type="submit" name="classer" value="Classer"/>

@@ -83,3 +83,4 @@ $file_ext = array(
 		"Texte simple" => "TXT"
 	)
 );
+$FILE_THUMB_MAXLEN = 256;

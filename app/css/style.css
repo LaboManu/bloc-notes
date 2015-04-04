@@ -82,10 +82,11 @@ div#fg_membersite {
 #error{
 
 }
-img.miniImg
+img.miniImg, div.miniImg
 {
    width: 200px; 
    height: 200px; 
+   overflow: hidden;
 }
  a.miniImg
  {
@@ -93,6 +94,8 @@ img.miniImg
      float: left;
      width: 220px;
      height: 240px;
+     border: 2px solid #C0C0C0;
+     overflow-x: hidden;
  }
  #document pre
  {
@@ -108,4 +111,19 @@ img.miniImg
      font-family: serif Whitney, Comics Sans;
      margin: 2px solid orange;
  }
-    
+.miniature_txt
+{
+    width: 161px;
+    height: 141px;
+    border: 3px inset black;
+    overflow: hidden;
+}
+.filename
+
+{
+    overflow-x: hidden;
+}
+.file_preview
+{
+    text-decoration: none;
+}
