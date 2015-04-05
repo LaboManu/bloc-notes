@@ -80,7 +80,7 @@ function renameFile($filename, $date="") {
     
     mysql_close();
 }
-function listHistory($filename, $date="") {
+function listHistory($filename = null, $date="") {
     if($date=="")
     {
         $date = date("Y-m-d-H-i-s");
@@ -92,7 +92,7 @@ function listHistory($filename, $date="") {
     global $monutilisateur;
     mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "select user, filename, moment, type from blocnotes_items where user=".$monutilisateur ." order by moment desc;";
+    $q = "select user, filename, moment, type from blocnotes_items where user='".$monutilisateur ."' order by moment desc";
     
     $results = mysql_query($q);
     return $results;

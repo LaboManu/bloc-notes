@@ -1,9 +1,11 @@
 <?php 
-require_once("../../config.php");
 require_once("listesItem.php");
 
+$classeur = filter_input(INPUT_GET, "classeur");
+if($classeur=="")
+    $classeur = null;
 ?>
-
+<!--
         <div>
                     <a onclick="javascript:afficherListes(true);">Afficher listes</a>
                     <a onclick="javascript:afficherListes(false);">Masquer listes</a>
@@ -12,22 +14,35 @@ require_once("listesItem.php");
                     <a onclick="javascript:afficherImages(false);">Masquer images</a>
                     <div id="imagesDiv">
                         <?php
-                            listerImage();
+                            //listerImage();
                         ?>                        
                     </div>
                     <a onclick="javascript:afficherTextes(true);">Afficher Textes</a>
                     <a onclick="javascript:afficherTextes(false);">Masquer Textes</a>
                     <div id="textesDiv">
                         <?php
-                            listerTexte();
+                            //listerTexte();
                         ?>                        
                     </div>
                     <a onclick="javascript:afficherModeles3D(true);">Afficher Mod&egrave;les 3D</a>
                     <a onclick="javascript:afficherModeles3D(false);">Masquer Mod&egrave;les 3D</a>
                     <div id="Modeles3DDiv">
                         <?php
-                            listerModeles3D();
+                            //listerModeles3D();
                         ?>                        
                     </div>
                 </div>
         </div>
+<!---->
+        <div>
+                    <a onclick="javascript:afficherListes(true);">Afficher listes</a>
+                    <a onclick="javascript:afficherListes(false);">Masquer listes</a>
+                <div id="listesDiv">
+                    <div id="imagesDiv">
+                        <?php
+                            listerTout($classeur);
+                        ?>                        
+                    </div>
+                </div>
+        </div>
+

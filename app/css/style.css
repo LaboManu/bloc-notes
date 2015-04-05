@@ -97,6 +97,10 @@ img.miniImg, div.miniImg
      border: 2px solid #C0C0C0;
      overflow-x: hidden;
  }
+ span.miniImg
+ {
+     overflow-x: hidden;
+ }
  #document pre
  {
      display: block;

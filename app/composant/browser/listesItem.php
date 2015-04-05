@@ -1,139 +1,56 @@
 <?php
 require_once("../../config.php");
-    
 
+function listerTout($classeur) {
+    global $dataDir;
+    $dirh = opendir($dataDir . "/" . $classeur);
+    while (($f = readdir($dirh)) != NULL) {
+        if (strtolower(substr($f, 0, 5)) == "class") {
+            typeCls(substr($f, 5), $f);
+        }
+        if (strtolower(substr($f, -4)) == ".png"
+                or strtolower(substr($f, -4) == ".jpg")) {
+            typeImg($classeur, $f);
+        } else if (strtolower(substr($f, -4)) == ".txt" || strtolower(substr($f, 0, 5)) == "class") {
+            $filePath = $dataDir . "/" . $classeur . "/" . $f;
+            typeTxt($classeur."/". $f, $filePath);
+        }
+    }
+}
 
-function listerImage($action="list-view", $classeur=".")
-{
-	global $dataDir;
-	global $userdataurl;
-	global $userdataurl;
-	global $document;
-        global $FILE_THUMB_MAXLEN;
-	$dirh = opendir($dataDir."/".$classeur);
-	while(($f=readdir($dirh))!=NULL)
-	{
-	$actionurl="page.xhtml.php?composant=reader.img&document=$classeur/$f";
-	if($action=="link")
+function typeTxt($cf, $filePath) {
+    global $FILE_THUMB_MAXLEN;
+    global $userdataurl;
+    global $dataDir;
+    $urlaction = "page.xhtml.php?composant=reader.txt&document=".$cf;
+        ?>
+        <a  draggable="true"
+ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
+            <div class="miniImg file_preview">
+                <?php echo file_get_contents($filePath, null, null, 0, 500); ?>
+            </div>
+            <span class="filename">
+        <?php echo $cf; ?>
+            </span>
+        </a>
+        <?php
+}
 
-{
-		$actionurl .= "&documentlink=".$classeur."/".$document."";
-}	
-		if(strtolower(substr($f,-4)) == ".png" 
-                        or strtolower(substr($f,-4) == ".jpg"))
-		{?>
-                    <a  class='miniImg'  href="<?= $actionurl ?>"><img src='<?= "$userdataurl/./$f" ?>' class="miniImg"><span class="filename"><?php echo $classeur."/".$f; ?></span></a>
-		<?php
-                
-                }
-	}
+function typeImg($classeur, $f) {
+    global $userdataurl;
+    global $dataDir;
+    $actionurl = "page.xhtml.php?composant=reader.img&document=$classeur/$f";
+    ?>
+    <a  draggable="true"
+ondragstart="drag(event)" class='miniImg'  href="<?= $actionurl ?>"><img src='<?= "$userdataurl/$classseur/$f" ?>' class="miniImg"><span class="filename"><?php echo $classeur . "/" . $f; ?></span></a>
+    <?php
 }
-function listerTexte($action="list", $classeur=".")
-{
-        global $urlApp;
-	global $dataDir;
-	global $userdataurl;
-	global $document;
-	global $documentlink;
-	$dirh = opendir($dataDir."/".$classeur);
-	while(($f=readdir($dirh))!=NULL)
-	{
-    	$urlaction = "page.xhtml.php?composant=reader.txt&document=$classeur/$f";
-    	if($action=="link")
 
-        {
-		$urlaction.= "&documentlink=$classeur/$f";
-    }           
-            $filePath = $dataDir."/".$classeur. "/".$f;
-		if(strtolower(substr($f,-4)) == ".txt")
-		{?>
-                    <a class='miniImg' href="<?= $urlaction ?>">
-                        <div class="miniImg file_preview">
-                            <?php echo file_get_contents($filePath, null, null, 0, 500); ?>
-                        </div>
-                        <span class="filename">
-                            <?php echo $classeur."/".$f; ?>
-                        </span>
-                    </a>
-		<?php
-                
-                }
-	}
+function typeCls($classeur, $f) {
+    global $userdataurl;
+    global $dataDir;
+    $actionurl = "page.xhtml.php?composant=browser&classeur=$f";
+    ?>
+    <a  ondrop="drop(event)" ondragover="allowDrop(event)" class='miniImg'  href="<?= $actionurl ?>"><img src='images/alphabet.png' class="miniImg"><span class="filename"><?php echo substr($f, 0, 5); ?></span></a>
+    <?php
 }
-// Dépréciée par le développeur. Pourqoui? Inutilisée. Compliquée.
-function listerBN()
-{
-	global $uploadDir;
-	global $document;
-	global $documentlink;
-	global $Tables;
-	global $fgmembersite;
-	echo "<select id='listebn' name='listebn'>";
-	
-	$dirh = opendir($uploadDir);
-	while(($f=readdir($dirh))!=NULL)
-	{
-		if($f!="." and $f!="..")
-		{
-			$aff  = substr($f,0,-4);
-		if(true/*substr($f,-4) == ".txt" or substr($f,-4) == ".TXT" or substr($f,-4) == ".jpg" or substr($f,-4) == ".JPG"*/) 
-		{
-		
-			 if($document==$f) 
-			 {
-				$selected="selected";
-			 }
-			 else
-			 {
-				$selected="";
-			 }
-			echo "<option name='$f' value='$f'  ".$selected." onclick=\"javascript:openblocnote('".$f."');\">Bloc-note no | $f</option>";
-			
-		}
-		}
-	}
-
-$result = $Tables->listItems($fgmembersite->UserFullName());
-if($result!=NULL)
-{
-$i=0;
-$value = $result[$i];
-print_r($value);
-while ($value)
-//foreach($item as $no => $value)
-{
-	echo "<option name=".$value['filename'].">Item : ".$value['filename'].
-		" appartient à ".$value['user']."</option>";
-$value = $result[$i];
-$i++;
-//print_r($value);
-}
-}
-	echo "</select><button onclick=\"javascript:openblocnote(document.getElementById('listebn').value);\">Charger</button>";
-}
-function listerModeles3D($action="list", $classeur=".")
-{
-	global $dataDir;
-	global $userdataurl;
-	global $document;
-	global $documentlink;
-	$dirh = opendir($dataDir."/".$classeur);
-	
-	while(($f=readdir($dirh))!=NULL)
-	{
-	$urlaction = "page.xhtml.php?compsant=reader.stl&document=".$classeur."/".$document."";
-	if($action=="link")
-	{
-		$urlaction .= "&documentlink=".$classeur."/".$document."";
-	}
-
-		if(strtolower(substr($f,-4)) == ".stl")
-		{?>
-                        <p><a href="<?= $urlaction ?>"><?= $f ?></a></p>
-		<?php
-                
-                }
-	}
-    
-}
-?>

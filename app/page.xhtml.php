@@ -22,6 +22,10 @@ else {
     {
         $paramsSuppl = "&contenu=".  rawurlencode(filter_input(INPUT_GET, "contenu"));
     }
+    else if($composant=="browser")
+    {
+        $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
+    }
     
     
 }
@@ -36,7 +40,9 @@ $waiterString = "Loading and not load that is definitively not the question.--MD
         <title>Bloc-notes 2.0 alpha</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        
+        <script type="text/javascript" src="composant/browser/dnd.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
     </head>
     <body>
         <!-- Barre du dessus -->
