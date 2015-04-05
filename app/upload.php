@@ -3,8 +3,6 @@
 require_once("./include/membersite_config.php");
 require_once("config.php");
 
-$o = new stdClass();
-
 if (!$fgmembersite->CheckLogin()) {
     echo "null";
 
@@ -13,12 +11,13 @@ if (!$fgmembersite->CheckLogin()) {
 $user = $fgmembersite->UserFullName();
 
 
-$url = "$uploadDir/";
+$urlbase = $dataDir."/CLASSTéléversés";
 // !empty( $_FILES ) is an extra safety precaution
 // in case the form's enctype="multipart/form-data" attribute is missing
 // or in case your form doesn't have any file field elements
 if( strtolower( $_SERVER[ 'REQUEST_METHOD' ] ) == 'post' && !empty( $_FILES ) )
 {
+    echo "Dubut de la copie<br/>";
     foreach( $_FILES as $index => $array )
     {
         //if( empty( $array[ 'error' ] ) )
@@ -41,12 +40,26 @@ if( strtolower( $_SERVER[ 'REQUEST_METHOD' ] ) == 'post' && !empty( $_FILES ) )
         //{
             // the path to the actual uploaded file is in $_FILES[ 'image' ][ 'tmp_name' ][ $index ]
             // do something with it:
-           $url.= $array['name'];
-            move_uploaded_file( $array['tmpName'], $url); // move to new location perhaps?
+           $urlfinale.= $urlbase."/".$array['name'];
+           echo "$ext<br/>";
+           $ext = strtolower(substr($urlbase, -3));
+           if($ext=="txt"||$ext=="rtf"||$ext="tml"||$ext=="htm"||
+                   $ext=="jpg"||$ext=="png"||$ext=="gif"
+                   ||
+                   $ext=="stl")
+           {
+           if(move_uploaded_file( $array['tmp_name'], $urlfinale))
+            {
+                echo "moved: $urlfinale<br/>";
+            }
+           else
+           {
+               echo error_get_last();
+           }
+           }
         //}
     }
 }
-print $url;
-print_r($_FILES);
 
+print_r($_FILES);
 ?>

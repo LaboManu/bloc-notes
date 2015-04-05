@@ -8,10 +8,10 @@ function listerTout($classeur) {
         if (strtolower(substr($f, 0, 5)) == "class") {
             typeCls(substr($f, 5), $f);
         }
-        if (strtolower(substr($f, -4)) == ".png"
+        else if (strtolower(substr($f, -4)) == ".png"
                 or strtolower(substr($f, -4) == ".jpg")) {
             typeImg($classeur, $f);
-        } else if (strtolower(substr($f, -4)) == ".txt" || strtolower(substr($f, 0, 5)) == "class") {
+        } else if (strtolower(substr($f, -4)) == ".txt") {
             $filePath = $dataDir . "/" . $classeur ."/" .$f;
             typeTxt((($classeur=="")?"":$classeur. "/" ) . $f, $filePath);
         }
@@ -51,6 +51,6 @@ function typeImg($classeur, $f) {
         global $dataDir;
         $actionurl = "page.xhtml.php?composant=browser&classeur=$f";
         ?>
-    <a  ondrop="drop(event)" ondragover="allowDrop(event)" class='miniImg'  href="<?= $actionurl ?>"><img src='images/alphabet.png' class="miniImg"><span class="filename"><?php echo substr($f, 0, 5); ?></span></a>
+    <a  ondrop="drop(event)" ondragover="allowDrop(event)" class='miniImg'  href="<?= $actionurl ?>"><img src='images/alphabet.png' class="miniImg"><span class="filename"><?php echo $classeur; ?></span></a>
     <?php
 }

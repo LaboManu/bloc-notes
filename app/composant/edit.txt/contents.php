@@ -32,14 +32,13 @@ echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
         <select name="CLASS">
 <?php
 $fh = opendir($dataDir);
-while(($f=readdir($fh)!==NULL))
+while(($f=readdir($fh)!=null))
 {
-    ?>
-            <?php 
+   
             if(strlen($f)>5 && substr($f,0, 5)=="CLASS")
                 {
             ?>
-            <option name="<?php echo $f; ?>" value="<?php echo substr($f, 5); ?>"></option>
+            <option id="<?php echo $f; ?>" value="<?php echo substr($f, 5); ?>"></option>
             <?php
                 }
  }
