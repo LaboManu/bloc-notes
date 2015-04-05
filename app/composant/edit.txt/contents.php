@@ -9,24 +9,24 @@ if(substr($document, 0, 2)=="./")
 {
         $document = substr($document, 2);
 }
-echo "(($dataDir.$pathSep))<strong>$document</strong>";
+echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
 ?>
 <hr/>
-<form action="?composant=rename.txt&document=" method="GET">
+<form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="rename.txt"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
-    <input type="text" name="nom" value="<?php echo $document ?>">
+    <input type="text" name="nom" value="<?php echo $document; ?>">
     <input type="submit" name="renommer" value="Renommer"/>
 </form>
 <hr/>
-<form action="?composant=save.txt&document=<?php echo rawurlencode($document); ?>" method="GET">
+<form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.txt"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
     <textarea rows="24" cols="80" name="contenu"><?php echo file_get_contents($dataDir.$pathSep.$document);
         ?></textarea> <input type="submit" name="sauvegarder" value="Sauvergarder"/>
 </form>
 <hr/>
-<form action="?composant=classe.doc&document=<?php echo rawurlencode($document); ?>" method="GET">
+<form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="classe.doc"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
         <select name="CLASS">
@@ -43,12 +43,12 @@ while(($f=readdir($fh)!==NULL))
             <?php
                 }
  }
-        ?>
+ ?>
             </select>
     <input type="submit" name="classer" value="Classer"/>
 </form>
 <hr/>
-<form action="?composant=changetype&document=<?php echo rawurlencode($document); ?>" method="GET">
+<form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="changetype"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
     <label>Changer le type du document:</label>
@@ -66,7 +66,7 @@ while(($f=readdir($fh)!==NULL))
 </form>
 <hr/>
 <hr/>
-<form action="?composant=del.txt&document=<?php echo rawurlencode($document); ?>" method="GET">
+<form action="page.xhtml.php>" method="GET">
     <input type="hidden" name="composant" value="del.txt"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
 <input type="submit" name="supprimer" value="Supprimer document: <?php echo $document; ?>"><br/>
