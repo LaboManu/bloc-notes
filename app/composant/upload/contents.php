@@ -8,7 +8,7 @@
     <form action="upload.php"
       class="dropzone"
       id="my-awesome-dropzone" method="POST" enctype="multipart/form-data">
-          <input id="file" name="file" type="file" multiple="multiple">
+          <input id="file" name="file[]" type="file" multiple="multiple">
                    <input type="submit" name="submitButton" value="Envoyer les fichiers"/>
 
     </form>

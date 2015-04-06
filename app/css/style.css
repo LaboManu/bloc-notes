@@ -1,3 +1,9 @@
+body
+{
+    font-family: Comics Sans, 24pt;
+}
+
+
 .mainmenu
 {
     font-size: 24pt;
@@ -130,4 +136,30 @@ img.miniImg, div.miniImg
 .file_preview
 {
     text-decoration: none;
+}
+cadre_media, #document
+{
+    margin-left: 33%;
+    position: fixed;
+    width: 50%;
+    height: 50%;
+    border: 5px inset black;
+    overflow-style: scrollbar;
+    overflow: scroll;
+}
+#document img
+{
+    width:  100%;
+    height:  100%;
+}
+a.nav_buttons
+{
+    float: right;
+    display: block;
+    font-size: 18pt;
+    background-color: #0000ff; 
+    color: white;
+    text-decoration: none;
+   margin: 2pt;
+   border: 3px solid gray;
 }

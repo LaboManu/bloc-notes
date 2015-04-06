@@ -5,7 +5,14 @@ if(isset($_POST['submitted']))
 {
    if($fgmembersite->RegisterUser())
    {
-        $fgmembersite->RedirectToURL("thank-you.html");
+       require_once("config.php");
+       
+       mkdir($dataDir);
+       mkdir($dataDir."CLASSTéléversés");
+       
+       $fgmembersite->RedirectToURL("thank-you.html");
+        
+        
    }
 }
 

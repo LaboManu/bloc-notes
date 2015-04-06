@@ -96,13 +96,13 @@ function afficherListes(affListes)
 <body>
 <div class="mainmenu" style="float: left;">
 
-<img src="images/logo-blocnotes-128.png"/><?php echo $appName . " " . $version ?>
+<img src="images/logo-blocnotes-128.png"/><?php echo $appName ; ?>
 <ul id='fg_membersite_content' class="mainmenu">
 <li>
-<a href="page.xhtml.php?composant=browser">Explorer</a>
+<a class="nav_buttons" href="page.xhtml.php?composant=browser">Explorer les notes et les images</a>
 </li>
 <li>
-<a href="page.xhtml.php?composant=upload">Upload files</a>
+<a class="nav_buttons" href="page.xhtml.php?composant=upload">Téléverser des fichiers</a>
 </li>
 </ul>
 </div>

@@ -10,7 +10,7 @@ function listerTout($classeur) {
         }
         else if (strtolower(substr($f, -4)) == ".png"
                 or strtolower(substr($f, -4) == ".jpg")) {
-            typeImg($classeur, $f);
+            typeImg((($classeur=="")?"":$classeur. "/" ) . $f);
         } else if (strtolower(substr($f, -4)) == ".txt") {
             $filePath = $dataDir . "/" . $classeur ."/" .$f;
             typeTxt((($classeur=="")?"":$classeur. "/" ) . $f, $filePath);
@@ -36,13 +36,13 @@ function typeTxt($cf, $filePath) {
     <?php
 }
 
-function typeImg($classeur, $f) {
+function typeImg($cf) {
     global $userdataurl;
     global $dataDir;
-    $actionurl = "page.xhtml.php?composant=reader.img&document=$classeur/$f";
+    $actionurl = "page.xhtml.php?composant=reader.img&document=$cf";
     ?>
     <a  draggable="true"
-        ondragstart="drag(event)" class='miniImg'  href="<?= $actionurl ?>"><img src='<?= "$userdataurl/$classseur/$f" ?>' class="miniImg"><span class="filename"><?php echo $classeur . "/" . $f; ?></span></a>
+        ondragstart="drag(event)" class='miniImg'  href="<?= $actionurl ?>"><img src='<?php echo  rawurldecode(rawurldecode("$userdataurl/$cf")); ?>' class="miniImg"><span class="filename"><?php echo $cf; ?></span></a>
         <?php
     }
 

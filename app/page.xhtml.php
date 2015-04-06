@@ -37,7 +37,7 @@ $waiterString = "Loading and not load that is definitively not the question.--MD
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Bloc-notes 2.0 alpha</title>
+        <title>Bloc-notes</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         
