@@ -6,6 +6,10 @@ function listerTout($classeur) {
     $dirh = opendir($dataDir . "/" . $classeur);
     while (($f = readdir($dirh)) != NULL) {
         if (strtolower(substr($f, 0, 5)) == "class") {
+            if(substr($classeur, -1)=="/")
+            {
+                $f = substr($f, -1);
+            }
             typeCls(substr($f, 5), $f);
         }
         else if (strtolower(substr($f, -4)) == ".png"
@@ -42,7 +46,9 @@ function typeImg($cf) {
     $actionurl = "page.xhtml.php?composant=reader.img&document=$cf";
     ?>
     <a  draggable="true"
-        ondragstart="drag(event)" class='miniImg'  href="<?= $actionurl ?>"><img src='<?php echo  rawurldecode(rawurldecode("$userdataurl/$cf")); ?>' class="miniImg"><span class="filename"><?php echo $cf; ?></span></a>
+        ondragstart="drag(event)" class='miniImg'  href="<?= $actionurl ?>">
+        <img src='<?php echo  "$userdataurl/$cf"; ?>' class="miniImg">
+        <span class="filename"><?php echo $cf; ?></span></a>
         <?php
     }
 
@@ -51,6 +57,9 @@ function typeImg($cf) {
         global $dataDir;
         $actionurl = "page.xhtml.php?composant=browser&classeur=$f";
         ?>
-    <a  ondrop="drop(event)" ondragover="allowDrop(event)" class='miniImg'  href="<?= $actionurl ?>"><img src='images/alphabet.png' class="miniImg"><span class="filename"><?php echo $classeur; ?></span></a>
+    <a  ondrop="drop(event)" ondragover="allowDrop(event)" class='miniImg'  href="<?= $actionurl ?>">
+        <img src='images/alphabet.png' class="miniImg">
+        <span class="filename"><?php echo $classeur; ?></span>
+    </a>
     <?php
 }

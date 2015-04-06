@@ -1,13 +1,14 @@
-<h2>Modifications récentes</h2>
-<table>
 <?php
 
 require_once("../../config.php");
-
+?>
+<h2>Modifications récentes</h2>
+<table>
+<?php
 $resultsArrDB = listHistory();
 
 
-while(($row=  mysql_fetch_assoc($resultsArrDB))!==null)
+while(($row=  mysql_fetch_assoc($resultsArrDB))!=NULL)
 {
     ?>
     <tr>

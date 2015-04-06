@@ -30,7 +30,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'post' && !empty($_FILES)) {
                 
                 if (move_uploaded_file($myFile['tmp_name'][$i], $urlfinale)) {
                     
-                    echo "moved: $urlfinale<br/>";
+                    echo "<p><a href='".$urlfinale."'> moved: ".$myFile['name'][$i]."</a></p>";
                 
                     
                 } else {

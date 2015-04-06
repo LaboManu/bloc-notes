@@ -92,8 +92,70 @@ function listHistory($filename = null, $date="") {
     global $monutilisateur;
     mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "select user, filename, moment, type from blocnotes_items where user='".$monutilisateur ."' order by moment desc";
+    $q = "select user, filename, moment, type from blocnotes_items where user='".$monutilisateur ."' order by moment";
     
     $results = mysql_query($q);
     return $results;
+}
+function simpleQ($q)
+{
+    
+    if($date=="")
+    {
+        $date = date("Y-m-d-H-i-s");
+    }
+    global $hostname;
+    global $username;
+    global $password;
+    global $name;
+    global $monutilisateur;
+    mysql_connect($hostname, $username, $password);
+    mysql_select_db($name);
+    $results = mysql_query($q);
+    return $results;
+}
+function getSimpleRowElement($row, $field)
+{
+    return $row[$field];
+}
+function dbfile_getCreationTime($filename)
+{
+    $q = "select moment from blocnotes_items where filename='".$filename."' and type='file.creation'";
+    $res = simpleQ($q);
+    if($res==null) {return null;}
+    if(($row= mysql_fetch_assoc($res))!=NULL)
+            getSimpleRowElement($row, "date");
+    return getSimpleRowElement($row, "date");
+}
+function dbfile_getModifications($filename)
+{
+    $q = "select moment from blocnotes_items where filename='".$filename."' and type='file.update' order by date";
+    $res = simpleQ($q);
+    if($res==null) {return null;}
+    return $res;
+    
+}
+function dbfile_getDeleteTime($filename)
+{
+    $q = "select moment from blocnotes_items where filename='".$filename."' and type='file.delete'";
+    $res = simpleQ($q);
+    if($res==null) {return null;}
+    if(($row= mysql_fetch_assoc($res))!=NULL)
+            getSimpleRowElement($row, "date");
+    return getSimpleRowElement($row, "date");
+    
+}
+function dbfile_getModificationsAsList($filename)
+{
+    ?><table><?php
+    $res = dbfile_getModifications($filename);
+    if($res!=null)
+    {
+        while(($row=  mysql_fetch_assoc($res))!=NULL)
+        {
+            echo "<tr><td>Modification</td><td>".$row['date']."</td></tr>";
+            
+        }
+    }
+    ?></table><?php
 }
