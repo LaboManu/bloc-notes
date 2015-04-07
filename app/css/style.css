@@ -28,8 +28,8 @@ ul#fg_membersite_content, ul#fg_membersite_content li
 }
 .icon-32
 {
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
 } 
 
 li.button_appdoc 
@@ -133,7 +133,7 @@ img.miniImg, div.miniImg
 {
     overflow-x: hidden;
 }
-.file_preview
+.miniImg a
 {
     text-decoration: none;
 }
@@ -154,7 +154,7 @@ cadre_media, #document
 }
 a.nav_buttons
 {
-    float: right;
+    float: left;
     display: block;
     font-size: 18pt;
     background-color: #0000ff; 

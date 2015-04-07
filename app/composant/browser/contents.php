@@ -40,7 +40,12 @@ if($classeur=="")
                 <div id="listesDiv">
                     <div id="imagesDiv">
                         <?php
+                        
                             listerTout($classeur);
+                            ?></div><div id="bdblisting">
+                                <?php
+                                connect();
+                                listerNotesFromDB();    
                         ?>                        
                     </div>
                 </div>

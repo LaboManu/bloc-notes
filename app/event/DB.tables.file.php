@@ -1,8 +1,43 @@
 <?php
+function connect()
+{
+        if ($date == "") {
+        $date = date("Y-m-d-H-i-s");
+    }
+    global $link;
+    global $hostname;
+    global $username;
+    global $password;
+    global $name;
+    $link = mysql_connect($hostname, $username, $password);
+    mysql_select_db($name);
 
-function createFile($filename, $date="") {
-    if($date=="")
-    {
+}
+
+$link = null;
+function createFile($filename, $date = "") {
+    if ($date == "") {
+        $date = date("Y-m-d-H-i-s");
+    }
+    global $link;
+    global $hostname;
+    global $username;
+    global $password;
+    global $name;
+    global $monutilisateur;
+    $link = mysql_connect($hostname, $username, $password);
+    mysql_select_db($name);
+    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.creation');";
+    //echo $q;
+
+    mysql_query($q);
+
+}
+
+function updateFile($filename, $date = "", $contenu = "") {
+    global $link;
+    if ($date == "") {
         $date = date("Y-m-d-H-i-s");
     }
     global $hostname;
@@ -10,152 +45,171 @@ function createFile($filename, $date="") {
     global $password;
     global $name;
     global $monutilisateur;
-    mysql_connect($hostname, $username, $password);
+    $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . $monutilisateur . "', '" .
-            $filename . "', '".$date."', 'file.creation');";
+    $q = "insert into blocnotes_items (user, filename, contenu, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($contenu, $link) . "',     '" . mysql_real_escape_string($date, $link) . "', 'file.update');";
     //echo $q;
-    
+
     mysql_query($q);
-    
+
+}
+
+function deleteFile($filename, $date = "") {
+    if ($date == "") {
+        $date = date("Y-m-d-H-i-s");
+    }
+    global $link;
+    global $hostname;
+    global $username;
+    global $password;
+    global $name;
+    global $monutilisateur;
+    $link = mysql_connect($hostname, $username, $password);
+    mysql_select_db($name);
+    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.delete');";
+    //echo $q;
+
+    mysql_query($q);
+
+}
+
+function renameFile($filename, $date = "") {
+    if ($date == "") {
+        $date = date("Y-m-d-H-i-s");
+    }
+    global $hostname;
+    global $username;
+    global $password;
+    global $name;
+    global $monutilisateur;
+    $link = mysql_connect($hostname, $username, $password);
+    mysql_select_db($name);
+    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . mysql_real_escape_string($monutilisateur) . "', '" .
+            mysql_real_escape_string($filename) . "', '" . mysql_real_escape_string($date) . "', 'file.rename');";
+    //echo $q;
+
+    mysql_query($q);
+
     mysql_close();
 }
-function updateFile($filename, $date="") {
-    if($date=="")
-    {
+
+function listHistory($filename = null, $date = "") {
+    if ($date == "") {
         $date = date("Y-m-d-H-i-s");
     }
+    global $link;
     global $hostname;
     global $username;
     global $password;
     global $name;
     global $monutilisateur;
-    mysql_connect($hostname, $username, $password);
+    $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . $monutilisateur . "', '" .
-            $filename . "', '".$date."', 'file.update');";
-    //echo $q;
-    
-    mysql_query($q);
-    
-    mysql_close();
-}
-function deleteFile($filename, $date="") {
-    if($date=="")
-    {
-        $date = date("Y-m-d-H-i-s");
-    }
-    global $hostname;
-    global $username;
-    global $password;
-    global $name;
-    global $monutilisateur;
-    mysql_connect($hostname, $username, $password);
-    mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . $monutilisateur . "', '" .
-            $filename . "', '".$date."', 'file.delete');";
-    //echo $q;
-    
-    mysql_query($q);
-    
-    mysql_close();
-}
-function renameFile($filename, $date="") {
-    if($date=="")
-    {
-        $date = date("Y-m-d-H-i-s");
-    }
-    global $hostname;
-    global $username;
-    global $password;
-    global $name;
-    global $monutilisateur;
-    mysql_connect($hostname, $username, $password);
-    mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . $monutilisateur . "', '" .
-            $filename . "', '".$date."', 'file.rename');";
-    //echo $q;
-    
-    mysql_query($q);
-    
-    mysql_close();
-}
-function listHistory($filename = null, $date="") {
-    if($date=="")
-    {
-        $date = date("Y-m-d-H-i-s");
-    }
-    global $hostname;
-    global $username;
-    global $password;
-    global $name;
-    global $monutilisateur;
-    mysql_connect($hostname, $username, $password);
-    mysql_select_db($name);
-    $q = "select user, filename, moment, type from blocnotes_items where user='".$monutilisateur ."' order by moment";
-    
+    $q = "select user, filename, moment, type from blocnotes_items where user='" . mysql_real_escape_string($monutilisateur, $link) . "' order by moment";
+
     $results = mysql_query($q);
     return $results;
 }
-function simpleQ($q)
-{
-    
-    if($date=="")
-    {
+
+function simpleQ($q) {
+
+    if ($date == "") {
         $date = date("Y-m-d-H-i-s");
     }
+    global $link;
     global $hostname;
     global $username;
     global $password;
     global $name;
     global $monutilisateur;
-    mysql_connect($hostname, $username, $password);
+    $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
     $results = mysql_query($q);
     return $results;
 }
-function getSimpleRowElement($row, $field)
-{
+
+function getSimpleRowElement($row, $field) {
+    global $link;
     return $row[$field];
 }
-function dbfile_getCreationTime($filename)
-{
-    $q = "select moment from blocnotes_items where filename='".$filename."' and type='file.creation'";
+
+function dbfile_getCreationTime($filename) {
+    global $link;
+    connect();
+    $q = "select moment from blocnotes_items where filename='" . mysql_real_escape_string($filename, $link) . "' and type='file.creation'";
     $res = simpleQ($q);
-    if($res==null) {return null;}
-    if(($row= mysql_fetch_assoc($res))!=NULL)
-            getSimpleRowElement($row, "date");
-    return getSimpleRowElement($row, "date");
-}
-function dbfile_getModifications($filename)
-{
-    $q = "select moment from blocnotes_items where filename='".$filename."' and type='file.update' order by date";
-    $res = simpleQ($q);
-    if($res==null) {return null;}
-    return $res;
-    
-}
-function dbfile_getDeleteTime($filename)
-{
-    $q = "select moment from blocnotes_items where filename='".$filename."' and type='file.delete'";
-    $res = simpleQ($q);
-    if($res==null) {return null;}
-    if(($row= mysql_fetch_assoc($res))!=NULL)
-            getSimpleRowElement($row, "date");
-    return getSimpleRowElement($row, "date");
-    
-}
-function dbfile_getModificationsAsList($filename)
-{
-    ?><table><?php
-    $res = dbfile_getModifications($filename);
-    if($res!=null)
-    {
-        while(($row=  mysql_fetch_assoc($res))!=NULL)
-        {
-            echo "<tr><td>Modification</td><td>".$row['date']."</td></tr>";
-            
-        }
+    if ($res == null) {
+        return null;
     }
-    ?></table><?php
+    if (($row = mysql_fetch_assoc($res)) != NULL) {
+        getSimpleRowElement($row, "date");
+    }
+    return getSimpleRowElement($row, "date");
 }
+
+function dbfile_getModifications($filename) {
+    global $link;
+    $q = "select moment from blocnotes_items where filename='" . mysql_real_escape_string($filename) . "' and type='file.update' order by date";
+    $res = simpleQ($q);
+    if ($res == null) {
+        return null;
+    }
+    return $res;
+}
+
+function dbfile_getDeleteTime($filename) {
+    global $link;
+    $q = "select moment from blocnotes_items where filename='" . mysql_real_escape_string($filename) . "' and type='file.delete'";
+    $res = simpleQ($q);
+    if ($res == null) {
+        return null;
+    }
+    if (($row = mysql_fetch_assoc($res))!= NULL) {
+        getSimpleRowElement($row, "date");
+    }
+    return getSimpleRowElement($row, "date");
+}
+
+function dbfile_getModificationsAsList($filename) {
+    global $link;
+    ?><table><?php
+        $res = dbfile_getModifications($filename);
+        if ($res != null) {
+            while (($row = mysql_fetch_assoc($res)) != NULL) {
+                echo "<tr><td>Modification</td><td>" . $row['date'] . "</td></tr>";
+            }
+        }
+        ?></table><?php
+    }
+
+    function getDocument($filename = "") {
+        global $link;
+        $q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
+                " FROM blocnotes_items " .
+                "WHERE filename =  '" . mysql_real_escape_string($filename, $link) . "' " .
+               " ORDER BY MOMENT DESC ".
+
+                "LIMIT 1 )";
+        //echo $q;
+        $result = simpleQ($q);
+        return $result;
+    }
+    
+
+    function getDocuments($classeur = "*") {
+$q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
+                " FROM blocnotes_items " .
+                "WHERE " .
+               " ORDER BY MOMENT DESC ".
+
+                "LIMIT 1 )";
+echo $q;
+        $result = simpleQ($q);
+        return $result;
+    }
+    function getField($row, $field)
+    {
+        return $row[$field];
+    }

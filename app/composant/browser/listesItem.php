@@ -21,7 +21,31 @@ function listerTout($classeur) {
         }
     }
 }
-
+function listerNotesFromDB($classeur = "")
+{
+    global $link;
+    global $dataDir;
+    $results = getDocuments();
+    while(($row=  mysql_fetch_assoc($result, $link))!=NULL)
+    {
+        $cf = (($classeur=="")?"":$classeur. "/" ) . $f;
+        $urlaction = "page.xhtml.php?composant=reader.txt&document=" . $cf;
+        $filePath = $dataDir . "/" . $classeur ."/" .$f;
+    ?>
+    <a  draggable="true"
+        ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
+        <div class="miniImg">
+            <?php echo file_get_contents($filePath, null, null, 0, 500); ?>
+        </div>
+        <span class="filename">
+            <?php echo $cf; ?>
+        </span>
+    </a>
+    <?php
+        
+    }
+    
+}
 function typeTxt($cf, $filePath) {
     global $FILE_THUMB_MAXLEN;
     global $userdataurl;

@@ -5,6 +5,7 @@ $document1 = filter_input(INPUT_GET, 'document');
 
 $document = rawurldecode($document1);
 
+connect();
 
 echo "<p>Création" . dbfile_getCreationTime($document) . "</p>";
 echo "<p>Modifications" . dbfile_getModificationsAsList($document) . "</p>";

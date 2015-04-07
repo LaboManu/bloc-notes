@@ -20,7 +20,7 @@ $name=''; /// database name
 
 require_once("event/DB.tables.file.php");
 
-$appName = "Bloc-notes";
+$appName = "";
 
 $version = "2.0 beta 2";
 
