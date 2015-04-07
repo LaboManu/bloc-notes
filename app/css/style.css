@@ -90,37 +90,45 @@ div#fg_membersite {
 }
 img.miniImg, div.miniImg
 {
-   width: 200px; 
-   height: 200px; 
-   overflow: hidden;
+    width: 200px; 
+    height: 200px; 
+    overflow: hidden;
+    border: 3px inset black;
 }
- a.miniImg
- {
-     display: block;
-     float: left;
-     width: 220px;
-     height: 240px;
-     border: 2px solid #C0C0C0;
-     overflow-x: hidden;
- }
- span.miniImg
- {
-     overflow-x: hidden;
- }
- #document pre
- {
-     display: block;
-     font-size: 18pt;
-     font-family: serif Whitney, Comics Sans;
-     margin: 2px solid green;
- }
- #document
- {
-     display: block;
-     font-size: 18pt;
-     font-family: serif Whitney, Comics Sans;
-     margin: 2px solid orange;
- }
+a.miniImg
+{
+    display: block;
+    float: left;
+    width: 220px;
+    height: 240px;
+    overflow-x: hidden;
+}
+span.miniImg
+{
+    overflow-x: hidden;
+}
+/*#document pre
+{
+    display: block;
+    font-size: 18pt;
+    font-family: serif Whitney, Comics Sans;
+    margin: 2px solid green;
+}*/
+div#document
+{
+    display: block;
+    font-size: 18pt;
+    font-family: serif Whitney, Comics Sans;
+    margin: 2px solid orange;
+    overflow: auto;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -o-hyphens: auto;
+    hyphens: auto;
+
+}
 .miniature_txt
 {
     width: 161px;
@@ -141,10 +149,9 @@ a.miniImg
 cadre_media, #document
 {
     margin-left: 33%;
-    position: fixed;
     width: 50%;
     height: 50%;
-    border: 5px inset black;
+    border: 3px inset black;
     overflow-style: scrollbar;
     overflow: scroll;
 }
@@ -161,6 +168,6 @@ a.nav_buttons
     background-color: #0000ff; 
     color: white;
     text-decoration: none;
-   margin: 2pt;
-   border: 3px solid gray;
+    margin: 2pt;
+    border: 3px solid gray;
 }

@@ -2,9 +2,8 @@
 
 require_once("../../config.php");
 
-$document1 = filter_input(INPUT_GET, 'document');
 
-$newname = strtolower("note");
+$newname = strtolower("Classeur");
         // replace spaces with hyphens and remove funny characters
         $newname = str_replace(' ', '-', $newname);
         //$newname = preg_replace('/[^\d\w\._-]/', '', $newname);
@@ -21,7 +20,7 @@ $newname = strtolower("note");
 
 if(touch($dataDir.$pathSep.$newname))
 {
-    echo "<h1>Note créée avec succès</h1>";
+    echo "<h1>Classeur créé avec succès</h1>";
     echo "<p>$newname</p>";
     
     require_once("../../event/DB.tables.file.php");
@@ -30,10 +29,4 @@ if(touch($dataDir.$pathSep.$newname))
 }
 
 ?>
-
-<ul>
-    
-<li class="button_appdoc"><a href="?composant=edit.txt&document=<?php echo rawurlencode(substr($newname, 0, -4)); ?>">Modifier, renommer, supprimer une note</a></li>
-
-</ul>
 

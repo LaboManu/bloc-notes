@@ -16,6 +16,7 @@ while(($row=  mysql_fetch_assoc($resultsArrDB))!=NULL)
         <td><?= $row['filename'] ?></td>
         <td><?= $row['moment']   ?></td>
         <td><?=  $row['type']    ?></td>
+        <td><?= $row['contenu']  ?></td>
     </tr><?php
 }
 ?>

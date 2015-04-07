@@ -26,6 +26,10 @@ else {
     {
         $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
+    else if($composant=="classe.doc")
+    {
+        $paramsSuppl = "&CLASS=".  rawurlencode(filter_input(INPUT_GET, "CLASS"));
+    }
     
     
 }

@@ -26,6 +26,8 @@ function listerNotesFromDB($classeur = "")
     global $link;
     global $dataDir;
     $results = getDocuments();
+    if($results)
+    {
     while(($row=  mysql_fetch_assoc($result, $link))!=NULL)
     {
         $cf = (($classeur=="")?"":$classeur. "/" ) . $f;
@@ -42,7 +44,7 @@ function listerNotesFromDB($classeur = "")
         </span>
     </a>
     <?php
-        
+    }   
     }
     
 }

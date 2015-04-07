@@ -28,7 +28,7 @@ function createFile($filename, $date = "") {
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
     $q = "insert into blocnotes_items (user, filename, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
-            mysql_real_escape_string($filename, $link) . ".txt', '" . mysql_real_escape_string($date, $link) . "', 'file.creation');";
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.creation');";
     //echo $q;
 
     mysql_query($q);
@@ -48,7 +48,7 @@ function updateFile($filename, $date = "", $contenu = "") {
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
     $q = "insert into blocnotes_items (user, filename, contenu, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
-            mysql_real_escape_string($filename, $link) . ".txt', '" . mysql_real_escape_string($contenu, $link) . "',     '" . mysql_real_escape_string($date, $link) . "', 'file.update');";
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($contenu, $link) . "',     '" . mysql_real_escape_string($date, $link) . "', 'file.update');";
     //echo $q;
 
     mysql_query($q);
@@ -68,7 +68,7 @@ function deleteFile($filename, $date = "") {
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
     $q = "insert into blocnotes_items (user, filename, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
-            mysql_real_escape_string($filename, $link) . ".txt', '" . mysql_real_escape_string($date, $link) . "', 'file.delete');";
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.delete');";
     //echo $q;
 
     mysql_query($q);
@@ -87,7 +87,7 @@ function renameFile($oldname, $newname, $date = "") {
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
     $q = "insert into blocnotes_items (user, filename, moment, type, contenu) values('" . mysql_real_escape_string($monutilisateur) . "', '" .
-            mysql_real_escape_string($newname) . ".txt', '" . mysql_real_escape_string($date) . "', 'file.rename', '".mysql_real_escape_string($oldname).".txt');";
+            mysql_real_escape_string($newname) . "', '" . mysql_real_escape_string($date) . "', 'file.rename', '".mysql_real_escape_string($oldname)."');";
     //echo $q;
 
     mysql_query($q);
@@ -107,7 +107,7 @@ function listHistory($filename = null, $date = "") {
     global $monutilisateur;
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "select user, filename, moment, type from blocnotes_items where user='" . mysql_real_escape_string($monutilisateur, $link) . "' order by moment";
+    $q = "select user, filename, moment, type, contenu from blocnotes_items where user='" . mysql_real_escape_string($monutilisateur, $link) . "' order by moment";
 
     $results = mysql_query($q);
     return $results;
@@ -188,7 +188,7 @@ function dbfile_getModificationsAsList($filename) {
         global $link;
         $q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
                 " FROM blocnotes_items " .
-                "WHERE filename =  '" . mysql_real_escape_string($filename, $link) . ".txt' " .
+                "WHERE filename =  '" . mysql_real_escape_string($filename, $link) . "' " .
                " ORDER BY MOMENT DESC ".
 
                 "LIMIT 1 )";
@@ -205,7 +205,6 @@ $q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
                " ORDER BY MOMENT DESC ".
 
                 "LIMIT 1 )";
-echo $q;
         $result = simpleQ($q);
         return $result;
     }
