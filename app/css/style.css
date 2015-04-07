@@ -133,9 +133,10 @@ img.miniImg, div.miniImg
 {
     overflow-x: hidden;
 }
-.miniImg a
+a.miniImg 
 {
     text-decoration: none;
+    border: none;
 }
 cadre_media, #document
 {

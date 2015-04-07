@@ -11,7 +11,7 @@ $contenu = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 <p>Document:<?php echo $document; ?></p>
 <pre>Contenu:<?php echo $contenu; ?></pre>
 <?php
-$fp = fopen($dataDir.$pathSep.$document, "w");
+$fp = fopen($dataDir.$pathSep.$document.".txt", "w");
 
 fwrite($fp, $contenu);
 

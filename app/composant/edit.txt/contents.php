@@ -22,7 +22,7 @@ echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.txt"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
-    <textarea rows="24" cols="80" name="contenu"><?php echo file_get_contents($dataDir.$pathSep.$document);
+    <textarea rows="24" cols="80" name="contenu"><?php echo file_get_contents($dataDir.$pathSep.$document.".txt");
         ?></textarea> <input type="submit" name="sauvegarder" value="Sauvergarder"/>
 </form>
 <hr/>
@@ -31,14 +31,14 @@ echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
         <select name="CLASS">
 <?php
-$fh = opendir($dataDir);
-while(($f=readdir($fh)!=null))
+$fh = opendir($dataDir."/".$classeur);
+while(($f=readdir($fh)!=NULL))
 {
    
             if(strlen($f)>5 && substr($f,0, 5)=="CLASS")
                 {
             ?>
-            <option id="<?php echo $f; ?>" value="<?php echo substr($f, 5); ?>"></option>
+            <option name="<?php echo substr($f, 5); ?>" value="<?php echo substr($f, 5); ?>"><?php echo substr($f, 5); ?></option>
             <?php
                 }
  }

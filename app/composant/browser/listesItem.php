@@ -50,15 +50,15 @@ function typeTxt($cf, $filePath) {
     global $FILE_THUMB_MAXLEN;
     global $userdataurl;
     global $dataDir;
-    $urlaction = "page.xhtml.php?composant=reader.txt&document=" . $cf;
+    $urlaction = "page.xhtml.php?composant=reader.txt&document=" . substr($cf, 0, -4);
     ?>
     <a  draggable="true"
         ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
-        <div class="miniImg file_preview">
+        <div class="miniImg">
             <?php echo file_get_contents($filePath, null, null, 0, 500); ?>
         </div>
         <span class="filename">
-            <?php echo $cf; ?>
+            <?php echo substr($cf, 0, -4); ?>
         </span>
     </a>
     <?php

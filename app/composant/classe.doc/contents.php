@@ -14,7 +14,7 @@ $CLASS = filter_input(INPUT_GET, 'CLASS');
 $classeur = rawurldecode($CLASS);
 
 
-$newname = strtolower($dataDir."/".$classeur."/".$document);
+$newname = strtolower($dataDir."/CLASS".$classeur."/".$document);
         // replace spaces with hyphens and remove funny characters
         $newname = str_replace(' ', '-', $newname);
         //$newname = preg_replace('/[^\d\w\._-]/', '', $newname);
@@ -30,13 +30,13 @@ $newname = strtolower($dataDir."/".$classeur."/".$document);
         echo "<p>$oldname</p>";
 echo "<p>$newname</p>";
 
-$oldname = $dataDir.$pathSep.$document;
-$newname = $dataDir.$pathSep.$classeur.$pathSep.$newname;
+$oldname = $dataDir.$pathSep.$document.".txt";
+$newname = $dataDir.$pathSep.$classeur.$pathSep.$newname.".txt";
 
 if(rename($oldname, $newname))
 {
     echo "<h1>Fichier <strong>$oldname</strong> classé avec succès dans <strong>$newname</strong>.</h1>";
 }
 
-
+renameFile($oldname, $newname);
 ?>
