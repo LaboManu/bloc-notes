@@ -3,7 +3,7 @@
 require_once("../../config.php");
 
 
-$newname = strtolower("Classeur");
+$newname = "Classeur";
         // replace spaces with hyphens and remove funny characters
         $newname = str_replace(' ', '-', $newname);
         //$newname = preg_replace('/[^\d\w\._-]/', '', $newname);

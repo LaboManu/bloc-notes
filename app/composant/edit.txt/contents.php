@@ -31,8 +31,9 @@ echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
         <select name="CLASS">
 <?php
-$fh = opendir($dataDir."/".$classeur);
-while(($f=readdir($fh)!=NULL))
+$dir = $dataDir."/".$classeur;
+$fh = opendir($dir);
+while(($f=readdir($fh))!=NULL)
 {
    
             if(strlen($f)>5 && substr($f,0, 5)=="CLASS")
@@ -65,7 +66,7 @@ while(($f=readdir($fh)!=NULL))
 </form>
 <hr/>
 <hr/>
-<form action="page.xhtml.php>" method="GET">
+<form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="del.txt"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
 <input type="submit" name="supprimer" value="Supprimer document: <?php echo $document; ?>"><br/>
