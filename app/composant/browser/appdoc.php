@@ -14,7 +14,7 @@ $classeur = substr($class1, 5)  ;
 if($classeur!="")
 {
     ?>
-<li class="button_appdoc"><a href="?composant=classeur.edit&classeur=<?php echo $class1; ?>">Modifier classeur</a></li>
+<li class="button_appdoc"><a href="?composant=classeur.edit&classeur=<?php echo $classeur; ?>">Modifier classeur</a></li>
     <?php
 
 }

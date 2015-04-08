@@ -41,4 +41,4 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'post' && !empty($_FILES)) {
         }
     }
 }
-?><a href="page.xhtml.php?composant=upload.php">Retour au télécersement de fichiers</a>
+?><a class="button_appdoc" href="page.xhtml.php?composant=upload">Retour au télécersement de fichiers</a>
