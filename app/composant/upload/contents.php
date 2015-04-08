@@ -13,10 +13,11 @@
 
     </form>
     <ul id="file-list">
+    	<li class="no-items">(no files uploaded yet)</li>
+    </ul>
+        <script language="javascript" type="text/javascript" src="../../scripts/dropzone.js"></script>
         <script language="javascript" type="text/javascript">
             ("div#mydrop").dropzone({ url: "upload.php" });
         </script>
-    	<li class="no-items">(no files uploaded yet)</li>
-    </ul>
     
     
