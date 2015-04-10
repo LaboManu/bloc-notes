@@ -9,13 +9,13 @@ $document = rawurldecode($document1);
 if (substr($document, 0, 2) == "./") {
     $document = substr($document, 2);
 }
-$CLASS = filter_input(INPUT_GET, 'CLASS');
+$CLASS = filter_input(INPUT_GET, 'classeur');
 
 $classeur = rawurldecode($CLASS);
 
 echo $classeur ;
 
-$newname = $dataDir . "/CLASS" . $classeur . "/" . $document;
+$newname = $dataDir . "/CLASS" . $classeur . "/";
 
 $i = 0;
 

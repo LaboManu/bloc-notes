@@ -26,9 +26,13 @@ else {
     {
         $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
-    else if($composant=="classe.doc")
+    else if(($composant=="classe.doc")||($composant=="edit.cls")||($composant=="save.cls")||($composant=="rename.cls")||($composant=="del.cls"))
     {
-        $paramsSuppl = "&CLASS=".  rawurlencode(filter_input(INPUT_GET, "CLASS"));
+            $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
+        if($composant=="rename.cls")
+        {
+            $paramsSuppl .= "&nom=".  rawurlencode(filter_input(INPUT_GET, "nom"));
+        }
     }
     
     
@@ -65,17 +69,17 @@ if ( status == "error" ) {
 var msg = "Sorry but there was an error: ";
 $( "#error" ).html( msg + xhr.status + " " + xhr.statusText +url);
 }});
-$( "#user_frame" ).load(url=urlAppJS+ "/user.php?document=<?php echo $document; ?>", function( response, status, xhr ) {
+$( "#user_frame" ).load(url=urlAppJS+ "/user.php?document=<?php echo $document .$paramsSuppl; ?>", function( response, status, xhr ) {
 if ( status == "error" ) {
 var msg = "Sorry but there was an error: ";
 $( "#error" ).html( msg + xhr.status + " " + xhr.statusText +url );
 }});
-$( "#appdoc_menu" ).load( url=urlAppJS+"/composant/<?php echo $composant;?>/appdoc.php?document=<?php echo $document; ?>" , function( response, status, xhr ) {
+$( "#appdoc_menu" ).load( url=urlAppJS+"/composant/<?php echo $composant;?>/appdoc.php?document=<?php echo $document .$paramsSuppl; ?>" , function( response, status, xhr ) {
 if ( status == "error" ) {
 var msg = "Sorry but there was an error: ";
 $( "#error" ).html( msg + xhr.status + " " + xhr.statusText +url );
 }});
-$( "#context_menu_bar" ).load(url=urlAppJS+"/composant/<?php echo $composant ; ?>/menubar.php?document=<?php echo $document; ?>" , function( response, status, xhr ) {
+$( "#context_menu_bar" ).load(url=urlAppJS+"/composant/<?php echo $composant ; ?>/menubar.php?document=<?php echo $document .$paramsSuppl;?>" , function( response, status, xhr ) {
 if ( status == "error" ) {
 var msg = "Sorry but there was an error: ";
 $( "#error" ).html( msg + xhr.status + " " + xhr.statusText +url );

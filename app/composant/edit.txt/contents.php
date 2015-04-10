@@ -29,7 +29,7 @@ echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="classe.doc"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
-        <select name="CLASS">
+        <select name="classeur">
 <?php
 $dir = $dataDir."/".$classeur;
 $fh = opendir($dir);

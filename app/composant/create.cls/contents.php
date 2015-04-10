@@ -6,7 +6,7 @@ require_once("../../config.php");
 $newname = "Classeur";
         // replace spaces with hyphens and remove funny characters
         $newname = str_replace(' ', '-', $newname);
-        //$newname = preg_replace('/[^\d\w\._-]/', '', $newname);
+        $newname = preg_replace('/[^\d\w\._-]/', '', $newname);
         // make sure there's something left
         $newname = $newname ? $newname : 'file';
         // prevent renaming over an existing file
