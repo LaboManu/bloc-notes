@@ -15,18 +15,18 @@ $classeur = rawurldecode($CLASS);
 
 echo $classeur ;
 
-$newname = $dataDir . "/CLASS" . $classeur . "/";
+$newname = $dataDir . "/CLASS" . $classeur . "/" . $document.".txt" ;
 
 $i = 0;
 
 $testnewname = $newname;
 while ($testnewame !== $nom && file_exists($testnewame)) {
-    $testnewname = $dataDir . "/" . $classeur . "/" . $newname . "_" . $i . "_-".".txt";
+    $testnewname = $dataDir . "/CLASS" . $classeur . "/" . $document . "_" . $i . "_".".txt";
     $i++;
 }
 
 
-$oldname = $dataDir . $pathSep . $document;
+$oldname = $dataDir . $pathSep . $document.".txt";
 $newname = $testnewname;
 
 echo "<p>old:$oldname</p>";
