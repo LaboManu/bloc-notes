@@ -151,7 +151,7 @@ function dbfile_getCreationTime($filename) {
 
 function dbfile_getModifications($filename) {
     global $link;
-    $q = "select moment from blocnotes_items where filename='" . mysql_real_escape_string($filename) . "' and type='file.update' order by date";
+    $q = "select moment from blocnotes_items where filename='" . mysql_real_escape_string($filename) . "' order by moment";
     $res = simpleQ($q);
     if ($res == null) {
         return null;
@@ -178,7 +178,7 @@ function dbfile_getModificationsAsList($filename) {
         $res = dbfile_getModifications($filename);
         if ($res != null) {
             while (($row = mysql_fetch_assoc($res)) != NULL) {
-                echo "<tr><td>Modification</td><td>" . $row['date'] . "</td></tr>";
+                echo "<tr><td>Modification</td><td>" . $row['moment'] . "</td></tr>";
             }
         }
         ?></table><?php
@@ -211,4 +211,14 @@ $q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
     function getField($row, $field)
     {
         return $row[$field];
+    }
+    
+    
+    function creationDate($filename = "") {
+        global $link;
+        $q = "SELECT * FROM blocnotes_items WHERE filename =  '" . mysql_real_escape_string($filename, $link) . " ORDER BY MOMENT ASC" ;
+        //echo $q;
+        $result = simpleQ($q);
+        $row = mysql_fetch_assoc($result);
+        return getField($row, "moment");
     }

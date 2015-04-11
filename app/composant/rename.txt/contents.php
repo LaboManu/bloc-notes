@@ -23,16 +23,18 @@ while ($newname !== $nom && file_exists($dataDir . '/' . $newname)) {
     $newname = "_" . $i . "_" . $newname;
     $i++;
 }
+$newnamedoc = $newname;
 
 echo "<p>$oldname</p>";
 echo "<p>$newname</p>";
 
 $oldname = $dataDir . $pathSep . $document . ".txt";
-$newname = $dataDir . $pathSep . $newname . ".txt";
+$newname = $dataDir . $pathSep . $newnamedoc . ".txt";
 
 if (rename($oldname, $newname)) {
     echo "<h1>Fichier renommé avec succès.</h1>";
 
-    renameFile($document);
+    renameFile($document, $newnamedoc);
+    createFile($newnamedoc);
 }
 ?>

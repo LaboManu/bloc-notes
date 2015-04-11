@@ -23,7 +23,7 @@ while ($newname !== $nom && file_exists($dataDir . '/' . $newname)) {
     $newname = "_" . $i . "_" . $newname;
     $i++;
 }
-
+$newnamedoc = $newname;
 
 $oldname = $dataDir . $pathSep . "CLASS".$classeur;
 $newname = $dataDir . $pathSep . "CLASS".$newname;
@@ -35,6 +35,7 @@ echo "<p>$newname</p>";
 if (rename($oldname, $newname)) {
     echo "<h1>Classeur renommé avec succès.</h1>";
 
-    renameFile($document);
+    renameFile($document, $newnamedoc);
+    createFile($newnamedoc); 
 }
 ?>

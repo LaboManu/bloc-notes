@@ -19,14 +19,14 @@ $newname = $dataDir . "/CLASS" . $classeur . "/";
 
 $i = 0;
 
-$testnewname = $newname.".txt";
+$testnewname = $newname;
 while ($testnewame !== $nom && file_exists($testnewame)) {
     $testnewname = $dataDir . "/" . $classeur . "/" . $newname . "_" . $i . "_-".".txt";
     $i++;
 }
 
 
-$oldname = $dataDir . $pathSep . $document . ".txt";
+$oldname = $dataDir . $pathSep . $document;
 $newname = $testnewname;
 
 echo "<p>old:$oldname</p>";

@@ -1,10 +1,17 @@
 <?php
 
+
+
+
 require_once("../../config.php");
+
 
 $document = filter_input(INPUT_GET, 'document');
 
 $document = rawurldecode($document);
+
+connect();
+$date = dbfile_getModificationsAsList($document.".txt");
 
 ?>
 <div id="document">
@@ -12,6 +19,7 @@ $document = rawurldecode($document);
     <pre>
         <?php echo file_get_contents($dataDir.$pathSep.$document.".txt");?>
     </pre>
+	<tt>DATES<?php echo $date; ?></tt>
 </div>
 <div id="doc2">
 
@@ -21,7 +29,5 @@ connect();
  echo getField($row, "contenu");
 ?></pre>
     <p>DATE de dernière mise à jour <?php echo getField($row, "moment"); ?>
-
-</div>
 
 </div>

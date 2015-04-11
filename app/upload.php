@@ -21,7 +21,8 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'post' && !empty($_FILES)) {
         $fileCount = count($myFile["name"]);
 
         for ($i = 0; $i < $fileCount; $i++) {
-            $urlfinale = $urlbase . "/" . $myFile['name'][$i];
+            $filename = $myFile['name'][$i];
+            $urlfinale = $urlbase . "/" . $filename;
             echo "$ext<br/>";
             $ext = strtolower(substr($urlbase, -3));
             if ($ext == "txt" || $ext == "rtf" || $ext = "tml" || $ext == "htm" ||
@@ -31,7 +32,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'post' && !empty($_FILES)) {
                 if (move_uploaded_file($myFile['tmp_name'][$i], $urlfinale)) {
                     
                     echo "<p><a href='".$urlfinale."'> moved: ".$myFile['name'][$i]."</a></p>";
-                
+                    createFile($filename);
                     
                 } else {
                     
