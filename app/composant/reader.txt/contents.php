@@ -14,12 +14,7 @@ connect();
 $date = dbfile_getModificationsAsList($document.".txt");
 
 ?>
-<div id="document">
-    <p id="document_name"><?php echo $document; ?></p>
-    <pre>
-        <?php echo file_get_contents($dataDir.$pathSep.$document.".txt");?>
-    </pre>
-	<tt>DATES<?php echo $date; ?></tt>
+<div id="document"><p id="document_name"><?php echo $document; ?></p><?php echo file_get_contents($dataDir.$pathSep.$document.".txt");?><tt>DATES<?php echo $date; ?></tt>
 </div>
 <div id="doc2">
 
