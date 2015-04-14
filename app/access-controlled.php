@@ -99,10 +99,10 @@ function afficherListes(affListes)
 <img src="images/logo-blocnotes-128.png"/><?php echo $appName ; ?>
 <ul id='fg_membersite_content' class="mainmenu">
 <li>
-<a class="nav_buttons" href="page.xhtml.php?composant=browser">Explorer les notes et les images</a>
+<a class="button_appdoc" href="page.xhtml.php?composant=browser" title="Explorer les notes et les images">Explorer</a>
 </li>
 <li>
-<a class="nav_buttons" href="page.xhtml.php?composant=upload">Téléverser des fichiers</a>
+<a class="button_appdoc" href="page.xhtml.php?composant=upload" title="Uploader des fichiers textes (*.txt) et images (jpg, png, gif)">Téléverser</a>
 </li>
 </ul>
 </div>
