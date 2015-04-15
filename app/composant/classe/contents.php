@@ -9,11 +9,10 @@ $document = rawurldecode($document1);
 if (substr($document, 0, 2) == "./") {
     $document = substr($document, 2);
 }
-
-if(strtoupper(substr($document, 0, 5))=="CLASS")
+$pos = strpos($document, "/");
+if($pos!==FALSE)
 {
-    echo "<h1>Ne peut classer un classeur <strong>$document</strong>.</h1>";
-    return;
+    $documentName = substr($document, $pos+1);
 }
 
 $CLASS = filter_input(INPUT_GET, 'classeur');
@@ -22,18 +21,18 @@ $classeur = rawurldecode($CLASS);
 
 echo $classeur ;
 
-$newname = $dataDir . "/CLASS" . $classeur . "/" . $document.".txt" ;
+$newname = $dataDir . "/CLASS" . $classeur . "/" . $documentName ;
 
 $i = 0;
 
 $testnewname = $newname;
 while ($testnewame !== $nom && file_exists($testnewame)) {
-    $testnewname = $dataDir . "/CLASS" . $classeur . "/" . $document . "_" . $i . "_".".txt";
+    $testnewname = $dataDir . "/CLASS" . $classeur . "/" . $documentName . "_" . $i . "_";
     $i++;
 }
 
 
-$oldname = $dataDir . $pathSep . $document.".txt";
+$oldname = $dataDir . $pathSep . $document;
 $newname = $testnewname;
 
 echo "<p>old:$oldname</p>";

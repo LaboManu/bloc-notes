@@ -13,7 +13,7 @@ echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
 ?>
 <hr/>
 <form action="page.xhtml.php" method="GET">
-    <input type="hidden" name="composant" value="classe.form"/>
+    <input type="hidden" name="composant" value="classe"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
         <select name="classeur">
 <?php
