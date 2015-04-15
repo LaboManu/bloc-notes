@@ -15,9 +15,8 @@ if($pos!==FALSE)
     $documentName = substr($document, $pos+1);
 }
 
-$CLASS = filter_input(INPUT_GET, 'classeur');
+$classeur = rawurldecode(filter_input(INPUT_GET, 'classeur'));
 
-$classeur = rawurldecode($CLASS);
 
 echo $classeur ;
 

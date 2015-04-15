@@ -26,7 +26,8 @@ else {
     {
         $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
-    else if(($composant=="classe.doc")||($composant=="edit.cls")||($composant=="save.cls")||($composant=="rename.cls")||($composant=="del.cls"))
+    else if(($composant=="classe.doc")||($composant=="edit.cls")||($composant=="save.cls")||($composant=="rename.cls")||($composant=="del.cls")
+            ||($composant=="classement")||($composant=="classe"))
     {
             $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
         if($composant=="rename.cls")
