@@ -1,6 +1,7 @@
 body
 {
     font-family: Comics Sans, 24pt;
+    z-index: 0;
 }
 
 
@@ -45,12 +46,14 @@ ul#fg_membersite_content, ul#fg_membersite_content li
 }
 div#fg_membersite {
     height:110px;
-    //line-height:110px;
+    line-height:110px;
     text-align:center; /* centrage horizontal */
+    z-index: 1;
+    
 }
 
 #fg_membersite fieldset {
-    width:100px;
+    width: 100px;
     border:1px solid #fff;
     vertical-align:middle;
     display:inline-block;
@@ -59,11 +62,19 @@ div#fg_membersite {
 }
 #user_frame
 {
+    z-index: 2;
     float: right; 
     height: 50px; 
     background-color: #00ffff; 
     color: #ff0000;  
-    border: 3px #009;}
+    border: 3px #009;
+}
+#user_frame p 
+{
+    background-color: #00ffff; 
+
+}
+
 #context_menu_bar
 {
     background-color: #ffff00; 
