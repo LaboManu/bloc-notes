@@ -93,6 +93,8 @@ function renameFile($oldname, $newname, $date = "") {
     mysql_query($q);
 
     mysql_close();
+    
+    updateLinks($oldname, $newname);
 }
 
 function listHistory($filename = null, $date = "") {
@@ -221,4 +223,29 @@ $q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
         $result = simpleQ($q);
         $row = mysql_fetch_assoc($result);
         return getField($row, "moment");
+    }
+    
+    function updateLinks($oldname, $newname)
+    {
+        // Table : blocnotes_links
+        $q1 = "update blocnotes_link set nom_element_porteur='".mysql_real_escape_string($newname)."' where nom_element_porteur='".mysql_real_escape_string($oldname)."'";
+        $q2 = "update blocnotes_link set nom_element_dependant='".mysql_real_escape_string($newname)."' where nom_element_dependant='".mysql_real_escape_string($oldname)."'";
+        // Exécuter les requêtes
+        
+        mysql_query($q1);
+        
+        mysql_query($q2);
+        
+    }
+    
+    
+    function createLink($nom_element_porteur, $nom_element_dependant)
+    {
+        global $link ;
+        $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values ('".
+                mysql_real_escape_string($nom_element_porteur, $link)."','".
+                mysql_real_escape_string($nom_element_dependant, $link)."')";
+        
+        mysql_query($q, $link);
+        
     }

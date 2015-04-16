@@ -3,7 +3,7 @@
 require_once("../../config.php");
 
 
-$newname = "Classeur";
+$newname = "CLASSClasseur";
         // replace spaces with hyphens and remove funny characters
         $newname = str_replace(' ', '-', $newname);
         $newname = preg_replace('/[^\d\w\._-]/', '', $newname);
@@ -11,14 +11,14 @@ $newname = "Classeur";
         $newname = $newname ? $newname : 'file';
         // prevent renaming over an existing file
         $i = 1;
-        $testnewname = $newname."_".$i.".txt";
-        while ($testnewname !== $nom && file_exists($dataDir . '/' . $testnewname)) {
+        $testnewname = $newname."_".$i;
+        while ($testnewname !== $nom && file_exists($dataDir . '/CLASS' . $testnewname)) {
             $i++;
-            $testnewname = $newname."_".$i.".txt";
+            $testnewname = $newname."_".$i;
         }
         $newname = $testnewname;
 
-if(touch($dataDir.$pathSep.$newname))
+if(mkdir($dataDir.$pathSep.$newname, 0777, true))
 {
     echo "<h1>Classeur créé avec succès</h1>";
     echo "<p>$newname</p>";
