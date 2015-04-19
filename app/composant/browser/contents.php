@@ -39,14 +39,19 @@ if($classeur=="")
                     <a onclick="javascript:afficherListes(false);">Masquer listes</a>
                 <div id="listesDiv">
                     <div id="imagesDiv">
+                        <form action="?composant=classerPlus" method="GET">
                         <?php
                         
                             listerTout($classeur);
-                            ?></div><div id="bdblisting">
+                            ?><div id="bdblisting">
                                 <?php
                                 connect();
                                 listerNotesFromDB();    
-                        ?>                        
+                                ?>                        
+                            </div>
+                            </form>
+                    </div>
+                        
                     </div>
                 </div>
         </div>

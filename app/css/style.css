@@ -105,6 +105,12 @@ img.miniImg, div.miniImg
     overflow: hidden;
     border: 3px inset black;
 }
+div.miniImgContainer
+{
+    width: 240px;
+    height: 260px;
+    float: left;
+}
 a.miniImg
 {
     display: block;
@@ -129,13 +135,9 @@ div#document
     display: block;
     font-size: 18pt;
     font-family: serif Whitney, Comics Sans;
-    margin: 2px solid orange;
+    border: 2px solid orange;
     overflow: auto;
-    word-wrap: break-word;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    -ms-hyphens: auto;
-    -o-hyphens: auto;
+    word-wrap: normal;
     hyphens: auto;
 
 }
@@ -184,4 +186,10 @@ a.nav_buttons
 textarea, input
 {
     font-size: 24pt;
+}
+input.filecheckbox
+{
+    /*display: inline;*/
+    float: right;
+    z-index: 10;
 }

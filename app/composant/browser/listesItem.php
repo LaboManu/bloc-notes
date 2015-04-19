@@ -34,15 +34,19 @@ function listerNotesFromDB($classeur = "")
         $urlaction = "page.xhtml.php?composant=reader.txt&document=" . $cf;
         $filePath = $dataDir . "/" . $classeur ."/" .$f;
     ?>
+<div class="miniImgContainer">
+<input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo $cf; ?>" />
     <a  draggable="true"
         ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
-        <div class="miniImg">
+        <div class="miniImgContainer">
             <?php echo file_get_contents($filePath, null, null, 0, 500); ?>
         </div>
         <span class="filename">
             <?php echo $cf; ?>
         </span>
     </a>
+
+</div>
     <?php
     }   
     }
@@ -54,6 +58,8 @@ function typeTxt($cf, $filePath) {
     global $dataDir;
     $urlaction = "page.xhtml.php?composant=reader.txt&document=" . substr($cf, 0, -4);
     ?>
+<div class="miniImgContainer">
+<input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" />
     <a  draggable="true"
         ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
         <div class="miniImg">
@@ -63,6 +69,7 @@ function typeTxt($cf, $filePath) {
             <?php echo substr($cf, 0, -4); ?>
         </span>
     </a>
+</div>
     <?php
 }
 
@@ -71,10 +78,14 @@ function typeImg($cf) {
     global $dataDir;
     $actionurl = "page.xhtml.php?composant=reader.img&document=$cf";
     ?>
+<div class="miniImgContainer">
+<input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "IMG_".$cf; ?>" />
     <a  draggable="true"
         ondragstart="drag(event)" class='miniImg'  href="<?= $actionurl ?>">
         <img src='<?php echo  "$userdataurl/$cf"; ?>' class="miniImg">
         <span class="filename"><?php echo $cf; ?></span></a>
+</div>
+
         <?php
     }
 
@@ -83,9 +94,12 @@ function typeImg($cf) {
         global $dataDir;
         $actionurl = "page.xhtml.php?composant=browser&classeur=$f";
         ?>
+<div class="miniImgContainer">
+<input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "CLASS_".substr($f, 0, -4); ?>" />
     <a  ondrop="drop(event)" ondragover="allowDrop(event)" class='miniImg'  href="<?= $actionurl ?>">
         <img src='images/alphabet.png' class="miniImg">
         <span class="filename"><?php echo $classeur; ?></span>
     </a>
+</div>
     <?php
 }
