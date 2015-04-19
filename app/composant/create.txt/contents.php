@@ -37,6 +37,7 @@ if(touch($dataDir.$pathSep.$newname))
 <ul>
     
 <li class="button_appdoc"><a href="?composant=edit.txt&document=<?php echo rawurlencode(substr($newname, 0, -4)); ?>">Modifier, renommer, supprimer une note</a></li>
+<li class="button_appdoc"><a href="?composant=reader.txt&document=<?php echo rawurlencode(substr($newname, 0, -4)); ?>">Visualiser la note</a></li>
 
 </ul>
 

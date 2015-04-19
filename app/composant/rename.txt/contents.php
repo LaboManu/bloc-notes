@@ -38,3 +38,6 @@ if (rename($oldname, $newname)) {
     createFile($newnamedoc);
 }
 ?>
+<ul>
+    <li class="button_appdoc"><a href="?composant=reader.txt&document=<?php echo rawurlencode(substr($newnamedoc, 0, -4)); ?>">Visualiser la note</a></li>
+</ul>

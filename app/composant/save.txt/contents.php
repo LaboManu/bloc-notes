@@ -31,3 +31,6 @@ echo "<h2>Modifié le </h2><pre>".($row1["moment"])."</pre>";
 
 }
 ?>
+<ul>
+    <li class="button_appdoc"><a href="?composant=reader.txt&document=<?php echo rawurlencode(substr($newname, 0, -4)); ?>">Visualiser la note</a></li>
+</ul>
