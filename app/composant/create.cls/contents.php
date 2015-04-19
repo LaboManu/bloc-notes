@@ -3,7 +3,7 @@
 require_once("../../config.php");
 
 
-$newname = "CLASSClasseur";
+$newname = "Classeur";
         // replace spaces with hyphens and remove funny characters
         $newname = str_replace(' ', '-', $newname);
         $newname = preg_replace('/[^\d\w\._-]/', '', $newname);
@@ -18,7 +18,7 @@ $newname = "CLASSClasseur";
         }
         $newname = $testnewname;
 
-if(mkdir($dataDir.$pathSep.$newname, 0777, true))
+if(mkdir($dataDir.$pathSep."CLASS".$newname, 0777, true))
 {
     echo "<h1>Classeur créé avec succès</h1>";
     echo "<p>$newname</p>";
