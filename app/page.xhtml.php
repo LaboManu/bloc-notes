@@ -35,6 +35,10 @@ else {
             $paramsSuppl .= "&nom=".  rawurlencode(filter_input(INPUT_GET, "nom"));
         }
     }
+    if($composant=="create.txt")
+    {
+            $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
+    }
     
     
 }
