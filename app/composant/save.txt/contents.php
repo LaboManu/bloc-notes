@@ -2,19 +2,20 @@
 
 require_once("../../config.php");
 
-$document1 = filter_input(INPUT_GET, 'document');
+$document = rawurldecode(filter_input(INPUT_GET, 'document'));
 
-$document = rawurldecode($document1);
+$classeur = rawurldecode(filter_input(INPUT_GET, 'classeur'));
 
 $contenu = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 ?>
 <p>Document:<?php echo $document; ?></p>
+<p>classeur:<?php echo $classeur; ?></p>
 <pre>Contenu:<?php echo $contenu; ?></pre>
 <?php
-$fp = fopen($dataDir.$pathSep.$document.".txt", "w");
+$fp = fopen($dataDir.$pathSep.($classeur==NULL?"":"CLASS".$classeur.$pathSep).$document.".txt", "w");
 
 fwrite($fp, $contenu);
-
+fclose($fp);
 echo "<h1>Fichier sauvegardé avec succès.</h1>";
 
 global $link;

@@ -16,11 +16,13 @@ if(!file_exists($appDir."/composant/". $composant))
 else {
     if($composant=="rename.txt")
     {
-        $paramsSuppl = "&nom=".  rawurlencode(filter_input(INPUT_GET, "nom"));
+        $paramsSuppl = "&nom=".  rawurlencode(filter_input(INPUT_GET, "nom"))
+            ."&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
     else if($composant=="save.txt")
     {
-        $paramsSuppl = "&contenu=".  rawurlencode(filter_input(INPUT_GET, "contenu"));
+        $paramsSuppl = "&contenu=".  rawurlencode(filter_input(INPUT_GET, "contenu"))
+            ."&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
     else if($composant=="browser")
     {
@@ -32,10 +34,11 @@ else {
             $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
         if($composant=="rename.cls")
         {
-            $paramsSuppl .= "&nom=".  rawurlencode(filter_input(INPUT_GET, "nom"));
-        }
+            $paramsSuppl .= "&nom=".  rawurlencode(filter_input(INPUT_GET, "nom"))
+        ."&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
+            }
     }
-    if($composant=="create.txt")
+    if(($composant=="create.txt"))
     {
             $paramsSuppl = "&classeur=".  rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
@@ -87,7 +90,7 @@ $( "#error" ).html( msg + xhr.status + " " + xhr.statusText +url );
 $( "#context_menu_bar" ).load(url=urlAppJS+"/composant/<?php echo $composant ; ?>/menubar.php?document=<?php echo $document .$paramsSuppl;?>" , function( response, status, xhr ) {
 if ( status == "error" ) {
 var msg = "Sorry but there was an error: ";
-$( "#error" ).html( msg + xhr.status + " " + xhr.statusText +url );
+$( "#error" ).html( msg + xhr.status + " " + xhr.statusText +url + <?php echo "'Composant + ".$composant+"'"; ?>);
 }});
 </script>
     </body>

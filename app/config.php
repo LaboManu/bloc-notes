@@ -84,3 +84,24 @@ $file_ext = array(
 	)
 );
 $FILE_THUMB_MAXLEN = 256;
+
+
+function getClasseurFromFullname($document)
+{
+    $pos=strpos($document, "/");
+    if($pos==FALSE)
+    {
+        return NULL;
+    }
+    return substr(substr($document, 0, $pos), 5);
+}
+function getDocumentFromFullname($document)
+{
+    $pos=strpos($document, "/");
+    if($pos==FALSE)
+    {
+        return $document;
+    }
+    return substr($document, $pos+1);
+            
+}

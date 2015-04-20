@@ -2,24 +2,24 @@
 
 require_once("../../config.php");
 
-$document1 = filter_input(INPUT_GET, 'document');
+$document = rawurldecode(filter_input(INPUT_GET, 'document'));
+$classeur = rawurldecode(filter_input(INPUT_GET, 'classeur'));
 
-$document = rawurldecode($document1);
+$nom = rawurldecode(filter_input(INPUT_GET, 'nom'));
 
-$nom1 = filter_input(INPUT_GET, 'nom');
+if($classeur=="")
+{
+    $classeur="./";
+}
 
-$nom = rawurldecode($nom1);
-
-
-$newname = strtolower($nom);
+$newname = $nom;
 // replace spaces with hyphens and remove funny characters
 $newname = str_replace(' ', '-', $newname);
-$newname = preg_replace('/[^\d\w\._-]/', '', $newname);
 // make sure there's something left
 $newname = $newname ? $newname : 'file';
 // prevent renaming over an existing file
 $i = 0;
-while ($newname !== $nom && file_exists($dataDir . '/' . $newname)) {
+while (file_exists($dataDir . '/'. $classeur."/". $newname)) {
     $newname = "_" . $i . "_" . $newname;
     $i++;
 }
@@ -28,8 +28,8 @@ $newnamedoc = $newname;
 echo "<p>$oldname</p>";
 echo "<p>$newname</p>";
 
-$oldname = $dataDir . $pathSep . $document . ".txt";
-$newname = $dataDir . $pathSep . $newnamedoc . ".txt";
+$oldname = $dataDir . $pathSep .($classeur==NULL?"":"CLASS".$classeur.$pathSep) .$document . ".txt";
+$newname = $dataDir . $pathSep .($classeur==NULL?"":"CLASS".$classeur.$pathSep) . $newnamedoc . ".txt";
 
 if (rename($oldname, $newname)) {
     echo "<h1>Fichier renommé avec succès.</h1>";

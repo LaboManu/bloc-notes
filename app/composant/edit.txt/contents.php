@@ -2,19 +2,28 @@
 
 require_once("../../config.php");
 
-$document1 = filter_input(INPUT_GET, 'document');
+$fullname = rawurldecode(filter_input(INPUT_GET, 'document'));
 
-$document = rawurldecode($document1);
 if(substr($document, 0, 2)=="./")
 {
         $document = substr($document, 2);
 }
-echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
+$classeur =  getClasseurFromFullname($fullname);
+$document =  getDocumentFromFullname($fullname);
+if($classeur!=NULL)
+{
+$emplacement ="CLASS". $classeur.$pathSep;
+}
+ else {
+$emplacement = "";    
+}
+echo "(Remote path:<i>$classeur</i>//<strong>$document</strong>";
 ?>
 <hr/>
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="rename.txt"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
+    <input type="hidden" name="classeur"  value="<?php echo rawurlencode($classeur); ?>"/>
     <input type="text" name="nom" value="<?php echo $document; ?>">
     <input type="submit" name="renommer" value="Renommer"/>
 </form>
@@ -22,16 +31,18 @@ echo "(Remote path:$dataDir.$pathSep)<strong>$document</strong>";
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.txt"/>
     <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
-    <textarea rows="24" cols="80" name="contenu"><?php echo file_get_contents($dataDir.$pathSep.$document.".txt");
+    <input type="hidden" name="classeur"  value="<?php echo rawurlencode($classeur); ?>"/>
+    <textarea rows="24" cols="80" name="contenu"><?php echo file_get_contents($dataDir.$pathSep.$emplacement.$document.".txt");
         ?></textarea> <input type="submit" name="sauvegarder" value="Sauvergarder"/>
 </form>
 <hr/>
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="classe.doc"/>
-    <input type="hidden" name="document"  value="<?php echo rawurlencode($document); ?>"/>
+    <input type="hidden" name="document"  value="<?php echo rawurlencode($emplacement.$document); ?>"/>
+    <input type="hidden" name="classeur"  value="<?php echo rawurlencode($classeur); ?>"/>
         <select name="classeur">
 <?php
-$dir = $dataDir."/".$classeur;
+$dir = $dataDir.($classeur==NULL?"":"/CLASS".$classeur);
 $fh = opendir($dir);
 while(($f=readdir($fh))!=NULL)
 {

@@ -66,7 +66,7 @@ function typeTxt($cf, $filePath) {
             <?php echo file_get_contents($filePath, null, null, 0, 500); ?>
         </div>
         <span class="filename">
-            <?php echo substr($cf, 0, -4); ?>
+            <?php echo substr(getDocumentFromFullname($cf), 0, -4); ?>
         </span>
     </a>
 </div>
