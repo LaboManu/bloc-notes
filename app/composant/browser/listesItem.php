@@ -5,7 +5,7 @@ function listerTout($classeur) {
     global $dataDir;
     $dirh = opendir($dataDir . "/" . $classeur);
     while (($f = readdir($dirh)) != NULL) {
-        if (strtolower(substr($f, 0, 5)) == "class") {
+        if ((strtolower(substr($f, 0, 5)) == "class") && is_dir($dataDir."/".$f)) {
             if(substr($classeur, -1)=="/")
             {
                 $f = substr($f, -1);
