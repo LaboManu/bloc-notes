@@ -193,3 +193,12 @@ input.filecheckbox
     float: right;
     z-index: 10;
 }
+.clearBoth
+{
+    display: block;
+    clear: both;
+}
+.contents
+{
+    display: block;
+}

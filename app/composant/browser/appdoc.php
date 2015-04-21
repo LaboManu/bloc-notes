@@ -27,4 +27,5 @@ if($classeur!="")
 
 }
 ?>
+<li class="button_appdoc"><a onclick="classeSelection()">Classer sélection</a></li>
 </ul>

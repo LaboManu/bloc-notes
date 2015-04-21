@@ -105,3 +105,4 @@ function getDocumentFromFullname($document)
     return substr($document, $pos+1);
             
 }
+require_once("event/classementSel/functions.php");

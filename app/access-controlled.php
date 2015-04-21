@@ -8,12 +8,6 @@ if(!$fgmembersite->CheckLogin())
     exit;
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-<head>
-      <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
-      <title>Bloc-notes</title>
-      <link rel="STYLESHEET" type="text/css" href="css/style.css"/>
       <script language="javascript" type="text/javascript" >
         url = "<?php echo $urldir; ?>";
         function erreurs()
@@ -29,18 +23,30 @@ if(!$fgmembersite->CheckLogin())
 		elem.style.display='none';
 	}
 }
-function openblocnote(f)
+
+function afficherNotes(affImages)
 {
-	document.location.replace(url+'?document='+f);
-	
+        var elem = document.getElementById('disclisting');
+	if(affImages)
+	{
+		elem.style.display='block';
+	}
+	else
+	{
+		elem.style.display='none';
+	}
 }
-function htmlView()
+function afficherNotesDB(bdblistingDB)
 {
-h=document.getElementById("HtmlView");
-h.style.display="Block";
-ed = document.getElementById("EditView");
-h.innerHTML = 
-ed.value
+        var elem = document.getElementById('dblisting');
+	if(bdblistingDB)
+	{
+		elem.style.display='block';
+	}
+	else
+	{
+		elem.style.display='none';
+	}
 }
 function afficherImages(affImages)
 {
@@ -91,9 +97,6 @@ function afficherListes(affListes)
 	}
 }
 </script>
-
-</head>
-<body>
 <div class="mainmenu" style="float: left;">
 
 <img src="images/logo-blocnotes-128.png"/><?php echo $appName ; ?>
@@ -106,7 +109,3 @@ function afficherListes(affListes)
 </li>
 </ul>
 </div>
-</span>
-
-</body>
-</html>

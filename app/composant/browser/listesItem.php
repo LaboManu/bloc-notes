@@ -21,36 +21,29 @@ function listerTout($classeur) {
         }
     }
 }
-function listerNotesFromDB($classeur = "")
-{
+function listerNotesFromDB($classeur = ""){
     global $link;
-    global $dataDir;
-    $results = getDocuments();
-    if($results)
-    {
-    while(($row=  mysql_fetch_assoc($result, $link))!=NULL)
-    {
-        $cf = (($classeur=="")?"":$classeur. "/" ) . $f;
-        $urlaction = "page.xhtml.php?composant=reader.txt&document=" . $cf;
-        $filePath = $dataDir . "/" . $classeur ."/" .$f;
-    ?>
-<div class="miniImgContainer">
-<input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo $cf; ?>" />
-    <a  draggable="true"
-        ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
-        <div class="miniImgContainer">
-            <?php echo file_get_contents($filePath, null, null, 0, 500); ?>
-        </div>
-        <span class="filename">
-            <?php echo $cf; ?>
-        </span>
-    </a>
-
-</div>
-    <?php
-    }   
-    }
+    $results = getDocumentsParClasseur($classeur);
+    if($results) {
+    while (($row=  mysql_fetch_assoc($results))!=NULL) {
+        $f = $row['filename'];
+        if ((strtolower(substr($f, 0, 5)) == "class") && is_dir($dataDir."/".$f)) {
+            if(substr($classeur, -1)=="/")
+            {
+                $f = substr($f, -1);
+            }
+            typeCls(substr($f, 5), $f);
+        }
+        else if (strtolower(substr($f, -4)) == ".png"
+                or strtolower(substr($f, -4) == ".jpg")) {
+            typeImg((($classeur=="")?"":$classeur. "/" ) . $f);
+        } else if (strtolower(substr($f, -4)) == ".txt") {
+            $filePath = $dataDir . "/" . $classeur ."/" .$f;
+            typeTxt((($classeur=="")?"":$classeur. "/" ) . $f, $filePath);
+        }
     
+    }
+    }
 }
 function typeTxt($cf, $filePath) {
     global $FILE_THUMB_MAXLEN;

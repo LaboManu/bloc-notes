@@ -1,7 +1,28 @@
 <?php
-function connect()
-{
-        if ($date == "") {
+
+function randomSerId() {
+    $id = rand(1, 9999999);
+}
+
+function id_exists($id) {
+    $q = "select serid from " . $tablePrefix . "_items where serid=" . mysql_real_escape_string($id);
+    if (simpleQ($q) == NULL)
+        return false;
+    else
+        return true;
+}
+
+function getSeridFromFilename($filename, $utilisateur) {
+
+    $q = "select serid from " . $tablePrefix . "_items where filename='" . mysql_real_escape_string($filename) . "' and username='" . mysql_real_escape_string($utilisateur) . "'";
+    if (($serid = simpleQ($q)) == NULL)
+        return FALSE;
+    else
+        return $serid;
+}
+
+function connect() {
+    if ($date == "") {
         $date = date("Y-m-d-H-i-s");
     }
     global $link;
@@ -11,10 +32,10 @@ function connect()
     global $name;
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-
 }
 
 $link = null;
+
 function createFile($filename, $date = "") {
     if ($date == "") {
         $date = date("Y-m-d-H-i-s");
@@ -25,14 +46,18 @@ function createFile($filename, $date = "") {
     global $password;
     global $name;
     global $monutilisateur;
+
+    while (id_exists($serid = randomSerId())) {
+        ;
+    }
+
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
-            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.creation');";
+    $q = "insert into blocnotes_items (user, filename, moment, type, serid) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.creation', $serid);";
     //echo $q;
 
     mysql_query($q);
-
 }
 
 function updateFile($filename, $date = "", $contenu = "") {
@@ -45,14 +70,14 @@ function updateFile($filename, $date = "", $contenu = "") {
     global $password;
     global $name;
     global $monutilisateur;
+    $serid = getSeridFromFilename($filename, $monutilisateur);
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, contenu, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
-            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($contenu, $link) . "',     '" . mysql_real_escape_string($date, $link) . "', 'file.update');";
+    $q = "insert into blocnotes_items (user, filename, contenu, moment, type, serid) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($contenu, $link) . "','" . mysql_real_escape_string($date, $link) . "', 'file.update'," . mysql_real_escape_string($serid, $link) . ");";
     //echo $q;
 
     mysql_query($q);
-
 }
 
 function deleteFile($filename, $date = "") {
@@ -67,12 +92,12 @@ function deleteFile($filename, $date = "") {
     global $monutilisateur;
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, moment, type) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
-            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.delete');";
+    $serid = getSeridFromFilename($filename, $monutilisateur);
+    $q = "insert into blocnotes_items (user, filename, moment, type, serid) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.delete'," . mysql_real_escape_string($serid, $link) . ")";
     //echo $q;
 
     mysql_query($q);
-
 }
 
 function renameFile($oldname, $newname, $date = "") {
@@ -86,14 +111,13 @@ function renameFile($oldname, $newname, $date = "") {
     global $monutilisateur;
     $link = mysql_connect($hostname, $username, $password);
     mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, moment, type, contenu) values('" . mysql_real_escape_string($monutilisateur) . "', '" .
-            mysql_real_escape_string($newname) . "', '" . mysql_real_escape_string($date) . "', 'file.rename', '".mysql_real_escape_string($oldname)."');";
-    //echo $q;
-
+    $serid = getSeridFromFilename($filename, $monutilisateur);
+    $q = "insert into blocnotes_items (user, filename, moment, type, contenu, serid) values('" . mysql_real_escape_string($monutilisateur) . "', '" .
+            mysql_real_escape_string($newname) . "', '" . mysql_real_escape_string($date) . "', 'file.rename', '" . mysql_real_escape_string($oldname) . "', " . mysql_real_escape_string($serid) . ");";
     mysql_query($q);
 
     mysql_close();
-    
+
     updateLinks($oldname, $newname);
 }
 
@@ -127,8 +151,8 @@ function simpleQ($q) {
     global $name;
     global $monutilisateur;
     $link = mysql_connect($hostname, $username, $password);
-    mysql_select_db($name);
-    $results = mysql_query($q);
+    mysql_select_db($name, $link);
+    $results = mysql_query($q, $link);
     return $results;
 }
 
@@ -168,7 +192,7 @@ function dbfile_getDeleteTime($filename) {
     if ($res == null) {
         return null;
     }
-    if (($row = mysql_fetch_assoc($res))!= NULL) {
+    if (($row = mysql_fetch_assoc($res)) != NULL) {
         getSimpleRowElement($row, "date");
     }
     return getSimpleRowElement($row, "date");
@@ -177,13 +201,13 @@ function dbfile_getDeleteTime($filename) {
 function dbfile_getModificationsAsList($filename) {
     global $link;
     ?><table><?php
-        $res = dbfile_getModifications($filename);
-        if ($res != null) {
-            while (($row = mysql_fetch_assoc($res)) != NULL) {
-                echo "<tr><td>Modification</td><td>" . $row['moment'] . "</td></tr>";
-            }
+    $res = dbfile_getModifications($filename);
+    if ($res != null) {
+        while (($row = mysql_fetch_assoc($res)) != NULL) {
+            echo "<tr><td>Modification</td><td>" . $row['moment'] . "</td></tr>";
         }
-        ?></table><?php
+    }
+    ?></table><?php
     }
 
     function getDocument($filename = "") {
@@ -191,61 +215,107 @@ function dbfile_getModificationsAsList($filename) {
         $q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
                 " FROM blocnotes_items " .
                 "WHERE filename =  '" . mysql_real_escape_string($filename, $link) . "' " .
-               " ORDER BY MOMENT DESC ".
-
+                " ORDER BY MOMENT DESC " .
                 "LIMIT 1 )";
         //echo $q;
         $result = simpleQ($q);
         return $result;
     }
-    
 
-    function getDocuments($classeur = "*") {
-$q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
-                " FROM blocnotes_items " .
-                "WHERE " .
-               " ORDER BY MOMENT DESC ".
-
-                "LIMIT 1 )";
+    function getDocuments() {
+        global $monutilisateur;
+        $q = "SELECT * FROM blocnotes_items " .
+                "WHERE user='" . $monutilisateur . "'" .
+                " ORDER BY MOMENT DESC " .
+                "";
         $result = simpleQ($q);
+        echo $q;
         return $result;
     }
-    function getField($row, $field)
-    {
+    function getDocumentsParClasseur($classeur="") {
+        global $monutilisateur;
+        $q = "SELECT * FROM blocnotes_items " .
+                "WHERE user='" . mysql_real_escape_string($monutilisateur) . "' and substr(filename, ".sizeof($classeur).")='".mysql_real_escape_string($classeur==""?"":"CLASS".$classeur).
+                "' ORDER BY MOMENT DESC " .
+                "";
+        $result = simpleQ($q);
+        echo $q;
+        return $result;
+    }
+
+    function getField($row, $field) {
         return $row[$field];
     }
-    
-    
+
     function creationDate($filename = "") {
         global $link;
-        $q = "SELECT * FROM blocnotes_items WHERE filename =  '" . mysql_real_escape_string($filename, $link) . " ORDER BY MOMENT ASC" ;
+        $q = "SELECT * FROM blocnotes_items WHERE filename =  '" . mysql_real_escape_string($filename, $link) . "' ORDER BY MOMENT DESC";
         //echo $q;
         $result = simpleQ($q);
         $row = mysql_fetch_assoc($result);
         return getField($row, "moment");
     }
-    
-    function updateLinks($oldname, $newname)
-    {
+
+    function updateLinks($oldname, $newname) {
         // Table : blocnotes_links
-        $q1 = "update blocnotes_link set nom_element_porteur='".mysql_real_escape_string($newname)."' where nom_element_porteur='".mysql_real_escape_string($oldname)."'";
-        $q2 = "update blocnotes_link set nom_element_dependant='".mysql_real_escape_string($newname)."' where nom_element_dependant='".mysql_real_escape_string($oldname)."'";
+        $q1 = "update blocnotes_link set nom_element_porteur='" . mysql_real_escape_string($newname) . "' where nom_element_porteur='" . mysql_real_escape_string($oldname) . "'";
+        $q2 = "update blocnotes_link set nom_element_dependant='" . mysql_real_escape_string($newname) . "' where nom_element_dependant='" . mysql_real_escape_string($oldname) . "'";
         // Exécuter les requêtes
-        
+
         mysql_query($q1);
-        
+
         mysql_query($q2);
-        
     }
-    
-    
-    function createLink($nom_element_porteur, $nom_element_dependant)
-    {
-        global $link ;
-        $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values ('".
-                mysql_real_escape_string($nom_element_porteur, $link)."','".
-                mysql_real_escape_string($nom_element_dependant, $link)."')";
-        
+
+    function createLink($nom_element_porteur, $nom_element_dependant) {
+        global $link;
+        $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values ('" .
+                mysql_real_escape_string($nom_element_porteur, $link) . "','" .
+                mysql_real_escape_string($nom_element_dependant, $link) . "')";
+
         mysql_query($q, $link);
-        
     }
+    
+    
+    
+function importItemsFromFilesystem($dataDir, $basePath = "") {
+    $extensionsReconnues = "PNG,JPG,GIF,TIFF,ICO,SVG,DOC,DOCX,ODT,TXT,RDP,AVI";
+
+    $extensionsList = explode(",", $extensionsReconnues);
+
+    global $monutilisateur;
+    
+    $dirRacine = opendir($dataDir . $basePath);
+
+    while (($classeurOrNote = readdir($dirRacine)) != NULL) {
+        if (is_dir($dataDir . "/" . $classeurOrNote)) {
+            importItemsFromFilesystem($basePath . "/" . $classeurOrNote);
+
+            insertDB($basePath, $classeurOrNote, randomSerId());
+            echo "Classeur importé";
+        } else {
+            $idx = array_search(strtoupper(substr($classeurOrNote, strpos($classeurOrNote, "."))), $extensions);
+            if ($idx !== FALSE) {
+            insertDB($basePath . "/" . $classeurOrNote);
+            } else {
+                echo "Extension non reconnues" . $classeurOrNote;
+            }
+                echo "Fichier importé : " . $basePath . "/" . $classeurOrNote;
+        }
+    }
+}
+function insertDB($basePath, $classeurOrNote)
+{
+    while(id_exists($serid = randomSerId()))
+    {
+        ;
+    }
+    $q = "insert ". $tablePrefix."_items (filename, serid, classeur, contents) "
+            .
+            " values ('".mysql_real_escape_string($classeurOrNote)."', ".
+            ((int)$serid)
+            .
+            ",'".$basePath."', ".mysql_real_escape_string(file_get_contents($basePath."/".$classeurOrNote))."')";
+    
+    
+}
