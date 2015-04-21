@@ -16,7 +16,7 @@ function importFromFilesystem($dataDir, $basePath = "") {
             copieClasseurEnDB($basePath . "/" . $classeurOrNote);
             echo "Classeur importé";
         } else {
-            $idx = array_search(substr($classeurOrNote, strpos($classeurOrNote, ".")), $extensions);
+            $idx = array_search(strtoupper(substr($classeurOrNote, strpos($classeurOrNote, "."))), $extensions);
             if ($idx !== FALSE) {
                 copieFichierEnDB($basePath . "/" . $classeurOrNote);
                 echo "Fichier importé : " . $basePath . "/" . $classeurOrNote;
@@ -36,5 +36,17 @@ function copieClasseurEnDB($relPath) {
 function copieFichierEnDB($relPath) {
     global $tablePrefix;
     $q = "insert into " . mysql_real_escape_string($tablePrefix)
-            . "_hach () values()";
+        . "_hach () values()";
+}
+function enregistrer_fichier()
+{
+    
+}
+
+// READ
+
+function accessObjectByHachset($hachset)
+{
+    global $tablePrefix;
+    "select filename_id, content_file, folder_name, filename, isHached, isClear, isCrypted from ".$tablePrefix."_data where hachset='".mysql_real_escape_string($hachset)."'";
 }
