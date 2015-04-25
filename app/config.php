@@ -20,6 +20,8 @@ $name=''; /// database name
 
 require_once("event/DB.tables.file.php");
 
+$tablePrefix = "blocnotes";
+
 $appName = "";
 
 $version = "2.0 beta 2";
