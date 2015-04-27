@@ -238,13 +238,13 @@ function dbfile_getModificationsAsList($filename) {
                 "WHERE username='" . mysql_real_escape_string($monutilisateur) . "' ";//and filename like '%" .mysql_real_escape_string($classeur==""?"":"CLASS".$classeur).
                 "'";
         $result = simpleQ($q);
-        echo $q;
         return $result;
     }
     function getDBDocument($id) {
         global $monutilisateur;
         $q = "SELECT * FROM blocnotes_data " .
                 "WHERE username='" . mysql_real_escape_string($monutilisateur) . "' and id =" .mysql_real_escape_string((int)$id);
+        
         $result = simpleQ($q);
         return $result;
     }

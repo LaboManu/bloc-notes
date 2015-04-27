@@ -85,18 +85,15 @@ function typeImg($cf) {
     <?php
 }
 function typeDB($filename, $content, $id) {
-    $urlaction = "page.xhtml.php?composant=reader.db&dbdoc=" . $filename;
+    $urlaction = "page.xhtml.php?composant=reader.db&dbdoc=" . $id;
     ?>
-<div class="miniImgContainer">
-<input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" />
-    <a  draggable="true"
-        ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
-        <div class="miniImg">
+<div class="miniImgContainer"><input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" /><a  draggable="true" ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>"><div class="miniImg">
             <?php 
             if(in_array(getExtension($filename), array("jpg","png","gif","bmp")))
             {
+                echoImgBase64($content, $filename);
                 ?>
-            <img src ="composant/display/contents.php?id=<?= $id ?>"/>
+            <img src ="composant/display/contents.php?id=<?= $id ?>" alt="<?= $filename ?>"/>
             <?php
                 
             }
@@ -107,13 +104,10 @@ function typeDB($filename, $content, $id) {
  else if(substr("/CLASS")>0)
  {
      echo "Classeur";
- }
-            ?>
+ } ?>
         </div><span class="filename"><?php echo $filename; ?></span></a></div>
-    <?php
-    
-}
-function echoImg($content, $filename)
+    <?php }
+function echoImgBase64($content, $filename)
 {
                     // A few settings
 
