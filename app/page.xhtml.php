@@ -31,10 +31,16 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
     if (($composant == "create.txt")) {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
-    if (($composant == "reader.db") ||($composant == "edit.db")||($composant == "save.db")) {
+    if (($composant == "reader.db") ||($composant == "edit.db")) {
         $paramsSuppl = "&dbdoc=" . rawurlencode((int)filter_input(INPUT_GET, "dbdoc"));
     }
-}
+    if($composant == "save.db"){
+        $paramsSuppl = "&dbdoc=" . 
+                rawurlencode((int)filter_input(INPUT_GET, "dbdoc"))."&contenu=".
+        rawurlencode(filter_input(INPUT_GET, "contenu"));
+    }
+
+    }
 
 $waiterString = ""; //Loading and not load that is definitively not the question.--MD";
 ?>

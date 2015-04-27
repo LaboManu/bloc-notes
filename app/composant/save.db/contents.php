@@ -8,5 +8,7 @@ $content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 
 
 connect();
-$sql = "update blocnotes_data set contenu='".mysql_real_escape_string($content)."' where id=".$id;
-echo simpleQ($q);
+$sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."' where id=".$id;
+simpleQ($sql);
+
+echo $id." |  : | ".$content;
