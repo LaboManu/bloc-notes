@@ -7,7 +7,7 @@ connect();
 $result = getDBDocument($id);
 
 
-
+echo $id;
 
 
 
@@ -18,12 +18,23 @@ if($result != NULL) {
 $filename = $doc['filename'];
 $content = $doc['content_file'];
 
-require_once("../display/contents.php?id=".$id);
 ?>
+<div id="document"></div>
 <ul>
     <li><a href="#">Modifier</a></li>
     <li><a href="#">Voir</a></li>
 </ul>
+
+<script type="text/javascript">
+    var urlAppJS = "<?php echo $urlApp; ?>";
+                $("#document").load(url = urlAppJS + "/composant/display/contents.php?id=<?php echo $id; ?>", function (response, status, xhr) {
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
+                }
+            });
+
+</script>
 <?php
 /*
 connect();

@@ -32,7 +32,7 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
     if (($composant == "reader.db")) {
-        $paramsSuppl = "&id=" . rawurlencode((int)filter_input(INPUT_GET, "id"));
+        $paramsSuppl = "&id=" . rawurlencode((int)filter_input(INPUT_GET, "dbdoc"));
     }
 }
 
@@ -87,13 +87,13 @@ $waiterString = ""; //Loading and not load that is definitively not the question
                     $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
                 }
             });
-            /*            $("#context_menu_bar").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/menubar.php?document=<?php echo $document . $paramsSuppl; ?>", function (response, status, xhr) {
+            $("#context_menu_bar").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/menubar.php?document=<?php echo $document . $paramsSuppl; ?>", function (response, status, xhr) {
              if (status == "error") {
              var msg = "Sorry but there was an error: ";
              $("#error").html(msg + xhr.status + " " + xhr.statusText + url + <?php echo "'Composant + " . $composant + "'"; ?>);
              }
              });
-             */
+             
         </script>
 <!--        <?php } if($composantdb!="")
         {

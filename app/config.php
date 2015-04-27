@@ -55,12 +55,12 @@ $appDirScript = $appDir = $appDir."/"."app";
 if(!file_exists($dataDir)) {mkdir($dataDir);}
 if(!file_exists($publicDir)) {mkdir($publicDir);}
 
-$urldir = "http://manudahmen.be/blocnotes/app/index.php";
 
 $uploadDir = $dataDir;
 
 $urlbase = "http://manudahmen.be/blocnotes";
 $urlApp = $urlbase.$pathSep."app";
+$urldir = "$urlApp/app/page.xhtml.php";
 
 $userdataurl= $urlbase.'/data/'.$fgmembersite->UserFullName();
 $userpublicurl= $urlbase.'/public/'.$fgmembersite->UserFullName();
