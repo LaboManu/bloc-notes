@@ -8,18 +8,20 @@ $composant = filter_input(INPUT_GET, 'composant');
 if ($composant == "") {
     $composant = "home";
 }
+$id=filter_input(INPUT_GET, 'id');
+
 if (!file_exists($appDir . "/composant/" . $composant)) {
     $composant = "pardefaut";
 } else {
     if ($composant == "rename.txt") {
         $paramsSuppl = "&nom=" . rawurlencode(filter_input(INPUT_GET, "nom"))
                 . "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
-    } else if ($composant == "save.txt") {
+    } if ($composant == "save.txt") {
         $paramsSuppl = "&contenu=" . rawurlencode(filter_input(INPUT_GET, "contenu"))
                 . "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
-    } else if ($composant == "browser") {
+    } if ($composant == "browser") {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
-    } else if (($composant == "classe.doc") || ($composant == "edit.cls") || ($composant == "save.cls") || ($composant == "rename.cls") || ($composant == "del.cls") || ($composant == "classement") || ($composant == "classe")) {
+    } if (($composant == "classe.doc") || ($composant == "edit.cls") || ($composant == "save.cls") || ($composant == "rename.cls") || ($composant == "del.cls") || ($composant == "classement") || ($composant == "classe")) {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
         if ($composant == "rename.cls") {
             $paramsSuppl .= "&nom=" . rawurlencode(filter_input(INPUT_GET, "nom"))
@@ -28,6 +30,9 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
     }
     if (($composant == "create.txt")) {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
+    }
+    if (($composant == "reader.db")) {
+        $paramsSuppl = "&id=" . rawurlencode((int)filter_input(INPUT_GET, "id"));
     }
 }
 
@@ -48,6 +53,7 @@ $waiterString = ""; //Loading and not load that is definitively not the question
         <script type="text/javascript" src="js/angular.min.js"></script>
     </head>
     <body>
+        <?php if($composant!="") {?>
         <!-- Barre du dessus -->
         <div id="context_menu_bar">
             <?php
@@ -89,5 +95,31 @@ $waiterString = ""; //Loading and not load that is definitively not the question
              });
              */
         </script>
+<!--        <?php } if($composantdb!="")
+        {
+            ?>
+        <div id="composantdb" class="great_box"></div>
+        <div id="actionscdb" class="toolbar"></div>
+        <script>
+            var urlAppJS = "<?php echo $urlApp; ?>";
+            $("#composantdb").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/contents.php?id=<?php echo $id . $paramsSuppl; ?>", function (response, status, xhr) {
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
+                }
+            });
+            var urlAppJS = "<?php echo $urlApp; ?>";
+            $("#actionscdb").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/links.php?id=<?php echo $id . $paramsSuppl; ?>", function (response, status, xhr) {
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
+                }
+            });
+        </script>
+         <?php
+         
+                }   
+        ?>
+    -->    
     </body>
 </html>
