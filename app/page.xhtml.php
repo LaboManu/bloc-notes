@@ -44,7 +44,8 @@ $waiterString = ""; //Loading and not load that is definitively not the question
         <link rel="icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />            
         <script type="text/javascript" src="composant/browser/dnd.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="js/angular.min.js"></script>
     </head>
     <body>
         <!-- Barre du dessus -->

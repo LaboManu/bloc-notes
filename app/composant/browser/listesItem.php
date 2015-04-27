@@ -26,22 +26,10 @@ function listerNotesFromDB($classeur = ""){
     $results = getDocumentsParClasseur($classeur);
     if($results) {
     while (($row=  mysql_fetch_assoc($results))!=NULL) {
-        $f = $row['filename'];
-        if ((strtolower(substr($f, 0, 5)) == "class") && is_dir($dataDir."/".$f)) {
-            if(substr($classeur, -1)=="/")
-            {
-                $f = substr($f, -1);
-            }
-            typeCls(substr($f, 5), $f);
-        }
-        else if (strtolower(substr($f, -4)) == ".png"
-                or strtolower(substr($f, -4) == ".jpg")) {
-            typeImg((($classeur=="")?"":$classeur. "/" ) . $f);
-        } else if (strtolower(substr($f, -4)) == ".txt") {
-            $filePath = $dataDir . "/" . $classeur ."/" .$f;
-            typeTxt((($classeur=="")?"":$classeur. "/" ) . $f, $filePath);
-        }
-    
+        $filename = $row['filename'];
+        $content = $row['content_file'];
+        $id = $row['id'];
+        typeDB($filename, $content, $id);
     }
     }
 }
@@ -95,4 +83,52 @@ function typeImg($cf) {
     </a>
 </div>
     <?php
+}
+function typeDB($filename, $content, $id) {
+    $urlaction = "page.xhtml.php?composant=reader.db&dbdoc=" . $filename;
+    ?>
+<div class="miniImgContainer">
+<input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" />
+    <a  draggable="true"
+        ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
+        <div class="miniImg">
+            <?php 
+            if(in_array(getExtension($filename), array("jpg","png","gif","bmp")))
+            {
+                ?>
+            <img src ="composant/display/contents.php?id=<?= $id ?>"/>
+            <?php
+                
+            }
+ else if(in_array(getExtension($filename), array("txt")))
+{
+     echo substr($content, 0, 500);
+ }
+ else if(substr("/CLASS")>0)
+ {
+     echo "Classeur";
+ }
+            ?>
+        </div><span class="filename"><?php echo $filename; ?></span></a></div>
+    <?php
+    
+}
+function echoImg($content, $filename)
+{
+                    // A few settings
+
+// Read image path, convert to base64 encoding
+$imgData = base64_encode($content);
+
+// Format the image SRC:  data:{mime};base64,{data};
+$src = 'data: image/'.  getExtension($filename).';base64,'.$imgData;
+
+// Echo out a sample image
+echo '<img src="'.$src.'">';
+
+}
+function getExtension($filename)
+{
+ return $ext = strtolower(substr($filename, -3));
+   
 }

@@ -234,12 +234,18 @@ function dbfile_getModificationsAsList($filename) {
     }
     function getDocumentsParClasseur($classeur="") {
         global $monutilisateur;
-        $q = "SELECT * FROM blocnotes_items " .
-                "WHERE user='" . mysql_real_escape_string($monutilisateur) . "' and substr(filename, ".sizeof($classeur).")='".mysql_real_escape_string($classeur==""?"":"CLASS".$classeur).
-                "' ORDER BY MOMENT DESC " .
-                "";
+        $q = "SELECT * FROM blocnotes_data " .
+                "WHERE username='" . mysql_real_escape_string($monutilisateur) . "' ";//and filename like '%" .mysql_real_escape_string($classeur==""?"":"CLASS".$classeur).
+                "'";
         $result = simpleQ($q);
         echo $q;
+        return $result;
+    }
+    function getDBDocument($id) {
+        global $monutilisateur;
+        $q = "SELECT * FROM blocnotes_data " .
+                "WHERE username='" . mysql_real_escape_string($monutilisateur) . "' and id =" .mysql_real_escape_string((int)$id);
+        $result = simpleQ($q);
         return $result;
     }
 
@@ -276,34 +282,6 @@ function dbfile_getModificationsAsList($filename) {
         mysql_query($q, $link);
     }
     
-    
-    
-function importItemsFromFilesystem($dataDir, $basePath = "") {
-    $extensionsReconnues = "PNG,JPG,GIF,TIFF,ICO,SVG,DOC,DOCX,ODT,TXT,RDP,AVI";
-
-    $extensionsList = explode(",", $extensionsReconnues);
-
-    global $monutilisateur;
-    
-    $dirRacine = opendir($dataDir . $basePath);
-
-    while (($classeurOrNote = readdir($dirRacine)) != NULL) {
-        if (is_dir($dataDir . "/" . $classeurOrNote)) {
-            importItemsFromFilesystem($basePath . "/" . $classeurOrNote);
-
-            insertDB($basePath, $classeurOrNote, randomSerId());
-            echo "Classeur importé";
-        } else {
-            $idx = array_search(strtoupper(substr($classeurOrNote, strpos($classeurOrNote, "."))), $extensions);
-            if ($idx !== FALSE) {
-            insertDB($basePath . "/" . $classeurOrNote);
-            } else {
-                echo "Extension non reconnues" . $classeurOrNote;
-            }
-                echo "Fichier importé : " . $basePath . "/" . $classeurOrNote;
-        }
-    }
-}
 function insertDB($basePath, $classeurOrNote)
 {
     while(id_exists($serid = randomSerId()))
