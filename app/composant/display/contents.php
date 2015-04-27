@@ -5,10 +5,9 @@ require_once("../browser/listesItem.php");
 
 connect();
 $result = getDBDocument(filter_input(INPUT_GET, "id"));
-if($results) {
-    if(($doc=  mysql_fetch_assoc($results))!=NULL) {
+if($result != NULL) {
+    if(($doc=  mysql_fetch_assoc($result))!=NULL) {
         
-echo $doc;
 $filename = $doc['filename'];
 $content = $doc['content_file'];
 
@@ -24,9 +23,11 @@ if (in_array(getExtension($filename), array("jpg", "png", "gif", "bmp"))) {
 echo getExtension($filename);
 echo $content;
     }
+} else {
+    echo "404 NOT FOUND ...";
 }
 function echoImgSelf($content, $filename) {
-    //header('Content-type:image/' . getExtension($filename));
+    header('Content-type:image/' . getExtension($filename));
 
     echo $content;
 }

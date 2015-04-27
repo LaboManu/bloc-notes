@@ -91,7 +91,7 @@ function typeDB($filename, $content, $id) {
             <?php 
             if(in_array(getExtension($filename), array("jpg","png","gif","bmp")))
             {
-                echoImgBase64($content, $filename);
+                //echoImgBase64($content, $filename);
                 ?>
             <img src ="composant/display/contents.php?id=<?= $id ?>" alt="<?= $filename ?>"/>
             <?php
