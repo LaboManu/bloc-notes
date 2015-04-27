@@ -1,4 +1,5 @@
 <?php
+/*
 	$isNew = false;
 	$cmd = $_POST['cmd'];
 	$id = $_POST['id'];
@@ -43,5 +44,5 @@
 		$isNew = true;
 	}
 
-
+*/
 ?>
