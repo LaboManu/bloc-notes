@@ -31,8 +31,8 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
     if (($composant == "create.txt")) {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
-    if (($composant == "reader.db")) {
-        $paramsSuppl = "&id=" . rawurlencode((int)filter_input(INPUT_GET, "dbdoc"));
+    if (($composant == "reader.db") ||($composant == "edit.db")||($composant == "save.db")) {
+        $paramsSuppl = "&dbdoc=" . rawurlencode((int)filter_input(INPUT_GET, "dbdoc"));
     }
 }
 

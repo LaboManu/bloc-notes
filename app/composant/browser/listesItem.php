@@ -127,3 +127,13 @@ function getExtension($filename)
  return $ext = strtolower(substr($filename, -3));
    
 }
+function isImage($ext)
+{
+ return in_array($ext, array("jpg","png","gif","bmp"));
+   
+}
+function isTexte($ext)
+{
+ return in_array($ext, array("txt"));
+   
+}

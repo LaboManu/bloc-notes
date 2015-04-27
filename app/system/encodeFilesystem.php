@@ -78,6 +78,6 @@ function query2($username, $fichierParcouru, $dir) {
     // Codage : mcrypt ou hash
     mysql_query($q);
 }
-
-encodeFiles("Manu", $allUserDataDir.$pathSep."Manu");
-encodeFiles("May", $allUserDataDir.$pathSep."lecomte mary");
+/*
+encodeFiles("lecomte mary", $allUserDataDir.$pathSep."lecomte mary");
+*/

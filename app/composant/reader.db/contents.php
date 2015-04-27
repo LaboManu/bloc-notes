@@ -1,8 +1,7 @@
 <?php
-
 require_once("../browser/listesItem.php");
 
-$id = (int) filter_input(INPUT_GET, "id");
+$id = (int) filter_input(INPUT_GET, "dbdoc");
 connect();
 $result = getDBDocument($id);
 
@@ -12,68 +11,39 @@ echo $id;
 
 
 
-if($result != NULL) {
-    if(($doc=  mysql_fetch_assoc($result))!=NULL) {
-        
-$filename = $doc['filename'];
-$content = $doc['content_file'];
+if ($result != NULL) {
+    if (($doc = mysql_fetch_assoc($result)) != NULL) {
 
-?>
-<div id="document"></div>
-<ul>
-    <li><a href="#">Modifier</a></li>
-    <li><a href="#">Voir</a></li>
-</ul>
+        $filename = $doc['filename'];
+        $content = $doc['content_file'];
+        ?>
+        <div id="document">
+            <?php 
+            if (isImage(getExtension($filename))) {
+                ?>
+                <img src="<?php echo $urlApp . "/composant/display/contents.php?id=$id"; ?>"/>
+                <?php
+            }
+            ?>
+        </div>
+        <ul>
+            <li><a href="#">Modifier</a></li>
+            <li><a href="#">Voir</a></li>
+        </ul>
 
-<script type="text/javascript">
-    var urlAppJS = "<?php echo $urlApp; ?>";
+        <?php if (isTexte(getExtension($filename))) { ?>
+            <script type="text/javascript">
+                var urlAppJS = "<?php echo $urlApp; ?>";
                 $("#document").load(url = urlAppJS + "/composant/display/contents.php?id=<?php echo $id; ?>", function (response, status, xhr) {
-                if (status == "error") {
-                    var msg = "Sorry but there was an error: ";
-                    $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
-                }
-            });
+                    if (status == "error") {
+                        var msg = "Sorry but there was an error: ";
+                        $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
+                    }
+                });
 
-</script>
-<?php
-/*
-connect();
-$result = getDBDocument();
-
-
-
-
-
-
-
-if($result != NULL) {
-    if(($doc=  mysql_fetch_assoc($result))!=NULL) {
-        
-$filename = $doc['filename'];
-$content = $doc['content_file'];
-
-if (in_array(getExtension($filename), array("jpg", "png", "gif", "bmp"))) {
-    echoImgSelf($content, $filename);
-} else if (in_array(getExtension($filename), array("txt"))) {
-    echo $content;
-} else if (strpos($filename, "/CLASS") > 0) {
-    echo "Classeur";
-}
-
-
-echo getExtension($filename);
-echo $content;
-    }
-} else {
-    echo "404 NOT FOUND ...";
-}
-function echoImgSelf($content, $filename) {
-    header('Content-type:image/' . getExtension($filename));
-
-    echo $content;
-}
-
-*/
+            </script>
+            <?php
+        }
     }
 }
 ?>
