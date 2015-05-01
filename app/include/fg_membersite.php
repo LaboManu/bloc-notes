@@ -1,24 +1,6 @@
-<?PHP
+<?php
 
-/*
-    Registration/Login script from HTML Form Guide
-    V1.0
-
-    This program is free software published under the
-    terms of the GNU Lesser General Public License.
-    http://www.gnu.org/copyleft/lesser.html
-    
-
-This program is distributed in the hope that it will
-be useful - WITHOUT ANY WARRANTY; without even the
-implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.
-
-For updates, please visit:
-http://www.html-form-guide.com/php-form/php-registration-form.html
-http://www.html-form-guide.com/php-form/php-login-form.html
-
-*/
+require_once("pass.php");
 require_once("class.phpmailer.php");
 require_once("formvalidator.php");
 
@@ -37,6 +19,19 @@ class FGMembersite
     
     var $error_message;
     
+    
+    public function __construct() {
+        global $hostname;
+        global $username;
+        global $password;
+        global $name;
+        
+        $this->db_host  = $hostname;
+        $this->username = $username;
+        $this->pwd  = $password;
+        $this->database  = $name;
+    }
+    
     //-----Initialization -------
     function FGMembersite()
     {
@@ -45,13 +40,13 @@ class FGMembersite
     }
     
     function InitDB($host,$uname,$pwd,$database,$tablename)
-    {
+    {/*
         $this->db_host  = $host;
         $this->username = $uname;
         $this->pwd  = $pwd;
-        $this->database  = $database;
+        $this->database  = $database;*/
         $this->tablename = $tablename;
-        
+      
     }
     function SetAdminEmail($email)
     {

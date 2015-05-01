@@ -52,7 +52,7 @@ div#fg_membersite {
     line-height:110px;
     text-align:center; /* centrage horizontal */
     z-index: 1;
-    
+
 }
 
 #fg_membersite fieldset {
@@ -201,4 +201,9 @@ input.filecheckbox
 .contents
 {
     display: block;
+}
+
+#disclisting
+{
+    display: none;
 }

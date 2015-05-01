@@ -1,4 +1,21 @@
 <?php
+class DBConnection
+{
+private $link = null;
+private $tablePrefix = "blocnotes";
+
+function connect() {
+    if ($date == "") {
+        $date = date("Y-m-d-H-i-s");
+    }
+    global $link;
+    global $hostname;
+    global $username;
+    global $password;
+    global $name;
+    $link = mysql_connect($hostname, $username, $password);
+    mysql_select_db($name);
+}
 
 function randomSerId() {
     $id = rand(1, 9999999);
@@ -21,20 +38,6 @@ function getSeridFromFilename($filename, $utilisateur) {
         return $serid;
 }
 
-function connect() {
-    if ($date == "") {
-        $date = date("Y-m-d-H-i-s");
-    }
-    global $link;
-    global $hostname;
-    global $username;
-    global $password;
-    global $name;
-    $link = mysql_connect($hostname, $username, $password);
-    mysql_select_db($name);
-}
-
-$link = null;
 
 function createFile($filename, $date = "") {
     if ($date == "") {
@@ -279,9 +282,26 @@ function dbfile_getModificationsAsList($filename) {
                 mysql_real_escape_string($nom_element_porteur, $link) . "','" .
                 mysql_real_escape_string($nom_element_dependant, $link) . "')";
 
-        mysql_query($q, $link);
+        $this->simpleQ($q, $link);
     }
+
+
+
+    function delete_link($id)    
+    {
+        $sql = "delete from ".$tablePrefix."_link where id=".mysql_real_escape_string((int)$id);
+        $this->simpleQ($sql);
     
+    }
+
+    function listLinkedNotes($id)
+    {
+        $sql = "select link.id as linkid, link.pid as parent, link.eid as enfant, d1.filename as fp, d1.content_file as cp, d2.filename as fe, d2.content_file as ce".
+            "from ".$this->tablePrefix."_link as link where nom_element_porteur=".((int)$id)." inner join ".$tablePrefix."_data as d1 on link.nom_element_porteur.id=d1.id".
+            " inner join ".$tablePrefix."_data as de on de.id=link.nom_element_dependant";
+        return $this->simpleQ($sql);
+    }
+
 function insertDB($basePath, $classeurOrNote)
 {
     while(id_exists($serid = randomSerId()))
@@ -301,6 +321,15 @@ function insertDB($basePath, $classeurOrNote)
 function selectDBFolders($needle)
 {
     global $monutilisateur;
-    echo $sql = "select distint folder_name, username from blocnotes_data where username ='".  mysql_real_escape_string($monutilisateur)."' and folder_name like '%".$needle."%'";
+    echo $sql = "select distint folder_name, username from blocnotes_data where username ='".  mysql_real_escape_string($monutilisateur)."'";
     return mysql_query($sql);
+}
+
+function renameDBFile($id, $filename_newname)
+{
+    global $tablePrefix;
+    $sql = "update ".mysql_real_escape_string($tablePrefix)."_data set filename=".mysql_real_escape_string($filename_newname)." where id=".mysql_real_escape_string((int)$id);
+    simpleQ($sql);
+    
+}
 }

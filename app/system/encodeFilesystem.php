@@ -10,7 +10,11 @@ $dataPrefix = "ENCODED_DATA_";
 /* * ** /
  * **  /  UTILISER AVEC PRECAUTION
  *  */
-
+if(filter_input(INPUT_GET, "CODE")!="MyVerySecretCode")
+{
+    die("Accès restreint refusé");
+    
+}
 //1 Boucler sur les utilisateur
 // // Pour chaque utilisateur
 function encodeFiles($username, $dir = "/") {
@@ -78,6 +82,12 @@ function query2($username, $fichierParcouru, $dir) {
     // Codage : mcrypt ou hash
     mysql_query($q);
 }
-/*
+
+
+
+// HARD 
+// MUST BE PROTECTEDget the code 
+$sql = "truncate blocnotes_data";
+simpleQ($sql);
 encodeFiles("lecomte mary", $allUserDataDir.$pathSep."lecomte mary");
-*/
+encodeFiles("Manu", $allUserDataDir.$pathSep."Manu");

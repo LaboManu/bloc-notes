@@ -34,7 +34,6 @@ $tmpDir = $appDir."/tmp";
 
 $allUserDataDir = $appDir."/data";
 $allUserPublicDir = $appDir."/public";
-require_once("globals-parameters.php");
 
 
 require_once("$appDir/app/include/membersite_config.php");
