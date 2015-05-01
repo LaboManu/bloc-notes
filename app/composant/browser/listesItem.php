@@ -86,7 +86,7 @@ function typeImg($cf) {
 }
 function typeDB($filename, $content, $id) {
     $urlaction = "page.xhtml.php?composant=reader.db&dbdoc=" . $id;
-    ?><div class="miniImgContainer"><select name="file_menu" id="menu<?php echo $id; ?>"><option value="Voir">Voir</option><option value="Modifier">Modifier</option><option value="Move">Déplacer</option><option value="Copier">Copier</option><option value="Coller">Coller</option><option value="Corbeille">Corbeille</option></select>
+    ?><div class="miniImgContainer"><select name="file_menu" id="menu<?php echo $id; ?>"><option value="Rien">---</option><option value="Voir">Voir</option><option value="Modifier">Modifier</option><option value="Move">Déplacer</option><option value="Copier">Copier</option><option value="Coller">Coller</option><option value="Corbeille">Corbeille</option><option value="Assembler">Assembler</option></select>
  <input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" /><a  draggable="true" ondragstart="drag(event)" class='miniImg' href="<?= $urlaction ?>">
 <div class="miniImg">
             <?php 

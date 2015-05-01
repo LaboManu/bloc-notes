@@ -4,7 +4,7 @@ $classeur = substr($class1, 5)  ;
 ?>
 <ul>
     
-
+<!--
 <?php
 if($classeur!="")
 {
@@ -28,4 +28,9 @@ if($classeur!="")
 }
 ?>
 <li class="button_appdoc"><a onclick="classeSelection()">Classer sélection</a></li>
+</ul>
+-->
+<ul>
+<li class="button_appdoc"><a href="?composant=create.db">Créer un élément en base de données</a></li>
+<li class="button_help"><a href="?help=assemble">Aide : assembler dss données</a></li>
 </ul>
