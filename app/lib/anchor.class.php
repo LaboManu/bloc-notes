@@ -1,3 +1,5 @@
+<?php
+/*
 create table anchor(
 id int,
 url varchar(1024),
@@ -5,7 +7,7 @@ title varchar(1024),
 description blob,
 mime varchar(100)
 )
-<?php
+*/
 class Anchor {
     private $dbconnection;
 

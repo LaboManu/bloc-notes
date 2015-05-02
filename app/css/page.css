@@ -1,0 +1,28 @@
+body
+{
+    font-family: Whitney, sans-serif;
+}
+.album_view
+{
+    border: 3px solid chartreuse;
+}
+.album_view img
+{
+    float: left;
+    width: 200px;
+    height: 200px;
+}
+#authorBioNO
+{
+}
+a
+{
+    text-decoration: blue underline;
+}
+
+#text_view
+{
+    float: left;
+    width: 50%;
+    
+}

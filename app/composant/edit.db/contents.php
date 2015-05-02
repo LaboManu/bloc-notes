@@ -17,15 +17,28 @@ $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.db"/>
     <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
+    <input type="text" name="filename"  value="<?php echo $doc['filename']; ?>"/>
     <textarea rows="24" cols="80" name="contenu"><?php echo $doc["content_file"]; ?></textarea>
     <input type="submit" name="sauvegarder" value="Sauvergarder"/>
 </form>
-        <?php    
+<?php
         }
-         else if(isImage($filename)) {
-            echo "Mise à jour non disponible acutellement : Type de fichier PICTURES ($ext) non pris en charge. $filename ";
+         else if(isImage($filename)) {?>
+<form action="page.xhtml.php" method="GET">
+    <input type="hidden" name="composant" value="save.db"/>
+    <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
+    <input type="text" name="filename"  value="<?php echo $doc['filename']; ?>"/>
+    <input type="submit" name="sauvegarder" value="Sauvergarder"/>
+</form><?php
         }
-        else {
-            echo "Erreur : Type de fichier ($ext) non pris en charge actuellement dans l'éditeur web blocnotes. $filename ";
+        else {?>
+<form action="page.xhtml.php" method="GET">
+    <input type="hidden" name="composant" value="save.db"/>
+    <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
+    <input type="text" name="filename"  value="<?php echo $doc['filename']; ?>"/>
+    <input type="submit" name="sauvegarder" value="Sauvergarder"/>
+</form>
+        <?php
+            
         }
     }    

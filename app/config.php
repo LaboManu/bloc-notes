@@ -19,6 +19,13 @@ $name=''; /// database name
 
 
 require_once("event/DB.tables.file.php");
+require_once("lib/anchor.class.php");
+require_once("lib/dbconnection.class.php");
+require_once("lib/note.class.php");
+require_once("lib/image.class.php");
+require_once("lib/share.class.php");
+require_once("lib/text.class.php");
+require_once("lib/download.php");
 
 $tablePrefix = "blocnotes";
 

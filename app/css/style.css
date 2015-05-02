@@ -212,3 +212,8 @@ input.filecheckbox
 {
     background-color: grey;
 }
+
+.ui-state-highlight
+{
+    background-color: yelllow;
+}

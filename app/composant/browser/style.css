@@ -1,0 +1,45 @@
+.code
+{
+	display: none;
+}
+.mainmenu
+{
+	font-size: 24pt;
+	background-color: pink;
+}
+img.mainmenu
+{
+	width: 24px;
+	height: 24px;
+
+}
+div#userid a
+{
+	display: block;
+
+	float: right;
+}
+ul#fg_membersite_content, ul#fg_membersite_content li
+{
+	display: inline;
+	font-size: 12pt;
+}
+.icon-32
+{
+	width: 32px;
+	height: 32px;
+} 
+
+li.button_appdoc 
+
+{
+	display: float;
+	padding: 5pt;
+	margin : 5pt;
+	color: black;
+	background-color: white;
+}
+li.button_appdoc a
+{
+    text-decoration: none;
+}

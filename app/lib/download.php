@@ -1,4 +1,3 @@
-
 <?php
 /**
  * DownloadBinaryFile: Charger un fichier distant et l'enregistrer en local

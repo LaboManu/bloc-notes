@@ -31,6 +31,8 @@ if($classeur!="")
 </ul>
 -->
 <ul>
-<li class="button_appdoc"><a href="?composant=create.db">Créer un élément en base de données</a></li>
-<li class="button_help"><a href="?help=assemble">Aide : assembler dss données</a></li>
+<li class="button_appdoc"><a href="?composant=create.db">Créer une note (txt) en base de données</a></li>
+<li class="button_appdoc"><a href="?composant=create.folder.db">Créer un dossier en base de données</a></li>
+<li class="button_appdoc"><a href="?help=composant=create.image.db">Créer une image en base de données</a></li>
+<li c<li class="button_help"><a href="?help=assemble">Aide : assembler dss données</a></li>
 </ul>

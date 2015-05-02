@@ -1,14 +1,11 @@
 <?php
 
-require_once("../../config.php");
-require_once("../browser/listesItem.php");
-
+require_once("../../composant/browser/listesItem.php");
 
 $type = rawurldecode(filter_input(INPUT_GET, "submit"));
-if(isset($_GET['dbdoc']))
+if(isset($_GET['id']))
 {
     $id = (int)(rawurldecode(filter_input(INPUT_GET, 'dbdoc')));
-    $filename = rawurldecode(filter_input(INPUT_GET, 'filename'));
 }
 else {
     $id = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')));
@@ -16,19 +13,11 @@ else {
 $content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 
 
-if($id==-2)
-{
-    echo "Nouveau dossier";
-    connect();
-    echo $sql = "insert into blocnotes_data (filename, username, isDirectory) values('".mysql_real_escape_string($filename)."', '".
-    mysql_real_escape_string($monutilisateur)."', 1)";
-    simpleQ($sql);
-}
-else if($id==-1)
+if($id==-1)
 {
     echo "Ajouter données";
     connect();
-    echo $sql = "insert into blocnotes_data (filename, content_file, username) values('".mysql_real_escape_string($filename)."', '".mysql_real_escape_string($content)."', '".
+    echo $sql = "insert into blocnotes_data (filename, content_file, username) values('Newly created.txt', '".mysql_real_escape_string($content)."', '".
     mysql_real_escape_string($monutilisateur)."')";
     simpleQ($sql);
 }
@@ -57,7 +46,7 @@ else if($id==0)
             } else if(($ext == "jpg") || ($ext == "png") || ($ext == "gif")) {
                 $mime = "image/".$ext;
             }    
-            echo $sql = "insert into blocnotes_data (filename, content_file, username, mime) values('".mysql_real_escape_string($myFile['tmp_name'][$i]).
+            $sql = "insert into blocnotes_data (filename, content_file, username, mime) values('".mysql_real_escape_string($myFile['name'][$i]).
             "', '".mysql_real_escape_string(file_get_contents($myFile['tmp_name'][$i]))."', '".
             mysql_real_escape_string($monutilisateur)."', '$mime')";
             simpleQ($sql);
@@ -69,24 +58,13 @@ else
 {
     echo "Mettre à jour la note";
     connect();
-    $doc = mysql_fetch_assoc(getDBDocument($id));
-    
-    if(getExtension($doc['filename'])=="txt")
-    {
-    
-        $sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."' where id=".$id;
-        simpleQ($sql);
-    } else if(isImage($doc['filename']))
-    {
-        $sql = "update blocnotes_data set filename='".mysql_real_escape_string($filename)."' where id=".$id;
-        simpleQ($sql);
-        
-    }
-    else
-    {
-        $sql = "update blocnotes_data set filename='".mysql_real_escape_string($filename)."' where id=".$id;
-        simpleQ($sql);
-        
-    }
+    $sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."' where id=".$id;
+    simpleQ($sql);
 }
 echo $id." |  : | ".$content;
+?>
+<ul>
+<li class="appdoc_button"><a href="../../page.xhtml.php?composant=browser">Naviguer</a></li>
+<li class="appdoc_button"><a href="../../page.xhtml.php?composant=create.db">Créer une autre note ou uploader des fichiers.</a></li>
+
+</ul>

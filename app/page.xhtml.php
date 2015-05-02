@@ -6,7 +6,10 @@ $document = rawurlencode($document1);
 $composant = filter_input(INPUT_GET, 'composant');
 
 if ($composant == "") {
-    $composant = "home";
+    $composant = filter_input(INPUT_POST, 'composant');
+    if ($composant == "") {
+        $composant="nontrouvé";
+    }
 }
 $id=filter_input(INPUT_GET, 'id');
 
@@ -37,7 +40,7 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
     if($composant == "save.db"){
         $paramsSuppl = "&dbdoc=" . 
                 rawurlencode((int)filter_input(INPUT_GET, "dbdoc"))."&contenu=".
-        rawurlencode(filter_input(INPUT_GET, "contenu"));
+        rawurlencode(filter_input(INPUT_GET, "contenu"))."&filename=".rawurlencode(filter_input(INPUT_GET, "filename"));
     }
 
     }
@@ -53,10 +56,11 @@ $waiterString = ""; //Loading and not load that is definitively not the question
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="shortcut icon" href="/favicon.ico" />            
+        <link rel="shortcut icon" href="/favicon.ico" />
+          <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script type="text/javascript" src="composant/browser/dnd.js"></script>
-        <script type="text/javascript" src="js/jquery-1.11.2.js"></script>
-        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/blocnoteslib.js"></script>
     </head>
     <body>
         <?php if($composant!="") {?>
@@ -101,31 +105,6 @@ $waiterString = ""; //Loading and not load that is definitively not the question
              });
              
         </script>
-<!--        <?php } if($composantdb!="")
-        {
-            ?>
-        <div id="composantdb" class="great_box"></div>
-        <div id="actionscdb" class="toolbar"></div>
-        <script>
-            var urlAppJS = "<?php echo $urlApp; ?>";
-            $("#composantdb").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/contents.php?id=<?php echo $id . $paramsSuppl; ?>", function (response, status, xhr) {
-                if (status == "error") {
-                    var msg = "Sorry but there was an error: ";
-                    $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
-                }
-            });
-            var urlAppJS = "<?php echo $urlApp; ?>";
-            $("#actionscdb").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/links.php?id=<?php echo $id . $paramsSuppl; ?>", function (response, status, xhr) {
-                if (status == "error") {
-                    var msg = "Sorry but there was an error: ";
-                    $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
-                }
-            });
-        </script>
-         <?php
-         
-                }   
-        ?>
-    -->    
+        <?php } ?>
     </body>
 </html>

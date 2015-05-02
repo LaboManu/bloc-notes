@@ -1,6 +1,3 @@
-/**
-** A implémenter
-*/ 
 <?php
 
 require_once "dbconnection.class.php";
