@@ -18,7 +18,7 @@ $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
     <input type="hidden" name="composant" value="save.db"/>
     <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
     <input type="text" name="filename"  value="<?php echo $doc['filename']; ?>"/>
-    <textarea rows="24" cols="80" name="contenu"><?php echo $doc["content_file"]; ?></textarea>
+    <textarea rows="12" cols="40" name="contenu"><?php echo $doc["content_file"]; ?></textarea>
     <input type="submit" name="sauvegarder" value="Sauvergarder"/>
 </form>
 <?php

@@ -5,7 +5,7 @@ require_once("../browser/listesItem.php");
     <input type="hidden" name="composant" value="save.db"/>
     <input type="hidden" name="dbdoc"  value="-1"/>
     <input type="text" name="filename"  value="Nouveau fichier texte.txt"/>
-    <textarea rows="24" cols="80" name="contenu"><?php echo $doc["content_file"]; ?></textarea>
+    <textarea rows="12" cols="40" name="contenu"><?php echo $doc["content_file"]; ?></textarea>
     <input type="submit" name="submit" value="addData"/>
 </form>
 <form action="event/uploads/uploadfordb.php" method="POST" enctype="multipart/form-data">

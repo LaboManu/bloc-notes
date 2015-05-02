@@ -14,6 +14,10 @@ if ($result != NULL) {
         if (in_array(getExtension($filename), array("jpg", "png", "gif", "bmp"))) {
             echoImgSelf($content, $filename);
         } else if (in_array(getExtension($filename), array("txt"))) {
+            $content = str_replace("[[", "<a target='NEW' href='", $content);
+            $content = str_replace("]]", "'>Lien</a>", $content);
+            $content = str_replace("{{", "<img src='composant/display/contents.php?id=", $content);
+            $content = str_replace("}}", "'/>", $content);
             echo $content;
         } else if (strpos($filename, "/CLASS") > 0) {
             echo "Classeur";
