@@ -73,20 +73,12 @@ else
     
     if(isTexte($doc["filename"], $doc["mime"]))
     {
-    
-        $sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."', mime='text/plain' where id=".$id;
-        simpleQ($sql);
-    } else if(isTexte($doc["filename"], $doc["mime"]))
+        $mime = "text/plain";
+    } else if(isImage($doc["filename"], $doc["mime"]))
     {
-        $sql = "update blocnotes_data set filename='".mysql_real_escape_string($filename)."', mime='image/".  getExtension($filename)."' where id=".$id;
-        simpleQ($sql);
+        $mime = "image/".getExtension($filename);
         
     }
-    else
-    {
-        $sql = "update blocnotes_data set filename='".mysql_real_escape_string($filename)."' where id=".$id;
+        echo htmlspecialchars($sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."', mime='".$mime."' where id=".$id." and username='".$monutilisateur."'");
         simpleQ($sql);
-        
-    }
 }
-echo $id." |  : | ".$content;
