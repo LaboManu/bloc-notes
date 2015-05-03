@@ -10,7 +10,7 @@ $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
     {
         $filename = $doc['filename'];
         $ext = getExtension($filename);
-        if($ext=="txt")
+        if(isTexte($ext, $doc["mime"]))
         {
 
             ?>
@@ -23,7 +23,7 @@ $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
 </form>
 <?php
         }
-         else if(isImage($filename)) {?>
+         else if(isImage($ext, $doc["mime"])) {?>
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.db"/>
     <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>

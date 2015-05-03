@@ -92,7 +92,7 @@ function typeDB($filename, $content, $id, &$rowdoc = NULL) {
  <input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" /><a class='miniImg' href="<?= $urlaction ?>">
 <div class="miniImg">
             <?php 
-            if(in_array(getExtension($filename), array("jpg","png","gif","bmp")))
+            if(isImage(getExtension($filename), $rowdoc["mime"]))
             {
                 //echoImgBase64($content, $filename);
                 ?>
@@ -100,11 +100,11 @@ function typeDB($filename, $content, $id, &$rowdoc = NULL) {
             <?php
                 
             }
- else if(in_array(getExtension($filename), array("txt")))
+ else if(isTexte(getExtension($filename), $rowdoc["mime"]))
 {
-     echo substr($content, 0, 500);
+     echo htmlspecialchars(substr($content, 0, 500));
  }
- else if($rowdoc['isDirectory']==1)
+ else //if($rowdoc['isDirectory']==1)
  {
 ?><img src='images/alphabet.png' class="miniImg"><?php
 } ?>
@@ -129,13 +129,13 @@ function getExtension($filename)
  return $ext = strtolower(substr($filename, -3));
    
 }
-function isImage($ext)
+function isImage($ext, $mime="")
 {
- return in_array($ext, array("jpg","png","gif","bmp"));
+ return in_array($ext, array("jpg","png","gif","bmp")) or (($mime!="")&&(substr($mime, 0, 5)=="image"));
    
 }
-function isTexte($ext)
+function isTexte($ext, $mime="")
 {
- return in_array($ext, array("txt"));
+ return in_array($ext, array("txt")) or ($mime=="text/plain");
    
 }

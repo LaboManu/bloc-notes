@@ -98,7 +98,7 @@ div#fg_membersite {
 #error{
 
 }
-img.miniImg, div.miniImg
+.miniImg img, .miniImg div
 {
     width: 200px; 
     height: 200px; 

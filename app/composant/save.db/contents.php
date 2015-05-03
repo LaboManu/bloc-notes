@@ -20,16 +20,16 @@ if($id==-2)
 {
     echo "Nouveau dossier";
     connect();
-    echo $sql = "insert into blocnotes_data (filename, username, isDirectory) values('".mysql_real_escape_string($filename)."', '".
-    mysql_real_escape_string($monutilisateur)."', 1)";
+    echo $sql = "insert into blocnotes_data (filename, username, isDirectory, mime) values('".mysql_real_escape_string($filename)."', '".
+    mysql_real_escape_string($monutilisateur)."', 1, 'directory')";
     simpleQ($sql);
 }
 else if($id==-1)
 {
     echo "Ajouter données";
     connect();
-    echo $sql = "insert into blocnotes_data (filename, content_file, username) values('".mysql_real_escape_string($filename)."', '".mysql_real_escape_string($content)."', '".
-    mysql_real_escape_string($monutilisateur)."')";
+    echo $sql = "insert into blocnotes_data (filename, content_file, username, mime) values('".mysql_real_escape_string($filename)."', '".mysql_real_escape_string($content)."', '".
+    mysql_real_escape_string($monutilisateur)."', 'text/plain')";
     simpleQ($sql);
 }
 else if($id==0)
@@ -71,14 +71,14 @@ else
     connect();
     $doc = mysql_fetch_assoc(getDBDocument($id));
     
-    if(getExtension($doc['filename'])=="txt")
+    if(isTexte($doc["filename"], $doc["mime"]))
     {
     
-        $sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."' where id=".$id;
+        $sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."', mime='text/plain' where id=".$id;
         simpleQ($sql);
-    } else if(isImage($doc['filename']))
+    } else if(isTexte($doc["filename"], $doc["mime"]))
     {
-        $sql = "update blocnotes_data set filename='".mysql_real_escape_string($filename)."' where id=".$id;
+        $sql = "update blocnotes_data set filename='".mysql_real_escape_string($filename)."', mime='image/".  getExtension($filename)."' where id=".$id;
         simpleQ($sql);
         
     }

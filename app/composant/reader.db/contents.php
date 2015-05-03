@@ -19,19 +19,11 @@ if ($result != NULL) {
         ?>
         <div id="document">
             <?php 
-            if (isImage(getExtension($filename))) {
+            if (isImage(getExtension($filename), $doc['mime'])) {
                 ?>
                 <img src="<?php echo $urlApp . "/composant/display/contents.php?id=$id"; ?>"/>
                 <?php
-            }
-            ?>
-        </div>
-        <ul>
-            <li><a href="#">Modifier</a></li>
-            <li><a href="#">Voir</a></li>
-        </ul>
-
-        <?php if (isTexte(getExtension($filename))) { ?>
+            } else if (isTexte(getExtension($filename), $doc['mime'])) { ?>
             <script type="text/javascript">
                 var urlAppJS = "<?php echo $urlApp; ?>";
                 $("#document").load(url = urlAppJS + "/composant/display/contents.php?id=<?php echo $id; ?>", function (response, status, xhr) {
@@ -43,7 +35,8 @@ if ($result != NULL) {
 
             </script>
             <?php
+            }
         }
     }
-}
+
 ?>
