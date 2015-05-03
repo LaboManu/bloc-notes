@@ -50,3 +50,7 @@ function copyId(text) {
         window.clipboardData.setData("Text", text);
     }
 }
+function doNoteAction(note_id, selectedIndex)
+{
+    alert("ID: "+note_id+" Index menu: " + selectedIndex + "ACTION (TODO)");
+}

@@ -48,9 +48,9 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
     }
 
 $waiterString = ""; //Loading and not load that is definitively not the question.--MD";
-?>
 
-<?php echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"; ?>
+
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"; ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
     <head>
