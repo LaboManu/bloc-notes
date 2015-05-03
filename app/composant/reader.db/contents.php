@@ -40,3 +40,8 @@ if ($result != NULL) {
     }
 
 ?>
+        </div>
+<div id="document_time">
+    <?php 
+    echo "Date de modification ou création: ".$doc["quand"];
+    echo ($doc["quand"]!="")?date("Y-m-d H:j:s", strtotime($doc["quand"])):" Date de modification inconnue".date("F j, Y-m-d H:i:s a", time());

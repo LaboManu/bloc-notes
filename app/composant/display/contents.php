@@ -14,6 +14,7 @@ if ($result != NULL) {
         if (isImage($ext, $doc['mime'])) {
             echoImgSelf($content, $filename);
         } else if (isTexte($ext, $doc["mime"])) {
+            $content =  htmlspecialchars($content);
             $content = str_replace("[[", "<a target='NEW' href='", $content);
             $content = str_replace("]]", "'>Lien</a>", $content);
             $content = str_replace("{{", "<img src='composant/display/contents.php?id=", $content);
@@ -21,7 +22,6 @@ if ($result != NULL) {
             
             
             echo $content;
-            
             
         } else {
             echo "Classeur";

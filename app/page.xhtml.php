@@ -59,7 +59,8 @@ $waiterString = ""; //Loading and not load that is definitively not the question
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
-          <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <link rel="profile" href="http://microformats.org/profile/hcalendar"/>
+            <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script type="text/javascript" src="composant/browser/dnd.js"></script>
         <script type="text/javascript" src="js/blocnoteslib.js"></script>
