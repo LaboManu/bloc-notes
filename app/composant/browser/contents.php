@@ -22,7 +22,7 @@ $filtre = filter_input(INPUT_GET, "filter");
                             //listerTout($classeur);
                             ?></div><hr/>
                             <h3>Classeurs en base de données</h3>-->
-                            <input type="text" name="filter" value="<?php echo $filtre; ?>"/>
+                            Recherche<input type="text" name="filter" value="<?php echo $filtre; ?>"/>
                             <input type="hidden" name="composant" value="browser"/>
                             <div id="dblisting" class="clearBoth">
                                 <?php

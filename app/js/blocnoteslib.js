@@ -44,3 +44,9 @@ function allowDrop(ev) {
 function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
+
+function copyId(text) {
+    if (window.clipboardData) { // Internet Explorer
+        window.clipboardData.setData("Text", text);
+    }
+}

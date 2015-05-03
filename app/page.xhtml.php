@@ -8,13 +8,13 @@ $composant = filter_input(INPUT_GET, 'composant');
 if ($composant == "") {
     $composant = filter_input(INPUT_POST, 'composant');
     if ($composant == "") {
-        $composant="nontrouvé";
+        $composant="browser";
     }
 }
 $id=filter_input(INPUT_GET, 'id');
 
 if (!file_exists($appDir . "/composant/" . $composant)) {
-    $composant = "pardefaut";
+    $composant = "browser";
 } else {
     if ($composant == "rename.txt") {
         $paramsSuppl = "&nom=" . rawurlencode(filter_input(INPUT_GET, "nom"))
