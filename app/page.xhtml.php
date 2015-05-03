@@ -25,6 +25,7 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
     } if ($composant == "browser") {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
         $paramsSuppl .= "&filter=" . rawurlencode(filter_input(INPUT_GET, "filter")) ;
+        $paramsSuppl .= "&composed=" . rawurlencode(filter_input(INPUT_GET, "composed")) ;
     } if (($composant == "classe.doc") || ($composant == "edit.cls") || ($composant == "save.cls") || ($composant == "rename.cls") || ($composant == "del.cls") || ($composant == "classement") || ($composant == "classe")) {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
         if ($composant == "rename.cls") {

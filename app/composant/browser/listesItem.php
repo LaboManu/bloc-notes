@@ -21,9 +21,9 @@ function listerTout($classeur) {
         }
     }
 }
-function listerNotesFromDB($filtre){
+function listerNotesFromDB($filtre, $composed){
     global $link;
-    $results = getDocumentsFiltered($filtre);
+    $results = getDocumentsFiltered($filtre, $composed);
     if($results) {
     while (($row=  mysql_fetch_assoc($results))!=NULL) {
         $filename = $row['filename'];

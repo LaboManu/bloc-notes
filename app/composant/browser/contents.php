@@ -6,29 +6,26 @@ if($classeur=="")
     $classeur = null;
 */
 $filtre = filter_input(INPUT_GET, "filter");
-
-
-?><!--        <div>
-            <a onclick="javascript:afficherNotes(true);">Afficher notes sur disque</a>
-                    <a onclick="javascript:afficherNotes(false);">Masquer notes sur disque</a>
-                    <a onclick="javascript:afficherNotesDB(true);">Afficher notes en DB</a>
-                    <a onclick="javascript:afficherNotesDB(false);">Masquer notes en DB</a>
-                <div id="listesDiv">
-                        <hr/>
-                        <h3>Classeurs sur disque</h3> -->
-                        <form action="" method="GET">
-                    <!--<div id="disclisting" class="clearBoth">
-                        <?php
-                            //listerTout($classeur);
-                            ?></div><hr/>
+$composed = false;
+$c=$_GET['composed'];
+if($c=="Notes composees")
+    {
+        $composed = true;
+    }
+else
+    {
+        $composed = false;
+    }
+?><form action="" method="GET">
                             <h3>Classeurs en base de données</h3>-->
                             Recherche<input type="text" name="filter" value="<?php echo $filtre; ?>"/>
-                            <input type="hidden" name="composant" value="browser"/>
+                            <input type="checkbox" name="composed" value="Notes composees" <?php echo $composed?"checked":""; ?> />
+                            <input type="hidden" name="composant" value="browser" />
                             <div id="dblisting" class="clearBoth">
                                 <?php
                                 
                                 connect();
-                                listerNotesFromDB($filtre);    
+                                listerNotesFromDB($filtre, $composed);
                                 ?>                        
                             </div>
                             </form>

@@ -240,13 +240,13 @@ function dbfile_getModificationsAsList($filename) {
         $result = simpleQ($q);
         return $result;
     }
-    function getDocumentsFiltered($filtre) {
+    function getDocumentsFiltered($filtre, $composedOnly=FALSE) {
         global $monutilisateur;
         $q = "SELECT * FROM blocnotes_data " .
                 "WHERE username='" . mysql_real_escape_string($monutilisateur) .
                 "' and ((filename like '%" .mysql_real_escape_string($filtre).
                 "%') or (content_file like'%" .mysql_real_escape_string($filtre).
-                "%'))";// order by modification";
+                "%') and (content_file like '%".($composedOnly?"{{":"")."%' ))";// order by modification";
         $result = simpleQ($q);
         return $result;
     }
