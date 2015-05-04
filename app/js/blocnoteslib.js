@@ -54,3 +54,42 @@ function doNoteAction(note_id, selectedIndex)
 {
     alert("ID: "+note_id+" Index menu: " + selectedIndex + "ACTION (TODO)");
 }
+
+
+function copyToClipboardIE1(sText)
+	{
+		window.clipboardData.setData('Text', sText);
+		return false;
+	}	
+	function copyToClipboardFF(sText)
+	{
+		try
+		{
+			netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+		}
+		catch (e)
+		{
+			alert("Impossible d'accéder au presse-papier.");
+		}		
+		var gClipboardHelper =
+			Components.classes["@mozilla.org/widget/clipboardhelper;1"]
+			.getService(Components.interfaces.nsIClipboardHelper);		
+		gClipboardHelper.copyString(sText);
+			return false;
+	}	
+	function copyclipboard(sText)
+	{		
+		if (window.clipboardData)
+		{
+			return copyToClipboardIE1(sText);
+		}
+		else if (typeof(netscape) == 'object' && typeof(Components) == 'object')
+		{
+			return copyToClipboardFF(sText);
+		}
+		else
+		{
+			alert("Cette fonctionnalité n'est pas disponible pour votre navigateur.");
+		}
+		return false;
+	}
