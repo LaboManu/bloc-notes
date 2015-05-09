@@ -20,16 +20,16 @@ if($id==-2)
 {
     echo "Nouveau dossier";
     connect();
-    echo $sql = "insert into blocnotes_data (filename, username, isDirectory, mime) values('".mysql_real_escape_string($filename)."', '".
-    mysql_real_escape_string($monutilisateur)."', 1, 'directory')";
+    echo $sql = "insert into blocnotes_data (filename, username, isDirectory, mime, quandNouveau) values('".mysql_real_escape_string($filename)."', ".
+    mysql_real_escape_string($monutilisateur)."', 1, 'directory', now())";
     simpleQ($sql);
 }
 else if($id==-1)
 {
     echo "Ajouter données";
     connect();
-    echo $sql = "insert into blocnotes_data (filename, content_file, username, mime) values('".mysql_real_escape_string($filename)."', '".mysql_real_escape_string($content)."', '".
-    mysql_real_escape_string($monutilisateur)."', 'text/plain')";
+    echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNouveau) values('".mysql_real_escape_string($filename)."', '".mysql_real_escape_string($content)."', '".
+    mysql_real_escape_string($monutilisateur)."', 'text/plain', now())";
     simpleQ($sql);
 }
 else if($id==0)
@@ -57,9 +57,9 @@ else if($id==0)
             } else if(($ext == "jpg") || ($ext == "png") || ($ext == "gif")) {
                 $mime = "image/".$ext;
             }    
-            echo $sql = "insert into blocnotes_data (filename, content_file, username, mime) values('".mysql_real_escape_string($myFile['tmp_name'][$i]).
+            echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNonveau) values('".mysql_real_escape_string($myFile['tmp_name'][$i]).
             "', '".mysql_real_escape_string(file_get_contents($myFile['tmp_name'][$i]))."', '".
-            mysql_real_escape_string($monutilisateur)."', '$mime')";
+            mysql_real_escape_string($monutilisateur)."', '$mime', now())";
             simpleQ($sql);
             echo error_get_last();
         }
@@ -79,6 +79,6 @@ else
         $mime = "image/".getExtension($filename);
         
     }
-        echo htmlspecialchars($sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."', mime='".$mime."' where id=".$id." and username='".$monutilisateur."'");
+        echo htmlspecialchars($sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."'");
         simpleQ($sql);
 }

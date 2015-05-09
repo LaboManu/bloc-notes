@@ -37,11 +37,21 @@ CREATE TABLE IF NOT EXISTS `blocnotes_data` (
   `username` varchar(1024) NOT NULL,
   `mime` varchar(1024) NOT NULL,
   `isDirectory` int(11) NOT NULL DEFAULT '0',
-  `quand` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `quand` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `quandNouveau` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=127 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=130 ;
 
--- --------------------------------------------------------
+--
+-- Triggers `blocnotes_data`
+--
+DROP TRIGGER IF EXISTS `creation_date_data_table`;
+DELIMITER //
+CREATE TRIGGER `creation_date_data_table` BEFORE INSERT ON `blocnotes_data`
+ FOR EACH ROW SET NEW.quand = now()
+//
+DELIMITER ;
+
 
 --
 -- Table structure for table `blocnotes_items`
