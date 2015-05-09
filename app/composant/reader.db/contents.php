@@ -50,3 +50,4 @@ if ($result != NULL) {
     </table>
 
 </div>
+<a href="js/ViewerJS/#<?php echo $urlApp."/composant/display/contents.php?id=".$id; ?>" target="NEW" >Voir dans une nouvelle page</a>
