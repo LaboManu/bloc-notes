@@ -14,7 +14,7 @@ if($id==-1)
 {
     $sql = "insert into ".$tablePrefix." (id_element_porteur, id_element_dependant) "/* FOR UPDATE:=type=chained (default) ,*/ .
         " values (".((int)mysql_real_escape_string($linker)).
-        " , ".((int)mysql_real_escape_string($linker)).") ";
+        " , ".((int)mysql_real_escape_string($linker)).")";
     echo $sql;
     simplQ($sql);
     
