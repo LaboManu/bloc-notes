@@ -104,11 +104,12 @@ CREATE TABLE IF NOT EXISTS `blocnotes_item_type` (
 
 CREATE TABLE IF NOT EXISTS `blocnotes_link` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_element_porteur` varchar(1024) DEFAULT NULL,
-  `nom_element_dependant` varchar(1024) DEFAULT NULL,
+  `nom_element_porteur` int(10) unsigned NOT NULL,
+  `nom_element_dependant` int(10) unsigned NOT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
