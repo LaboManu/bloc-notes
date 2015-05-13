@@ -24,6 +24,7 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
                 . "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
     } if ($composant == "browser") {
         $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
+        $paramsSuppl .= "&dbdoc=" . rawurlencode(filter_input(INPUT_GET, "dbdoc"));
         $paramsSuppl .= "&filter=" . rawurlencode(filter_input(INPUT_GET, "filter")) ;
         $paramsSuppl .= "&composed=" . rawurlencode(filter_input(INPUT_GET, "composed")) ;
     } if (($composant == "classe.doc") || ($composant == "edit.cls") || ($composant == "save.cls") || ($composant == "rename.cls") || ($composant == "del.cls") || ($composant == "classement") || ($composant == "classe")) {
@@ -42,7 +43,8 @@ if (!file_exists($appDir . "/composant/" . $composant)) {
     if($composant == "save.db"){
         $paramsSuppl = "&dbdoc=" . 
                 rawurlencode((int)filter_input(INPUT_GET, "dbdoc"))."&contenu=".
-        rawurlencode(filter_input(INPUT_GET, "contenu"))."&filename=".rawurlencode(filter_input(INPUT_GET, "filename"));
+        rawurlencode(filter_input(INPUT_GET, "contenu"))."&filename=".rawurlencode(filter_input(INPUT_GET, "filename"))
+            ."&folder=" . rawurlencode(filter_input(INPUT_GET, "folder"));
     }
 
     }

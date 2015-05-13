@@ -240,13 +240,15 @@ function dbfile_getModificationsAsList($filename) {
         $result = simpleQ($q);
         return $result;
     }
-    function getDocumentsFiltered($filtre, $composedOnly=FALSE) {
+    function getDocumentsFiltered($filtre, $composedOnly=FALSE, $path="*") {
         global $monutilisateur;
         $q = "SELECT * FROM blocnotes_data " .
                 "WHERE username='" . mysql_real_escape_string($monutilisateur) .
                 "' and ((filename like '%" .mysql_real_escape_string($filtre).
                 "%') or (content_file like'%" .mysql_real_escape_string($filtre).
-                "%') and (content_file like '%".($composedOnly?"{{":"")."%' ))";// order by modification";
+                "%') and (content_file like '%".
+                        ($composedOnly?"{{":"")."%' )) and "
+                . "folder_name like ".($path=="*"?"''":"'%".$path."%'");// order by modification";
         $result = simpleQ($q);
         return $result;
     }
@@ -313,4 +315,41 @@ function selectDBFolders($needle)
     global $monutilisateur;
     echo $sql = "select distint folder_name, username from blocnotes_data where username ='".  mysql_real_escape_string($monutilisateur)."' and folder_name like '%".$needle."%'";
     return mysql_query($sql);
+}
+function isDirectory($dbdoc)
+{
+    global $tablePrefix;
+    $sql = "select isDirectory from ".$tablePrefix."_data where id=".((int)$dbdoc);
+    $res = simpleQ($sql);
+    if(($doc=mysql_fetch_assoc($res))!=NULL)
+    {
+        return $doc["isDirectory"];
+    }
+    return FALSE;
+}
+function getDirectoryPath($dbdoc)
+{
+    global $monutilisateur;
+    global $tablePrefix;
+    if(isDirectory($dbdoc))
+    {
+    $sql = "select isDirectory, folder_name, filename from ".$tablePrefix."_data where id=".((int)$dbdoc)." and username='".$monutilisateur."'";
+    $res = simpleQ($sql);
+    if(($doc=mysql_fetch_assoc($res))!=NULL)
+    {
+        return ($doc["folder_name"]==""?"":$doc["folder_name"]).$doc['filename'];
+    }
+    }
+ else {
+     echo "Erreur n'est pas un répertoire";
+    }
+    return "";
+}
+function getFolderList()
+{
+    global $monutilisateur;
+    global $tablePrefix;
+    $sql = "select * from ".$tablePrefix."_data where isDirectory=1 and username='".$monutilisateur."'";
+    $res = simpleQ($sql);
+    return $res;
 }

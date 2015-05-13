@@ -1,6 +1,6 @@
 <?php
-$class1 = filter_input(INPUT_GET, "classeur");
-$classeur = substr($class1, 5)  ;
+
+$dbdoc=(int) filter_input(INPUT_GET, "dbdoc");
 ?>
 <ul>
     
@@ -31,7 +31,7 @@ if($classeur!="")
 </ul>
 -->
 <ul>
-<li class="button_appdoc"><a href="?composant=create.db">Ecrire</a></li>
+<li class="button_appdoc"><a href="?composant=create.db&folder=<?php echo $dbdoc  ; ?>">Ecrire</a></li>
 <li class="button_appdoc"><a href="?composant=create.folder.db">Nouveau dossier</a></li>
 <!--<li class="button_appdoc"><a href="?help=composant=create.image.db">Créer une image en base de données</a></li>-->
 <li class="button_help"><a href="?help=assemble">Aide : assembler dss données</a></li>

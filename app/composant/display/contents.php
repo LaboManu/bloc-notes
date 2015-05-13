@@ -4,7 +4,7 @@ require_once("../browser/listesItem.php");
 
 
 connect();
-$result = getDBDocument(filter_input(INPUT_GET, "id"));
+$result = getDBDocument((int)filter_input(INPUT_GET, "id"));
 if ($result != NULL) {
     if (($doc = mysql_fetch_assoc($result)) != NULL) {
 

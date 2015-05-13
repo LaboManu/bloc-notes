@@ -3,7 +3,6 @@
 require_once("../../config.php");
 require_once("../browser/listesItem.php");
 
-
 $type = rawurldecode(filter_input(INPUT_GET, "submit"));
 if(isset($_GET['dbdoc']))
 {
@@ -26,10 +25,17 @@ if($id==-2)
 }
 else if($id==-1)
 {
-    echo "Ajouter données";
     connect();
-    echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNouveau) values('".mysql_real_escape_string($filename)."', '".mysql_real_escape_string($content)."', '".
-    mysql_real_escape_string($monutilisateur)."', 'text/plain', now())";
+echo
+    $folder = (int)(rawurldecode(filter_input(INPUT_GET, 'folder')));
+    $result = getDBDocument($folder);
+    if(($doc=  mysql_fetch_assoc($result)))
+    {
+        $folder_name = $doc['filename'];
+    }
+    echo "Ajouter données";
+    echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNouveau, folder_name) values('".mysql_real_escape_string($filename)."', '".mysql_real_escape_string($content)."', '".
+    mysql_real_escape_string($monutilisateur)."', 'text/plain', now(), '".  mysql_real_escape_string($folder_name)."')";
     simpleQ($sql);
 }
 else if($id==0)

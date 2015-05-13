@@ -1,10 +1,18 @@
 <?php 
 require_once("listesItem.php");
-/*
-$classeur = filter_input(INPUT_GET, "classeur");
-if($classeur=="")
-    $classeur = null;
-*/
+
+$dbdoc=(int) filter_input(INPUT_GET, "dbdoc");
+if(isDirectory($dbdoc))
+{
+$path = getDirectoryPath($dbdoc);
+}
+ else {
+     echo "N'est pas un répertoire";
+}
+if($path=="")
+{
+    $path = "*";
+}
 $filtre = filter_input(INPUT_GET, "filter");
 $composed = false;
 $c=$_GET['composed'];
@@ -25,7 +33,7 @@ else
                                 <?php
                                 
                                 connect();
-                                listerNotesFromDB($filtre, $composed);
+                                listerNotesFromDB($filtre, $composed, $path);
                                 ?>                        
                             </div>
                             </form>

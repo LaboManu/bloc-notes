@@ -52,7 +52,35 @@ function copyId(text) {
 }
 function doNoteAction(note_id, selectedIndex)
 {
-    alert("ID: "+note_id+" Index menu: " + selectedIndex + "ACTION (TODO)");
+    //alert("ID: "+note_id+" Index menu: " + selectedIndex + "ACTION (TODO)");
+    if(selectedIndex==1)
+    {
+        document.location.href = "page.xhtml.php?composant=reader.db&dbdoc="+note_id;
+    }
+    else if(selectedIndex==2)
+    {
+        document.location.href = "page.xhtml.php?composant=reader.db&dbdoc="+note_id;
+    }
+    else if(selectedIndex==3) // Move
+    {
+        alert("Déplacement pas encore autorisé");
+        document.location.href = "page.xhtml.php?composant=move.db&dbdoc="+note_id;
+    }
+    else if(selectedIndex==4) // Copier
+    {
+        alert("Copier pas encore autorisé");
+        //document.location.href = "page.xhtml.php?composant=move.db&dbdoc="+note_id;
+    }
+    else if(selectedIndex==5) // Coller
+    {
+        alert("Coller pas encore autorisé");
+        //document.location.href = "page.xhtml.php?composant=move.db&dbdoc="+note_id;
+    }
+    else if(selectedIndex==6) // Corbeille
+    {
+        alert("Corbeille pas encore autorisé");
+        document.location.href = "page.xhtml.php?composant=delete.db&dbdoc="+note_id;
+    }
 }
 
 

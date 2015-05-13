@@ -21,9 +21,9 @@ function listerTout($classeur) {
         }
     }
 }
-function listerNotesFromDB($filtre, $composed){
+function listerNotesFromDB($filtre, $composed, $path="*"){
     global $link;
-    $results = getDocumentsFiltered($filtre, $composed);
+    $results = getDocumentsFiltered($filtre, $composed, $path);
     if($results) {
     while (($row=  mysql_fetch_assoc($results))!=NULL) {
         $filename = $row['filename'];
@@ -86,7 +86,7 @@ function typeImg($cf) {
     <?php
 }
 function typeDB($filename, $content, $id, &$rowdoc = NULL) {
-    $urlaction = "page.xhtml.php?composant=reader.db&dbdoc=" . $id;
+    $urlaction = "page.xhtml.php?composant=browser&dbdoc=" . $id;
     ?><div id="<?php echo "data-$id"; ?>" class="miniImgContainer" ondrop="drop(event, <?php echo $id ?>)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" >
         <span onclick="copyId(<?= $id ?>)">"<?= "Copy:{{{$id}}}" ?></span><select onchange="doNoteAction(<?= $id ?>, this.selectedIndex);" name="file_menu" id="menu<?php echo $id; ?>"><option value="Rien">---</option><option value="Voir">Voir</option><option value="Modifier">Modifier</option><option value="Move">Déplacer</option><option value="Copier">Copier</option><option value="Coller">Coller</option><option value="Corbeille">Corbeille</option><option value="Assembler">Assembler</option></select>
  <input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" /><a class='miniImg' href="<?= $urlaction ?>">
@@ -104,11 +104,10 @@ function typeDB($filename, $content, $id, &$rowdoc = NULL) {
 {
      echo htmlspecialchars(substr($content, 0, 500));
  }
- else //if($rowdoc['isDirectory']==1)
+ else if($rowdoc['isDirectory']==1)
  {
 ?><img src='images/alphabet.png' class="miniImg"><?php
-} ?>
-        </div><span class="filename"><?php echo $filename; ?></span></a></div>
+} ?></div><span class="filename"><?php echo $filename; ?></span></a></div>
     <?php }
 function echoImgBase64($content, $filename)
 {

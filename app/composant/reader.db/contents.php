@@ -51,3 +51,4 @@ if ($result != NULL) {
 
 </div>
 <a href="js/ViewerJS/#<?php echo $urlApp."/composant/display/contents.php?id=".$id; ?>" target="NEW" >Voir dans une nouvelle page</a>
+<iframe src = "js/ViewerJS/#<?php echo $urlApp."/composant/display/contents.php?id=".$id; ?>" width='490' height='490' allowfullscreen webkitallowfullscreen></iframe>
