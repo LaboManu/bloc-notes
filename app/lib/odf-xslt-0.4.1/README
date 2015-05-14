@@ -1,0 +1,99 @@
+This is the README for odf-xslt.
+
+Copyright (C) 2007 Tribal Internet Marketing BV
+Written by Sander Marechal <s.marechal@jejik.com>
+
+odf-xslt is a template engine based on ODF files. It assumes that the XML files
+inside an ODF container are XSLT files instead of ODF files and can process
+those with an XSLT processor.
+
+It also has an ODF to XSLT convertor that can read specially marked-up ODF file
+and convert them to XSLT. These files are cached before they are handed off to
+the XSLT processor. 
+
+The full documentation and API reference is available at: http://www.jejik.com/odf-xslt/
+
+Here is a short example:
+
+<?php
+import ('odf-xslt/odf-xslt.php');
+
+$data = new DOMDocument();
+$data->load('some-xml-data.xml');
+
+$proc = new ODFXSLTProcessor();
+$proc->import_stylesheet('some-template.odt');
+$proc->transform_to_file($data, 'result.odt');
+?>
+
+The public variable $container_files specifies a list of all the XML files in an
+ODF container that need to be parsed. ODF metadata can be accessed through the
+public variable $meta. You can register preprocessor and postprocessor functions
+to the ODF-XSLT processor. These are run once for all the parsed XML files in
+the order in which they are registered.
+
+ODF templates can either be regular ODF files with XSLT tags embedded inside
+them, or they can be marked up inside a word processor using special odf-xslt
+tags. These tags can be embedded in several ways. First off, you can insert
+placeholders where the placeholder reference is an XPath expression to the value
+it should be replaced with. More complicated expressions can be insterted with
+XSLT tags and a location directive.
+
+Location directives take the form of {@<location> <xpath-espression> <xslt>} and
+can be embedded in an image's Alternative text, inside script markers with a
+script type of "ODF-XSLT" or directly inside the text. The xpath-expression
+points to an element where the specified xslt code should be insterted. The
+location parameter can have the value of before, after, replace or child and
+tells odf-xslt ifit should insert the xslt code before or after the selected
+element(s), replace the elements with the xslt code or append it as a child. It
+sounds more complicated than it is. Here are some examples:
+
+This example replaces a placeholder image with another image. Insert this into
+the images Altervative field:
+
+{@child ../draw:image
+  <xslt:attribute name="xlink:href">
+    <xslt:value-of select="data/image[@name='myimage']"/>
+  </xslt:attribute>
+}
+
+Which would replace the image with the one specified in this XML file:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <image name="myimage">/home/example/some-image.png</image>
+</data>
+
+To loop over a row of data and build a table from it, create a one row table in
+your word processor. This example is for a two-column table. Insert an
+ODFTemplate script in the first column and insert this:
+
+{@before ancestor::table:table-row[1]
+  <xslt:for-each select="data/table/row">
+}
+
+In the last column, insert an ODFTemplate script with the following contents:
+
+{@after ancestor::table:table-row[1] </xslt:for-each>}
+
+Now add some placeholders in the columns with references pointing to e.g. col1
+and col2. You should now be able to generate a table with the following XML data
+file:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <table>
+    <row>
+      <col1>value</col1>
+      <col2>value</col2>
+    </row>
+    <row>
+      <col1>value</col1>
+      <col2>value</col2>
+    </row>
+  </table>
+</data>
+
+Since everything is based on XSLT and XPath this system is very flexible.
+Anything that can be parsed by PHP's XPath and XSL parser can be handled by
+ODF-XSLT.

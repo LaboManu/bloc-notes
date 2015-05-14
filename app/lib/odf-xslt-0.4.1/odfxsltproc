@@ -1,0 +1,77 @@
+#!/usr/bin/php -q
+<?php
+
+/**
+ * A simple commandline tool to process ODF-XSLT files.
+ * See the README for documentation and an example.
+ *
+ * @copyright Copyright (c) 2007, 2008 Tribal Internet Marketing B.V.
+ * @author Sander Marechal <s.marechal@jejik.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+require_once('odf-xslt/odf-xslt.php');
+
+if ($_SERVER['argc'] < 2)
+{
+	echo "Convert the XML data on STDIN to ODF using an ODF-XSLT stylesheet.\nUsage: odfxsltproc <stylesheet> <output>\n";
+	exit(2);
+}
+
+if (in_array($_SERVER['argv'][1] == '--help', array('--help', '-h', '-?')))
+{
+	echo "Convert the XML data on STDIN to ODF using an ODF-XSLT stylesheet.\n";
+	echo "Usage: odfxsltproc <stylesheet> <output>\n\n";
+	echo "If <output> is not specified then the document will be outputted to stdout.\n";
+	echo "This way odfxsltproc can be part of a processing pipeline. Note that usually\n";
+	echo "You do not want to output to stdin. ODF is zipped XML so the output would be\n";
+	echo "binary soup.\n\n";
+	echo "See the README file for instructions on how to write ODF-XSLT templates.\n\n";
+	echo "Copyright (C) 2007-2008 Tribal Internet Marketing B.V. and Sander Marechal.\n";
+	echo "This program is Free Software, released under the GNU General Public License\n";
+	echo "version 3. See COPYING for details.\n";
+	exit(0);
+}
+
+$stylesheet = realpath($_SERVER['argv'][1]);
+$output = $_SERVER['argv'][2];
+
+// Does the stylesheet exist?
+if (!file_exists($stylesheet))
+{
+	echo "The stylesheet " . $stylesheet . " does not exist\n";
+	exit(1);
+}
+
+// Grab the XML data from STDIN
+$data = '';
+while(!feof(STDIN))
+	$data .= fread(STDIN, 8192);
+
+$dom = new DOMDocument();
+$dom->loadXML($data);
+
+$processor = new ODFXSLTProcessor();
+$processor->cache_dir = '/tmp/';
+$processor->import_stylesheet($stylesheet);
+
+if ($output)
+	$processor->transform_to_file($dom, $output);
+else
+	fwrite(STDOUT, $processor->transform_to_memory($dom));
+
+$processor->cache_clear();
+
+?>

@@ -1,0 +1,112 @@
+2012-08-31 06:56  sander
+
+	* COPYING: Relicense under LGPL
+
+2008-10-24 14:52  sander
+
+	* odf-xslt.php.in, odfxsltproc: Add the posibility to use
+	  odfxsltproc as a filter
+
+2008-10-24 14:21  sander
+
+	* odf-xslt.php.in, odfxsltproc: Automatically create xslt:attribute
+	  elements for office:value attributes in table cells
+
+2008-01-04 13:28  sander
+
+	* odf-xslt.php.in, odfxsltproc: Bugfix to cache and path resolution
+	  for odfxsltproc
+
+2008-01-04 12:56  sander
+
+	* Makefile: Forgot to add ChangeLog to Makefile
+
+2008-01-04 12:55  sander
+
+	* ChangeLog: Add ChangeLog
+
+2008-01-04 10:48  sander
+
+	* AUTHORS, Makefile, NEWS, README, odf-xslt.php.in, odfxsltproc:
+	  Last fixes for release and bump version to 0.4
+
+2007-11-07 11:28  sander
+
+	* odfxsltproc: Fix relative paths in odfxsltproc
+
+2007-11-07 08:06  sander
+
+	* odf-xslt.php.in: Fix matching multiple template stanzas and
+	  replace ODFTemplate with ODF-XSLT for script names.
+
+2007-11-06 13:02  sander
+
+	* Makefile: Add odfxsltproc to Makefile
+
+2007-11-06 11:52  sander
+
+	* odf-xslt.php.in: Some documenattion fixes
+
+2007-11-06 11:48  sander
+
+	* odfxsltproc: Added odfxsltproc, a simple commandline tool.
+
+2007-11-06 11:46  sander
+
+	* odf-xslt.php.in: Fixed empty content bug when not using pre- or
+	  postprocessors.
+
+2007-10-29 14:05  sander
+
+	* odf-xslt.php.in: Changed package name.
+
+2007-10-26 10:06  sander
+
+	* odf-xslt.php.in: A better class description.
+
+2007-10-26 09:24  sander
+
+	* ., odf-xslt.php.in: New phpdoc properties.
+
+2007-10-26 07:35  sander
+
+	* odf-xslt.php.in: Added phpdoc property for documentation
+	  generration.
+
+2007-10-25 14:38  sander
+
+	* INSTALL: Some documentation updates.
+
+2007-10-17 13:04  Sander.Marechal
+
+	* odf-xslt.php.in: Added PHPDoc documentation.
+
+2007-07-23 11:00  Sander.Marechal
+
+	* odf-xslt.php.in: Only process text placeholders with a
+	  description field.
+
+2007-07-23 10:47  Sander.Marechal
+
+	* odf-xslt.php.in: Allow multiple XSLT location directives in one
+	  element.
+
+2007-07-20 09:11  sander.marechal
+
+	* odf-xslt.php.in: The regsiter_(pre|post)processor now throws an
+	  exception instead of triggering an error.
+
+2007-07-20 08:53  sander.marechal
+
+	* COPYING, INSTALL, Makefile, README, odf-xslt.php.in: Updated the
+	  documentation and applied GPL 3.0 license
+
+2007-06-19 10:55  sander.marechal
+
+	* INSTALL, Makefile, README, odf-xslt.php.in: Initial import of
+	  odf-xslt
+
+2007-06-18 15:14  sander.marechal
+
+	* .: Importing initial repository layout.
+

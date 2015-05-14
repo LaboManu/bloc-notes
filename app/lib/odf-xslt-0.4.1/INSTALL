@@ -1,0 +1,15 @@
+This is the INSTALL file for odf-xslt
+
+Copyright (C) 2007 Tribal Internet Marketing BV
+Written by Sander Marechal <sander.marechal@tribal.nl>
+
+REQUIREMENTS:
+
+* PHP 5
+* XML module for PHP5
+* XSL module for PHP5
+* PHP CLI (for the commandline tool)
+
+odf-xslt comes with a simple makefile that only understands the install,
+uninstall, dist and clean targets. By default, odf-xslt will install in
+/usr/local/share/php and it's documentation in /usr/local/share/doc
