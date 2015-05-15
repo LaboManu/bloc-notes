@@ -281,8 +281,8 @@ function dbfile_getModificationsAsList($filename) {
 
     function updateLinks($oldname, $newname) {
         // Table : blocnotes_links
-        $q1 = "update blocnotes_link set nom_element_porteur='" . mysql_real_escape_string($newname) . "' where nom_element_porteur='" . mysql_real_escape_string($oldname) . "'";
-        $q2 = "update blocnotes_link set nom_element_dependant='" . mysql_real_escape_string($newname) . "' where nom_element_dependant='" . mysql_real_escape_string($oldname) . "'";
+        $q1 = "update blocnotes_link set nom_element_porteur=" . (int)mysql_real_escape_string($newname) . " where nom_element_porteur=" . (int)mysql_real_escape_string($oldname) . "";
+        $q2 = "update blocnotes_link set nom_element_dependant=" . (int)mysql_real_escape_string($newname) . " where nom_element_dependant=" . (int)mysql_real_escape_string($oldname) . "";
         // Exécuter les requêtes
 
         mysql_query($q1);
@@ -292,9 +292,9 @@ function dbfile_getModificationsAsList($filename) {
 
     function createLink($nom_element_porteur, $nom_element_dependant) {
         global $link;
-        $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values ('" .
-                mysql_real_escape_string($nom_element_porteur, $link) . "','" .
-                mysql_real_escape_string($nom_element_dependant, $link) . "')";
+        $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values (" .
+                (int)mysql_real_escape_string($nom_element_porteur, $link) . " , " .
+                (int)mysql_real_escape_string($nom_element_dependant, $link) . ")";
 
         mysql_query($q, $link);
     }
@@ -371,17 +371,61 @@ function getMimeType($id)
 
 /*
  * ** array ( 
- *      "id" => int, 
+ *      "id" => $doc, 
  *      "data" =>array(noOrdre => $row_data)
- * )
+ *  Pas de récursivités;
 */
-function getDBDocumentAvecImagesEtTextes() {
+function getDBDocumentAvecImagesEtTextes($id) {
+    $myArray;
     
+    $id = (int )$id;
+    
+    $row = getDBDocument($id);
+    if(($doc = mysql_fetch_assoc($row))!=NULL)
+    {
+        $myArray["id"] = $doc;
+        
+        $sql = "select l.nom_element_porteur as masterId, d.* "
+                . "from blocnotes_link as l"
+        . " inner join blocnotes_data as d "
+        . " on l.nom_element_porteur=d.nom_element_dependant "
+                . "where l.nom_element_porteur=$id";
+        $res = simpleQ($sql);
+        
+        $myArray["data"] = array();
+                
+         while(($doc2=mysql_fetch_assoc($res))!=NULL)
+        {
+             $myArray["data"][$doc2["id"]] = $doc2;
+        }
+        return $myArray;
+    }
+    
+    else return NULL;
 }
 function insereImageOuNote($id, $idDependant=-1, $filename, $data, $mime, $ordre) {
-    
+    global $link;
+    if($idDependant<=0)
+    {
+        
+        $sql = "insert into blocnotes_data ( filename, content_file, mime )"
+        . " values ( '".mysql_real_escape_string($filename).
+        "' , '" . mysql_real_escape_string($data)."' , '".
+                mysql_real_escape_string($mime)."')";
+        simpleQ( $sql);
+        $idDependant = mysql_insert_id($link);
+    }
+    createLink($id,  $idDependant, $ordre);
 }
+
+
 function deleteImageOuNoteDependant($id, $idDependant)
 {
     
+    $id = (int)$id;;
+    $idDependant = (int)$idDependant ;
+    $sql = "delete from blocnotes_link where ".
+        "nom_element_porteur=$id and "
+             ."   nom_element_dependant=$idDependant";
+    simpleQ($sql);
 }
