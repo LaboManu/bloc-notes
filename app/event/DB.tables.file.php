@@ -30,7 +30,11 @@ function connect() {
     global $username;
     global $password;
     global $name;
+    
+    if($link==NULL)
+    {
     $link = mysql_connect($hostname, $username, $password);
+    }
     mysql_select_db($name);
 }
 
@@ -254,6 +258,7 @@ function dbfile_getModificationsAsList($filename) {
     }
     function getDBDocument($id) {
         global $monutilisateur;
+        connect();
         $q = "SELECT * FROM blocnotes_data " .
                 "WHERE username='" . mysql_real_escape_string($monutilisateur) . "' and id =" .mysql_real_escape_string((int)$id);
         
@@ -352,4 +357,31 @@ function getFolderList()
     $sql = "select * from ".$tablePrefix."_data where isDirectory=1 and username='".$monutilisateur."'";
     $res = simpleQ($sql);
     return $res;
+}
+function getMimeType($id)
+{
+    connect();
+    $result = getDBDocument($id);
+    if ($result != NULL) {
+        if (($doc = mysql_fetch_assoc($result)) != NULL) {
+            return $doc["filename"];
+        }
+    }
+}
+
+/*
+ * ** array ( 
+ *      "id" => int, 
+ *      "data" =>array(noOrdre => $row_data)
+ * )
+*/
+function getDBDocumentAvecImagesEtTextes() {
+    
+}
+function insereImageOuNote($id, $idDependant=-1, $filename, $data, $mime, $ordre) {
+    
+}
+function deleteImageOuNoteDependant($id, $idDependant)
+{
+    
 }

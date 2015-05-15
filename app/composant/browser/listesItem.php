@@ -138,3 +138,4 @@ function isTexte($ext, $mime="")
  return in_array($ext, array("txt")) or ($mime=="text/plain");
    
 }
+
