@@ -22,7 +22,7 @@ if ($result != NULL) {
 
             // Traiter le formattage manuel
             $matches = array();
-            preg_match("{{[0-9]+}}", $contents, $matches);
+            preg_match("/\\{\\{[0-9]+\\}\\}/", $contents, $matches);
 
             for ($i = 0; $i < count($matches); $i++) {
 
