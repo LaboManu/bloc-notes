@@ -7,7 +7,7 @@ $folder = (int)filter_input(INPUT_GET, "folder");
 ?><form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.db"/>
     <input type="hidden" name="dbdoc"  value="-1"/>
-    <input type="text" name="filename"  value="Nouveau fichier texte.txt"/>
+    <input type="text" name="filename"  value="Nouvelle note textuelle"/>
     <select name="folder">
         <?php
         connect();

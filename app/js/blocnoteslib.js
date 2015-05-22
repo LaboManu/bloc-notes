@@ -78,9 +78,14 @@ function doNoteAction(note_id, selectedIndex)
     }
     else if(selectedIndex==6) // Corbeille
     {
-        alert("Corbeille pas encore autorisé");
-        document.location.href = "page.xhtml.php?composant=delete.db&dbdoc="+note_id;
+        if (confirm("L'élément va être supprimé. Confirmer?")) {
+    document.location.href = "page.xhtml.php?composant=delete.db&dbdoc="+note_id;
     }
+  }
+  else {
+     alert ("Suppression annulée.")
+  }alert("");
+        
 }
 
 

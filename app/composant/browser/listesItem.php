@@ -1,6 +1,5 @@
 <?php
-require_once("../../config.php");
-
+require_once("../../all-configured-and-secured-included.php");
 function listerTout($classeur) {
     global $dataDir;
     $dirh = opendir($dataDir . "/" . $classeur);

@@ -2,13 +2,7 @@
 
 class TableGestionFichier {
 
-    public $hostname = 'manudahmen.be.mysql';
-    public $username = 'manudahmen_be';
-    public $password = 'Znduy32A';
-    public $name = 'manudahmen_be';
-    public $tableUsers = 'blocnotes_users';
-    public $tableItem = 'blocnotes_items';
-
+    
     function connect() {
         
     }

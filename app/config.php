@@ -1,7 +1,9 @@
 <?PHP
 
 
-require_once("pass.php");
+
+
+require_once(__DIR__."/pass.php");
 /**
 
 Defined in pass.php:
@@ -16,18 +18,14 @@ $name=''; /// database name
 ?>
 
 **/
+require_once(__DIR__."/lib/anchor.class.php");
+require_once(__DIR__."/lib/dbconnection.class.php");
+require_once(__DIR__."/lib/note.class.php");
+require_once(__DIR__."/lib/image.class.php");
+require_once(__DIR__."/lib/share.class.php");
+require_once(__DIR__."/lib/text.class.php");
+require_once(__DIR__."/lib/download.php");
 
-
-require_once("event/DB.tables.file.php");
-require_once("lib/anchor.class.php");
-require_once("lib/dbconnection.class.php");
-require_once("lib/note.class.php");
-require_once("lib/image.class.php");
-require_once("lib/share.class.php");
-require_once("lib/text.class.php");
-require_once("lib/download.php");
-
-$tablePrefix = "blocnotes";
 
 $appName = "";
 
@@ -43,7 +41,7 @@ $allUserDataDir = $appDir."/data";
 $allUserPublicDir = $appDir."/public";
 
 
-require_once("$appDir/app/include/membersite_config.php");
+require_once(__DIR__."/include/membersite_config.php");
 
 
 if(!$fgmembersite->CheckLogin())
@@ -58,8 +56,6 @@ $dataDir = $allUserDataDir . "/" . $fgmembersite->UserFullName();
 $publicDir = $allUserPublicDir . "/" . $fgmembersite->UserFullName();
 $appDirScript = $appDir = $appDir."/"."app";
 
-if(!file_exists($dataDir)) {mkdir($dataDir);}
-if(!file_exists($publicDir)) {mkdir($publicDir);}
 
 
 $uploadDir = $dataDir;

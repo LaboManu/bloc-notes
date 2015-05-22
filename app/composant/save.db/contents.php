@@ -2,6 +2,7 @@
 
 require_once("../../config.php");
 require_once("../browser/listesItem.php");
+$folder = (int)(rawurldecode(filter_input(INPUT_GET, 'folder')));
 
 $type = rawurldecode(filter_input(INPUT_GET, "submit"));
 if(isset($_GET['dbdoc']))
@@ -27,7 +28,6 @@ else if($id==-1)
 {
     connect();
 echo
-    $folder = (int)(rawurldecode(filter_input(INPUT_GET, 'folder')));
     $result = getDBDocument($folder);
     if(($doc=  mysql_fetch_assoc($result)))
     {
@@ -63,9 +63,9 @@ else if($id==0)
             } else if(($ext == "jpg") || ($ext == "png") || ($ext == "gif")) {
                 $mime = "image/".$ext;
             }    
-            echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNonveau) values('".mysql_real_escape_string($myFile['tmp_name'][$i]).
+            echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNonveau, folder_name) values('".mysql_real_escape_string($myFile['tmp_name'][$i]).
             "', '".mysql_real_escape_string(file_get_contents($myFile['tmp_name'][$i]))."', '".
-            mysql_real_escape_string($monutilisateur)."', '$mime', now())";
+            mysql_real_escape_string($monutilisateur)."', '$mime', now(), '" . mysql_real_escape_string($folder_name). "')";
             simpleQ($sql);
             echo error_get_last();
         }
@@ -85,6 +85,6 @@ else
         $mime = "image/".getExtension($filename);
         
     }
-        echo htmlspecialchars($sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."'");
+        echo htmlspecialchars($sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."', folder_name='".  mysql_real_escape_string($folder)."'");
         simpleQ($sql);
 }
