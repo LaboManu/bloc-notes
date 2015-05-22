@@ -2,10 +2,6 @@
 
 class TableGestionFichier {
 
-    
-    function connect() {
-        
-    }
 
     function verifierExistenceFichier($filename) {
         $this->connect();

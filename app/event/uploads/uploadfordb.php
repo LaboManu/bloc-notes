@@ -19,7 +19,7 @@ if($id==-1)
     connect();
     echo $sql = "insert into blocnotes_data (filename, content_file, username) values('Newly created.txt', '".mysql_real_escape_string($content)."', '".
     mysql_real_escape_string($monutilisateur)."')";
-    simpleQ($sql);
+    simpleQ($sql, $mysqli);
 }
 else if($id==0)
 {
@@ -49,7 +49,7 @@ else if($id==0)
             $sql = "insert into blocnotes_data (filename, content_file, username, mime) values('".mysql_real_escape_string($myFile['name'][$i]).
             "', '".mysql_real_escape_string(file_get_contents($myFile['tmp_name'][$i]))."', '".
             mysql_real_escape_string($monutilisateur)."', '$mime')";
-            simpleQ($sql);
+            simpleQ($sql, $mysqli);
             echo error_get_last();
         }
     }
@@ -59,7 +59,7 @@ else
     echo "Mettre à jour la note";
     connect();
     $sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."' where id=".$id;
-    simpleQ($sql);
+    simpleQ($sql, $mysqli);
 }
 echo $id." |  : | ".$content;
 ?>

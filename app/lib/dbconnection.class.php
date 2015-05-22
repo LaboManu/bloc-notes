@@ -22,8 +22,9 @@ function randomSerId() {
 }
 
 function id_exists($id) {
+    global $mysqli;
     $q = "select serid from " . $tablePrefix . "_items where serid=" . mysql_real_escape_string($id);
-    if (simpleQ($q) == NULL)
+    if (simpleQ($q, $mysqli) == NULL)
         return false;
     else
         return true;
@@ -32,7 +33,7 @@ function id_exists($id) {
 function getSeridFromFilename($filename, $utilisateur) {
 
     $q = "select serid from " . $tablePrefix . "_items where filename='" . mysql_real_escape_string($filename) . "' and username='" . mysql_real_escape_string($utilisateur) . "'";
-    if (($serid = simpleQ($q)) == NULL)
+    if (($serid = simpleQ($q, $mysqli)) == NULL)
         return FALSE;
     else
         return $serid;
@@ -54,10 +55,9 @@ function createFile($filename, $date = "") {
         ;
     }
 
-    $link = mysql_connect($hostname, $username, $password);
-    mysql_select_db($name);
-    $q = "insert into blocnotes_items (user, filename, moment, type, serid) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
-            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.creation', $serid);";
+    simpleQ("insert into blocnotes_items (user, filename, moment, type, serid) values('" . mysql_real_escape_string($monutilisateur, $link) . "', '" .
+            mysql_real_escape_string($filename, $link) . "', '" . mysql_real_escape_string($date, $link) . "', 'file.creation', $serid);",
+            $mysqli);
     //echo $q;
 
     mysql_query($q);
@@ -290,7 +290,7 @@ function dbfile_getModificationsAsList($filename) {
     function delete_link($id)    
     {
         $sql = "delete from ".$tablePrefix."_link where id=".mysql_real_escape_string((int)$id);
-        $this->simpleQ($sql);
+        $this->simpleQ($sql, $mysqli);
     
     }
 
@@ -299,7 +299,7 @@ function dbfile_getModificationsAsList($filename) {
         $sql = "select link.id as linkid, link.pid as parent, link.eid as enfant, d1.filename as fp, d1.content_file as cp, d2.filename as fe, d2.content_file as ce".
             "from ".$this->tablePrefix."_link as link where nom_element_porteur=".((int)$id)." inner join ".$tablePrefix."_data as d1 on link.nom_element_porteur.id=d1.id".
             " inner join ".$tablePrefix."_data as de on de.id=link.nom_element_dependant";
-        return $this->simpleQ($sql);
+        return $this->simpleQ($sql, $mysqli);
     }
 
 function insertDB($basePath, $classeurOrNote)
@@ -329,7 +329,7 @@ function renameDBFile($id, $filename_newname)
 {
     global $tablePrefix;
     $sql = "update ".mysql_real_escape_string($tablePrefix)."_data set filename=".mysql_real_escape_string($filename_newname)." where id=".mysql_real_escape_string((int)$id);
-    simpleQ($sql);
+    simpleQ($sql, $mysqli);
     
 }
 }

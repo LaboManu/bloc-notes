@@ -24,7 +24,7 @@ function listerNotesFromDB($filtre, $composed, $path="*"){
     global $link;
     $results = getDocumentsFiltered($filtre, $composed, $path);
     if($results) {
-    while (($row=  mysql_fetch_assoc($results))!=NULL) {
+    while (($row=  mysqli_fetch_row($results))!=NULL) {
         $filename = $row['filename'];
         $content = $row['content_file'];
         $id = $row['id'];

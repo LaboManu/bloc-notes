@@ -7,7 +7,7 @@ connect();
 $dbdoc = (int) filter_input(INPUT_GET, "dbdoc");
 
 if ($dbdoc == "") {
-    $dbdoc = getRootForUser($monutilisateur);
+    $dbdoc = getRootForUser();
     echo "Répertoire racine (par défaut)";
 }
 
