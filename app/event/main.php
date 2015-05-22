@@ -24,6 +24,7 @@ function getSeridFromFilename($filename, $utilisateur) {
 }
 
 function connect() {
+    global $link;
     global $config;
     if ($date == "") {
         $date = date("Y-m-d-H-i-s");
@@ -31,12 +32,11 @@ function connect() {
     $hostname = trim($config->hostname);
     $username = trim($config->username);
     $password = trim($config->password);
-    $dbname = trim($config->hostname);
+    $dbname = trim($config->name);
 
 
-    if ($link == NULL) {
-        $link = mysql_connect($hostname, $username, $password);
-    }
+    $link = mysql_connect($hostname, $username, $password);
+    
     if (!$link or ($link == NULL)) {
         echo "Impsiible de se connecter à la base de données erreur détaillée<tt>";
         print_r(error_get_last);
@@ -431,7 +431,7 @@ function getRootForUser($link) {
 
     connect();
     echo $monutilisateur;
-    $sql = "select * from blocnotes_data where username like '" .
+    $sql = "select * from blocnotes_data where username like 'Manu".
             mysql_real_escape_string($monutilisateur, $link)
             . "' and isRoot=1";
 
@@ -439,6 +439,7 @@ function getRootForUser($link) {
     if ($res != NULL) {
         $folder = mysql_fetch_assoc($res);
         $id = $folder['id'];
+        echo $id;
         return $id;
     } else {
         print_r("Resultat nul db");
