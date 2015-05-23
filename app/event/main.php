@@ -227,29 +227,29 @@ function dbfile_getModificationsAsList($filename) {
 
         global $monutilisateur;
         $q = "SELECT * FROM blocnotes_data " .
-                "WHERE username='" . mysqli_real_query($mysqli, $monutilisateur) . "' ";
+                "WHERE  isDeleted=0 and username='" . mysqli_real_query($mysqli, $monutilisateur) . "' ";
         "'";
         $result = simpleQ($q, $mysqli);
         return $result;
     }
 
-    function getDocumentsFiltered($filtre, $composedOnly = FALSE, $pathId = "0") {
+    function getDocumentsFiltered($filtre, $composedOnly, $pathId) {
         global $monutilisateur;
         global $mysqli;
 
         if ($pathId == 0) {
-            $classeur = getRootForUser();
+            $pathId = getRootForUser();
         }
 
-        $q = "SELECT * FROM blocnotes_data " .
-                "WHERE username='" . mysqli_real_query($mysqli, $monutilisateur) .
-                "' and ((filename like '%" . mysqli_real_query($mysqli, $filtre) .
-                "%') or (content_file like'%" . mysqli_real_query($mysqli, $filtre) .
+        echo $q = "SELECT * FROM blocnotes_data " .
+                "WHERE username='" . mysqli_real_escape_string($mysqli, $monutilisateur) .
+                "' and ((filename like '%" . mysqli_real_escape_string($mysqli, $filtre) .
+                "%') or (content_file like'%" . mysqli_real_escape_string($mysqli, $filtre) .
                 "%') and (content_file like '%" .
-                ($composedOnly ? "{{" : "") . "%' )) and "
-                . "folder_id=" . ( (int) $pathId); // order by modification";
+                ($composedOnly ? "{{" : "") . "%' )) and isDeleted=0 and "
+                . "folder_id=" . ( (int) $pathId); 
 
-        $result = simpleQ($q, $myysqli);
+        $result = simpleQ($q, $mysqli);
 
         return $result;
     }
@@ -259,7 +259,7 @@ function dbfile_getModificationsAsList($filename) {
         global $mysqli;
         connect();
         $q = "SELECT * FROM blocnotes_data " .
-                "WHERE username='" . mysqli_real_query($mysqli, $monutilisateur) . "' and id =" . mysqli_real_query($mysqli, (int) $id);
+                "WHERE isDeleted=0 username='" . mysqli_real_query($mysqli, $monutilisateur) . "' and id =" . mysqli_real_query($mysqli, (int) $id);
 
         $result = simpleQ($q, $mysqli);
         return $result;
@@ -436,17 +436,26 @@ function dbfile_getModificationsAsList($filename) {
 
     function getRootForUser() {
         global $mysqli;
-        echo $sql = "select * from blocnotes_data where username like '" .
-        mysqli_real_query($mysqli, $monutilisateur)
+        global $monutilisateur;
+        $sql = "select id from blocnotes_data where username like '" .
+        mysqli_real_escape_string($mysqli, $monutilisateur)
         . "' and isRoot=1";
 
         $result = simpleQ($sql, $mysqli);
-        if (($row = mysqli_fetch_assoc($result)) != NULL) {
-            $id = $folder['id'];
-            return $id;
+        if($result)
+        {
+        if ($arr = $result->fetch_assoc()) {
+            $id = $arr['id'];
         } else {
-            return 0;
+            $id = 0;
         }
+        }
+else
+{
+    $id=-1;
+    echo "No root for user";
+}//echo "ID;; $id";
+       return $id;
     }
 
     function deleteDoc($id) {

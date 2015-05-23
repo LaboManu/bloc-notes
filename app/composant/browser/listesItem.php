@@ -20,17 +20,18 @@ function listerTout($classeur) {
         }
     }
 }
-function listerNotesFromDB($filtre, $composed, $path="*"){
-    global $link;
+function listerNotesFromDB($filtre, $composed, $path){
+    global $mysqli;
     $results = getDocumentsFiltered($filtre, $composed, $path);
     if($results) {
-    while (($row=  mysqli_fetch_row($results))!=NULL) {
+    while (($row=  mysqli_fetch_assoc($results))) {
         $filename = $row['filename'];
         $content = $row['content_file'];
         $id = $row['id'];
         typeDB($filename, $content, $id, $row);
     }
     }
+    else "Pas de résultat";
 }
 function typeTxt($cf, $filePath) {
     global $FILE_THUMB_MAXLEN;

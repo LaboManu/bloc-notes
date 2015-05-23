@@ -5,54 +5,53 @@ require_once(__DIR__ . "/access-controlled.php");
 $document1 = filter_input(INPUT_GET, 'document');
 $document = rawurlencode($document1);
 /* @var $_GET type */
+
 $composant = filter_input(INPUT_GET, 'composant');
 
 if ($composant == "") {
     $composant = filter_input(INPUT_POST, 'composant');
-    if ($composant == "") {
-        $composant = "browser";
-    }
 }
-$id = filter_input(INPUT_GET, 'id');
+$id =(int) filter_input(INPUT_GET, 'id');
+$dbdoc = (int) filter_input(INPUT_GET, 'dbdoc');
 
-if (!file_exists($appDir . "/composant/" . $composant)) {
+if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
     $composant = "browser";
-} else {
+}
+
     if ($composant == "rename.txt") {
-        $paramsSuppl = "&nom=" . rawurlencode(filter_input(INPUT_GET, "nom"))
+        $paramsSuppl = "nom=" . rawurlencode(filter_input(INPUT_GET, "nom"))
                 . "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
     } if ($composant == "save.txt") {
-        $paramsSuppl = "&contenu=" . rawurlencode(filter_input(INPUT_GET, "contenu"))
+        $paramsSuppl = "contenu=" . rawurlencode(filter_input(INPUT_GET, "contenu"))
                 . "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
     } if ($composant == "browser") {
-        $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
         $paramsSuppl .= "&dbdoc=" . rawurlencode(filter_input(INPUT_GET, "dbdoc"));
         $paramsSuppl .= "&filter=" . rawurlencode(filter_input(INPUT_GET, "filter"));
         $paramsSuppl .= "&composed=" . rawurlencode(filter_input(INPUT_GET, "composed"));
     } if (($composant == "classe.doc") || ($composant == "edit.cls") || ($composant == "save.cls") || ($composant == "rename.cls") || ($composant == "del.cls") || ($composant == "classement") || ($composant == "classe")) {
-        $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
+        $paramsSuppl = "classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
         if ($composant == "rename.cls") {
             $paramsSuppl .= "&nom=" . rawurlencode(filter_input(INPUT_GET, "nom"))
                     . "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
         }
     }
     if (($composant == "create.txt")) {
-        $paramsSuppl = "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
+        $paramsSuppl = "classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
     }
     if (($composant == "reader.db") || ($composant == "edit.db")) {
-        $paramsSuppl = "&dbdoc=" . rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
+        $paramsSuppl = "dbdoc=" . rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
     }
     if ($composant == "save.db") {
-        $paramsSuppl = "&dbdoc=" .
+        $paramsSuppl = "dbdoc=" .
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc")) . "&contenu=" .
                 rawurlencode(filter_input(INPUT_GET, "contenu")) . "&filename=" . rawurlencode(filter_input(INPUT_GET, "filename"))
                 . "&folder=" . rawurlencode(filter_input(INPUT_GET, "folder"));
     }
     if ($composant == "delete.db") {
-        $paramsSuppl = "&dbdoc=" .
+        $paramsSuppl = "dbdoc=" .
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
     }
-}
+
 
 $waiterString = ""; //Loading and not load that is definitively not the question.--MD";
 
@@ -87,7 +86,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
             <div id="error"><?php echo $waiterString ?></div>
             <script>
                 var urlAppJS = "<?php echo $urlApp; ?>";
-                $("#contents").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/contents.php", function (response, status, xhr) {
+                $("#contents").load(url = urlAppJS + "/composant/<?php echo $composant."/contents.php?".$paramsSuppl;?>" , function (response, status, xhr) {
                     if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
@@ -99,7 +98,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
                         $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
                     }
                 });
-                $("#appdoc_menu").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/appdoc.php", function (response, status, xhr) {
+                $("#appdoc_menu").load(url = urlAppJS + "/composant/<?php echo $composant."/appdoc.php?".$paramsSuppl;?>", function (response, status, xhr) {
                     if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
