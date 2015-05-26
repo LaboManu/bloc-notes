@@ -13,11 +13,11 @@ if ($composant == "") {
 }
 $id =(int) filter_input(INPUT_GET, 'id');
 $dbdoc = (int) filter_input(INPUT_GET, 'dbdoc');
-
+/*
 if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
     $composant = "browser";
 }
-
+*/
     if ($composant == "rename.txt") {
         $paramsSuppl = "nom=" . rawurlencode(filter_input(INPUT_GET, "nom"))
                 . "&classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));

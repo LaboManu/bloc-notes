@@ -1,6 +1,6 @@
 <?php
 
-require("../../config.php");
+require("../../all-configured-and-secured-included.php");
 require_once("../../lib/fpdf17/fpdf.php");
 require_once("../../lib/fpdf17/loadimages.php");
 
@@ -8,7 +8,7 @@ require_once("../../lib/fpdf17/loadimages.php");
 $id = (int) filter_input(INPUT_GET, "id");
 $result = getDBDocument($id);
 if ($result != NULL) {
-    if (($doc = mysql_fetch_assoc($result)) != NULL) {
+    if (($doc = mysqli_fetch_assoc($result)) != NULL) {
         $contents = $doc['content_file'];
 
         $pdf = new PDF_MemImage();
@@ -30,7 +30,7 @@ if ($result != NULL) {
 //Load an image into a variable
                 $resultI = getDBDocument($matches[$i]);
                 if ($resultI != NULL) {
-                    if (($docI = mysql_fetch_assoc($resultI)) != NULL) {
+                    if (($docI = mysqli_fetch_assoc($resultI)) != NULL) {
                         $logo = $docI['content_file'];
 //Output it
                         $pdf->MemImage($logo, 50, 30, 140, 0);

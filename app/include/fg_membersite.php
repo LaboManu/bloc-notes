@@ -40,11 +40,11 @@ class FGMembersite
     }
     
     function InitDB($host,$uname,$pwd,$database,$tablename)
-    {/*
+    {
         $this->db_host  = $host;
         $this->username = $uname;
         $this->pwd  = $pwd;
-        $this->database  = $database;*/
+        $this->database  = $database;
         $this->tablename = $tablename;
       
     }

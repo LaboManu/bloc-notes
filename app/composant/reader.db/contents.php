@@ -12,7 +12,7 @@ echo $id;
 
 
 if ($result != NULL) {
-    if (($doc = mysql_fetch_assoc($result)) != NULL) {
+    if (($doc = mysqli_fetch_assoc($result)) != NULL) {
 
         $filename = $doc['filename'];
         $content = $doc['content_file'];

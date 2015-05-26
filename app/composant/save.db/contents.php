@@ -20,22 +20,23 @@ if($id==-2)
 {
     echo "Nouveau dossier";
     connect();
-    echo $sql = "insert into blocnotes_data (filename, username, isDirectory, mime, quandNouveau) values('".mysql_real_escape_string($filename)."', ".
-    mysql_real_escape_string($monutilisateur)."', 1, 'directory', now())";
-    simpleQ($sql, $mysqli);
+    echo $sql = "insert into blocnotes_data (filename, username, isDirectory, mime, quandNouveau) values('".mysqli_real_escape_string($mysqli, 
+            
+            $filename)."', '".
+    mysqli_real_escape_string($mysqli, $monutilisateur)."', 1, 'directory', now())";
+    if(simpleQ($sql, $mysqli))
+    {
+        // $doc = getLastDBDoc();
+        // echo "<a href=?composant=reader.db&dbdoc=".($doc['id']);
+    }
 }
 else if($id==-1)
 {
     connect();
-echo
-    $result = getDBDocument($folder);
-    if(($doc=  mysql_fetch_assoc($result)))
-    {
-        $folder_name = $doc['filename'];
-    }
+    $folder_id = (int)rawurldecode(filter_input(INPUT_GET, 'folder'));
     echo "Ajouter données";
-    echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNouveau, folder_name) values('".mysql_real_escape_string($filename)."', '".mysql_real_escape_string($content)."', '".
-    mysql_real_escape_string($monutilisateur)."', 'text/plain', now(), '".  mysql_real_escape_string($folder_name)."')";
+    echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNouveau, folder_id) values('".mysqli_real_escape_string($mysqli, $filename)."', '".mysqli_real_escape_string($mysqli, $content)."', '".
+    mysqli_real_escape_string($mysqli, $monutilisateur)."', 'text/plain', now(), ".  mysqli_real_escape_string($mysqli, $folder_id).")";
     simpleQ($sql, $mysqli);
 }
 else if($id==0)
@@ -63,9 +64,9 @@ else if($id==0)
             } else if(($ext == "jpg") || ($ext == "png") || ($ext == "gif")) {
                 $mime = "image/".$ext;
             }    
-            echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNonveau, folder_name) values('".mysql_real_escape_string($myFile['tmp_name'][$i]).
-            "', '".mysql_real_escape_string(file_get_contents($myFile['tmp_name'][$i]))."', '".
-            mysql_real_escape_string($monutilisateur)."', '$mime', now(), '" . mysql_real_escape_string($folder_name). "')";
+            echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNonveau, folder_id) values('".mysqli_real_escape_string($mysqli, $myFile['tmp_name'][$i]).
+            "', '".mysqli_real_escape_string($mysqli, file_get_contents($myFile['tmp_name'][$i]))."', '".
+            mysqli_real_escape_string($mysqli, $monutilisateur)."', '$mime', now(), " . mysqli_real_escape_string($mysqli, $folder). ")";
             simpleQ($sql, $mysqli);
             echo error_get_last();
         }
@@ -75,7 +76,7 @@ else
 {
     echo "Mettre à jour la note";
     connect();
-    $doc = mysql_fetch_assoc(getDBDocument($id));
+    $doc = mysqli_fetch_assoc(getDBDocument($id));
     
     if(isTexte($doc["filename"], $doc["mime"]))
     {
@@ -85,6 +86,6 @@ else
         $mime = "image/".getExtension($filename);
         
     }
-        echo htmlspecialchars($sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."', filename='".mysql_real_escape_string($filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."', folder_name='".  mysql_real_escape_string($folder)."'");
+        echo htmlspecialchars($sql = "update blocnotes_data set content_file='".mysqli_real_escape_string($mysqli, $content)."', filename='".mysqli_real_escape_string($mysqli, $filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."', folder_id=".  mysqli_real_escape_string($mysqli, $folder)."");
         simpleQ($sql, $mysqli);
 }

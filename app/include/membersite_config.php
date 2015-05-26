@@ -15,7 +15,7 @@ $fgmembersite->SetAdminEmail('manuel.dahmen@gmail.com');
 //by itself on submitting register.php for the first time
 $fgmembersite->InitDB(/*hostname*/'manudahmen.be.mysql',
                       /*username*/'manudahmen_be',
-                      /*password*/'Znduy32A',
+                      /*password*/'fRO985yQ',
                       /*database name*/'manudahmen_be',
                       /*table name*/'blocnotes_users');
 

@@ -44,7 +44,7 @@ function connect() {
     }
 
 
-    echo 'Succès... ' . $mysqli->host_info . "\n";
+    //echo 'Succès... ' . $mysqli->host_info . "\n";
 }
 
 $link = null;
@@ -125,7 +125,7 @@ function listHistory($filename = null, $date = "") {
     connect§();
     $q = "select user, filename, moment, type, contenu from blocnotes_items where user='" . mysqli_real_query($mysqli, $monutilisateur, $link) . "' order by moment";
     mysqli_stmt_execute($q);
-    $result = mysqli_stmt::get_result();  
+    $result = mysqli_stmt::get_result();
     return $result;
 }
 
@@ -139,7 +139,6 @@ function simpleQ($q, $mysqli) {
         connect();
     }
     return mysqli_query($mysqli, $q);
-    
 }
 
 function getSimpleRowElement($row, $field) {
@@ -241,13 +240,13 @@ function dbfile_getModificationsAsList($filename) {
             $pathId = getRootForUser();
         }
 
-        echo $q = "SELECT * FROM blocnotes_data " .
+        $q = "SELECT * FROM blocnotes_data " .
                 "WHERE username='" . mysqli_real_escape_string($mysqli, $monutilisateur) .
                 "' and ((filename like '%" . mysqli_real_escape_string($mysqli, $filtre) .
                 "%') or (content_file like'%" . mysqli_real_escape_string($mysqli, $filtre) .
                 "%') and (content_file like '%" .
                 ($composedOnly ? "{{" : "") . "%' )) and isDeleted=0 and "
-                . "folder_id=" . ( (int) $pathId); 
+                . "folder_id=" . ( (int) $pathId);
 
         $result = simpleQ($q, $mysqli);
 
@@ -259,7 +258,7 @@ function dbfile_getModificationsAsList($filename) {
         global $mysqli;
         connect();
         $q = "SELECT * FROM blocnotes_data " .
-                "WHERE isDeleted=0 username='" . mysqli_real_query($mysqli, $monutilisateur) . "' and id =" . mysqli_real_query($mysqli, (int) $id);
+                "WHERE isDeleted=0 and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "' and id =" . mysqli_real_escape_string($mysqli, (int) $id);
 
         $result = simpleQ($q, $mysqli);
         return $result;
@@ -354,10 +353,11 @@ function dbfile_getModificationsAsList($filename) {
     }
 
     function getFolderList() {
+        global $config;
         global $monutilisateur;
         global $mysqli;
-        global $tablePrefix;
-        $sql = "select * from " . $tablePrefix . "_data where isDirectory=1 and username='" . $monutilisateur . "'";
+        $tablePrefix = $config->tablePrefix;
+        echo $sql = "select * from " . $tablePrefix . "_data where isDirectory=1 and username='" . $monutilisateur . "'";
         $res = simpleQ($sql, $mysqli);
         return $res;
     }
@@ -425,7 +425,6 @@ function dbfile_getModificationsAsList($filename) {
         global $mysqli;
 
         $id = (int) $id;
-        ;
         $idDependant = (int) $idDependant;
         $sql = "delete from blocnotes_link where " .
                 "nom_element_porteur=$id and "
@@ -438,31 +437,27 @@ function dbfile_getModificationsAsList($filename) {
         global $mysqli;
         global $monutilisateur;
         $sql = "select id from blocnotes_data where username like '" .
-        mysqli_real_escape_string($mysqli, $monutilisateur)
-        . "' and isRoot=1";
+                mysqli_real_escape_string($mysqli, $monutilisateur)
+                . "' and isRoot=1";
 
         $result = simpleQ($sql, $mysqli);
-        if($result)
-        {
-        if ($arr = $result->fetch_assoc()) {
-            $id = $arr['id'];
+        if ($result) {
+            if ($arr = $result->fetch_assoc()) {
+                $id = $arr['id'];
+            } else {
+                $id = 0;
+            }
         } else {
-            $id = 0;
-        }
-        }
-else
-{
-    $id=-1;
-    echo "No root for user";
-}//echo "ID;; $id";
-       return $id;
+            $id = -1;
+            echo "No root for user";
+        }//echo "ID;; $id";
+        return $id;
     }
 
-    function deleteDoc($id) {
+    function deleteDBDoc($id) {
         global $mysqli;
         global $monutilisateur;
-        $sql = "update blocnotes_data set deleted=1 where id=" . mysqli_real_query($mysqli, $id) . " and username='" . $monutilisateur . "'";
-
-        $res = simpleQ($sql, $mysqli);
+        echo $sql = "update blocnotes_data set isDeleted=1 where id=" . mysqli_real_query($mysqli, $id) . " and username='" . mysqli_real_query($mysqli, $monutilisateur) . "'";
+        simpleQ($sql, $mysqli);
     }
     

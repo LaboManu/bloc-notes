@@ -21,7 +21,6 @@ function listerTout($classeur) {
     }
 }
 function listerNotesFromDB($filtre, $composed, $path){
-    global $mysqli;
     $results = getDocumentsFiltered($filtre, $composed, $path);
     if($results) {
     while (($row=  mysqli_fetch_assoc($results))) {
@@ -31,7 +30,10 @@ function listerNotesFromDB($filtre, $composed, $path){
         typeDB($filename, $content, $id, $row);
     }
     }
-    else "Pas de résultat";
+    else
+    { 
+        echo "Pas de résultat";
+    }
 }
 function typeTxt($cf, $filePath) {
     global $FILE_THUMB_MAXLEN;
@@ -104,10 +106,10 @@ function typeDB($filename, $content, $id, &$rowdoc = NULL) {
 {
      echo htmlspecialchars(substr($content, 0, 500));
  }
- else if($rowdoc['isDirectory']==1)
+ else if($rowdoc['isDirectory']==1 || $rowdoc["mime"]=="directory")
  {
-?><img src='images/alphabet.png' class="miniImg"><?php
-} ?></div><span class="filename"><?php echo $filename; ?></span></a></div>
+?><img src='images/alphabet.png' class="miniImg" alt="Icône dossier par défaut"><?php
+} ?></div><span class="filename"><?php echo $rowdoc["filename"]."|".$rowdoc["folder_name"]; ?></span></a></div>
     <?php }
 function echoImgBase64($content, $filename)
 {

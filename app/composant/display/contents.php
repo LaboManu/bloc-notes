@@ -6,7 +6,7 @@ require_once("../browser/listesItem.php");
 connect();
 $result = getDBDocument((int)filter_input(INPUT_GET, "id"));
 if ($result != NULL) {
-    if (($doc = mysql_fetch_assoc($result)) != NULL) {
+    if (($doc = mysqli_fetch_assoc($result)) != NULL) {
         $filename = $doc['filename'];
         $content = $doc['content_file'];
         $ext = getExtension($filename);
