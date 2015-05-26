@@ -20,14 +20,19 @@ if($id==-2)
 {
     echo "Nouveau dossier";
     connect();
-    echo $sql = "insert into blocnotes_data (filename, username, isDirectory, mime, quandNouveau) values('".mysqli_real_escape_string($mysqli, 
+    echo $sql = "insert into blocnotes_data (filename, username, isDirectory, mime, quandNouveau, folder_id) values('".mysqli_real_escape_string($mysqli, 
             
             $filename)."', '".
-    mysqli_real_escape_string($mysqli, $monutilisateur)."', 1, 'directory', now())";
+    mysqli_real_escape_string($mysqli, $monutilisateur)."', 1, 'directory', now(), ".mysqli_real_escape_string($mysqli, $folder).")";
     if(simpleQ($sql, $mysqli))
     {
+        echo "Répertoire crée";
         // $doc = getLastDBDoc();
         // echo "<a href=?composant=reader.db&dbdoc=".($doc['id']);
+    }
+    else
+    {
+        echo "Erreur technique";
     }
 }
 else if($id==-1)
@@ -86,6 +91,6 @@ else
         $mime = "image/".getExtension($filename);
         
     }
-        echo htmlspecialchars($sql = "update blocnotes_data set content_file='".mysqli_real_escape_string($mysqli, $content)."', filename='".mysqli_real_escape_string($mysqli, $filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."', folder_id=".  mysqli_real_escape_string($mysqli, $folder)."");
+        echo htmlspecialchars($sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli, $folder).", content_file='".mysqli_real_escape_string($mysqli, $content)."', filename='".mysqli_real_escape_string($mysqli, $filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."'");
         simpleQ($sql, $mysqli);
 }

@@ -13,9 +13,8 @@ if ($dbdoc == "") {
 
 $filtre = filter_input(INPUT_GET, "filter");
 
-$composed = false;
 
-$c = $_GET['composed'];
+$composed = ($_GET['composed'] or false);
 if ($c == "Notes composees") {
     $composed = true;
 } else {

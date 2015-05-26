@@ -122,7 +122,7 @@ function listHistory($filename = null, $date = "") {
     }
     global $mysqli;
     global $monutilisateur;
-    connect§();
+    connect();
     $q = "select user, filename, moment, type, contenu from blocnotes_items where user='" . mysqli_real_query($mysqli, $monutilisateur, $link) . "' order by moment";
     mysqli_stmt_execute($q);
     $result = mysqli_stmt::get_result();
@@ -131,11 +131,10 @@ function listHistory($filename = null, $date = "") {
 
 function simpleQ($q, $mysqli) {
     global $mysqli;
-    if ($date == "") {
-        $date = date("Y-m-d-H-i-s");
-    }
 
-    if ($link == NULL) {
+    $date = date("Y-m-d-H-i-s");
+
+    if ($mysqli == NULL) {
         connect();
     }
     return mysqli_query($mysqli, $q);
@@ -454,10 +453,10 @@ function dbfile_getModificationsAsList($filename) {
         return $id;
     }
 
-    function deleteDBDoc($id) {
+    function deleteDBDoc($dbdoc) {
         global $mysqli;
         global $monutilisateur;
-        echo $sql = "update blocnotes_data set isDeleted=1 where id=" . mysqli_real_query($mysqli, $id) . " and username='" . mysqli_real_query($mysqli, $monutilisateur) . "'";
+        echo $sql = "update blocnotes_data set isDeleted=1 where id=" . mysqli_real_escape_string($mysqli, $dbdoc) . " and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "'";
         simpleQ($sql, $mysqli);
     }
     

@@ -29,7 +29,7 @@ require_once(__DIR__."/lib/download.php");
 
 $appName = "";
 
-$version = "2.0 beta 2";
+$version = "2.0";
 
 $pathSep = "/";
 
