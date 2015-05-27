@@ -84,7 +84,7 @@ function doNoteAction(note_id, selectedIndex)
   }
   else {
      alert ("Suppression annulée.")
-  }alert("");
+  }
         
 }
 

@@ -878,10 +878,12 @@ function Ln($h=null)
 	else
 		$this->y += $h;
 }
-
-function Image($file, $x=null, $y=null, $w=0, $h=0, $type='', $link='')
+// 34serid0frame1000001-2jpgjpgwed-27-may-2015-063652.jpg Warning: file_get_contents(jpg): failed to open stream: No such file or directory in /customers/3/5/2/manudahmen.be/httpd.www/blocnotes/app/lib/fpdf17/fpdf.php on line 1215 FPDF error: Missing or incorrect image file: jpg
+// ARE YOU LAUGHING OF ME, AMIRICANS SONS OF BITCHES?
+function Image($slug_ext='', $filename='', $x=null, $y=null, $w, $h, $type, $link, $data)
 {
-	// Put an image on the page
+        $file = $slug_ext;
+    	// Put an image on the page
 	if(!isset($this->images[$file]))
 	{
 		// First use of this image, get info
@@ -892,13 +894,14 @@ function Image($file, $x=null, $y=null, $w=0, $h=0, $type='', $link='')
 				$this->Error('Image file has no extension and no type was specified: '.$file);
 			$type = substr($file,$pos+1);
 		}
+            
 		$type = strtolower($type);
-		if($type=='jpeg')
+		if($type=='jpeg') 
 			$type = 'jpg';
 		$mtd = '_parse'.$type;
 		if(!method_exists($this,$mtd))
 			$this->Error('Unsupported image type: '.$type);
-		$info = $this->$mtd($file);
+		$info = $this->$mtd($type, $file, $data);
 		$info['i'] = count($this->images)+1;
 		$this->images[$file] = $info;
 	}
@@ -1207,14 +1210,14 @@ function _dounderline($x, $y, $txt)
 	return sprintf('%.2F %.2F %.2F %.2F re f',$x*$this->k,($this->h-($y-$up/1000*$this->FontSize))*$this->k,$w*$this->k,-$ut/1000*$this->FontSizePt);
 }
 
-function _parsejpg($file)
+function _parsejpg($type, $filename, $data)
 {
-	// Extract info from a JPEG file
-	$a = getimagesize($file);
+    // Extract info from a JPEG file
+	$a = getimagesizefromstring($data);
 	if(!$a)
-		$this->Error('Missing or incorrect image file: '.$file);
+		$this->Error('Missing or incorrect image file: '.$filename);
 	if($a[2]!=2)
-		$this->Error('Not a JPEG file: '.$file);
+		$this->Error('Not a JPEG file: '.$filename);
 	if(!isset($a['channels']) || $a['channels']==3)
 		$colspace = 'DeviceRGB';
 	elseif($a['channels']==4)
@@ -1222,11 +1225,10 @@ function _parsejpg($file)
 	else
 		$colspace = 'DeviceGray';
 	$bpc = isset($a['bits']) ? $a['bits'] : 8;
-	$data = file_get_contents($file);
 	return array('w'=>$a[0], 'h'=>$a[1], 'cs'=>$colspace, 'bpc'=>$bpc, 'f'=>'DCTDecode', 'data'=>$data);
 }
 
-function _parsepng($file)
+function _parsepng($type, $filename, $data)
 {
 	// Extract info from a PNG file
 	$f = fopen($file,'rb');

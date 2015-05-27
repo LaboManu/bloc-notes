@@ -1,7 +1,7 @@
 <?php
 require_once("../browser/listesItem.php");
 $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
- 
+
 function folder_field(){
     ?>
 <select name="folder">
