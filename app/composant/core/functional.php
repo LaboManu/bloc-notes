@@ -29,25 +29,25 @@ function htmlizeDoc($content) {
     return $contents;
 }
 
-function replaceContentDoc($fpdf, $content) {
+function replaceContentDoc(FPDF $fpdf, $contents) {
     $matches = ""; global $urlApp; global $pathSep;
-    preg_match_all("/\{\{(([0-9])+)\}\}/", $content, $matches);
+    preg_match_all("/\{\{(([0-9])+)\}\}/", $contents, $matches);
     $matches = $matches[1];
     for ($i = 0; $i < count($matches); $i++) {
         $fpdf->AddPage();
-
         $resultI = getDBDocument($matches[$i]);$docI = mysqli_fetch_assoc($resultI);
         ($docI['id'] > 0) or die();$filename = $docI['filename'];$mime = $docI['mime'];$content = $docI['content_file'];$id=$docI["id"];
         $docuurl = $urlApp . $pathSep . "composant" . $pathSep . "display" . $pathSep . "document.php?id=" . $matches[$i];
         $slug = doc_slug($id, $filename);
         if (isTexte(getExtension($filename,$mime))) {
-            $fpdf->MultiCell($docuurl);
+            $fpdf->MultiCell(27,0,$docuurl);
+            $fpdf->MultiCell(210,297, $docuurl);
         } else if (isImage(getExtension($filename,$mime))) {
-            $fpdf->Image($slug, $docuurl, 0,0,215,268, getExtension($mime), '', $content);
+            $fpdf->Image($slug, $docuurl, 0,0,210,297, getExtension($mime), '', $content);
             
         } else
         {
-            $fpdf->MultiCell("Contenu non pris en charge ou er");
+            $pdf->MultiCell(210,297, "Contenu non pris en charge ou er");
         }
     }
     preg_match("/\(\(([0-9])+\)\)/", $content, $matches);

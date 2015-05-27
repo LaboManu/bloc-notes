@@ -4,8 +4,6 @@ require_once("../../all-configured-and-secured-included.php");
 require_once("../../lib/fpdf17/fpdf.php");
 require_once("../core/functional.php");
 
-$font = (int) filter_input(INPUT_GET, "font");
-
 connect();
 
 $id = (int) filter_input(INPUT_GET, "id");
@@ -21,7 +19,11 @@ if ($result != NULL) {
         if ($mime == "text/plain") {
             $pdf->AddPage();
             $pdf->SetY(5);    // set the cursor at Y position 5
-            $pdf->SetFont(($font ? $font : 'Arial'), 'B', 16);
+            $pdf->SetFont('Arial', 'B', 16);
+            $pdf->MultiCell(210,297, $contents);
+
+            $pdf->AddPage();
+            $pdf->SetY(5);    // set the cursor at Y position 5
             replaceContentDoc($pdf, $contents);
         } else if (isImage(getExtension($filename,$mime))) {
             $ext  = substr($doc["mime"], strlen("IMAGE/"));
