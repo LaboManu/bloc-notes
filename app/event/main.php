@@ -36,7 +36,7 @@ function connect() {
 
 
     //conection: 
-    $mysqli = mysqli_connect($hostname, $username, $password, $dbname) or die("Error " . mysqli_error($link));
+    $mysqli = mysqli_connect($hostname, $username, $password, $dbname) or die("Error " . mysqli_error($mysqli));
 
     if ($mysqli->connect_error) {
         die('Erreur de connexion (' . $mysqli->connect_errno . ') '
@@ -130,6 +130,8 @@ function listHistory($filename = null, $date = "") {
 }
 
 function simpleQ($q, $mysqli) {
+
+    
     global $mysqli;
 
     $date = date("Y-m-d-H-i-s");

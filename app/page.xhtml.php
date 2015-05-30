@@ -36,12 +36,16 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
         }
     }
     if (($composant == "create.txt")) {
-        $paramsSuppl = "classeur=" . rawurlencode(filter_input(INPUT_GET, "classeur"));
+    }
+    if($composant == "create.db")
+    {
+        $paramsSuppl = "dbdoc=" . rawurlencode(filter_input(INPUT_GET, "dbdoc"))
+                . "&folder=" . rawurlencode(filter_input(INPUT_GET, "folder"));
     }
     if (($composant == "reader.db") || ($composant == "edit.db")) {
         $paramsSuppl = "dbdoc=" . rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
     }
-    if ($composant == "save.db") {
+    if ($composant == "save.db"|| ($composant == "edit.db")) {
         $paramsSuppl = "dbdoc=" .
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc")) . "&contenu=" .
                 rawurlencode(filter_input(INPUT_GET, "contenu")) . "&filename=" . rawurlencode(filter_input(INPUT_GET, "filename"))

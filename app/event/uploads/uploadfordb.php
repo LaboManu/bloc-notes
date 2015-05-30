@@ -1,8 +1,10 @@
 <?php
 require_once("../../all-configured-and-secured-included.php");
 require_once("../../composant/browser/listesItem.php");
-print_r($_POST);
+//print_r($_POST);
 connect();
+global $mysqli;
+global $link;
 
 $type = rawurldecode(filter_input(INPUT_GET, "submit"));
 if (isset($_GET['dbdoc'])) {
@@ -28,15 +30,14 @@ if ($id == 0) {
     echo $_SERVER['REQUEST_METHOD'];
     echo "POST";
     if (isset($_FILES['files'])) {
-        echo "$ _ FILES[files] is set";
+        //echo "$ _ FILES[files] is set";
         $myFiles = $_FILES['files'];
         $fileCount = count($myFiles["name"]);
 
         for ($i = 0; $i < $fileCount; $i++) {
-            echo "File n°$i | $filename";
+            echo "File n°$i | $filename<br/>";
             $filename = $myFiles['name'][$i];
-            echo $filename;
-            echo "ext" . ($ext = getExtension($filename));
+            //echo "ext" . ($ext = getExtension($filename));
             if (isTexte($ext, null)) {
                 $mime = "text/plain";
             } else if (isImage($ext)) {
@@ -45,12 +46,17 @@ if ($id == 0) {
                 $mime = "text/plain";
             }
             $content = file_get_contents($myFiles['tmp_name'][$i]);
-            $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNonveau, folder_id) values('" . mysqli_real_escape_string($mysqli, $filename) .
+            $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNouveau, folder_id) values('" . mysqli_real_escape_string($mysqli, $filename) .
                     "', '" . mysqli_real_escape_string($mysqli, $content) . "', '" .
                     mysqli_real_escape_string($mysqli, $monutilisateur) . "', '$mime', now(), " . ((int) $folder) . ")";
-            if (simpleQ($sql, $mysqli)) {
-                echo "Fichier inséré avec succès" . $filename;
+            if ($res = simpleQ($sql, $mysqli)) {
+                echo "Fichier inséré : " . $filename;
+            } else {
+                echo mysqli_dump_debug_info($mysqli);
             }
+            if ($res) {
+                mysqli_free_result($res);
+            };
         }
     }
 }
