@@ -2,16 +2,17 @@
 
 require_once("../../config.php");
 require_once("../browser/listesItem.php");
-$folder = (int)(rawurldecode(filter_input(INPUT_GET, 'folder')));
 
 $type = rawurldecode(filter_input(INPUT_GET, "submit"));
 if(isset($_GET['dbdoc']))
 {
     $id = (int)(rawurldecode(filter_input(INPUT_GET, 'dbdoc')));
     $filename = rawurldecode(filter_input(INPUT_GET, 'filename'));
+$folder = (int)(rawurldecode(filter_input(INPUT_GET, 'folder')));
 }
 else {
     $id = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')));
+$folder = (int)(rawurldecode(filter_input(INPUT_POST, 'folder')));
 }
 $content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 
@@ -46,6 +47,7 @@ else if($id==-1)
 }
 else if($id==0)
 {
+    print_r($_POST);
     echo "Ajouter fichiers (images ou textes)";
     connect();
     echo "TODO: Insert uploaded files.";

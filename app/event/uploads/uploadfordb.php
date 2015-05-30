@@ -1,28 +1,26 @@
 <?php
-
+require_once("../../all-configured-and-secured-included.php");
 require_once("../../composant/browser/listesItem.php");
+print_r($_POST);
+connect();
 
 $type = rawurldecode(filter_input(INPUT_GET, "submit"));
-if(isset($_GET['id']))
-{
-    $id = (int)(rawurldecode(filter_input(INPUT_GET, 'dbdoc')));
-}
-else {
-    $id = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')));
+if (isset($_GET['dbdoc'])) {
+    $id = (int) (rawurldecode(filter_input(INPUT_GET, 'dbdoc')));
+} else {
+    $id = (int) (rawurldecode(filter_input(INPUT_POST, 'dbdoc')));
 }
 $content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 
-
-if($id==-1)
-{
-    echo "Ajouter données";
-    connect();
-    echo $sql = "insert into blocnotes_data (filename, content_file, username) values('Newly created.txt', '".mysql_real_escape_string($content)."', '".
-    mysql_real_escape_string($monutilisateur)."')";
-    simpleQ($sql, $mysqli);
+if (isset($_GET['folder'])) {
+    $folder = (int) (rawurldecode(filter_input(INPUT_GET, 'folder')));
+} else {
+    $folder = (int) (rawurldecode(filter_input(INPUT_POST, 'folder')));
 }
-else if($id==0)
-{
+
+
+if ($id == 0) {
+    print_r($_POST);
     echo "Ajouter fichiers (images ou textes)";
     connect();
     echo "TODO: Insert uploaded files.";
@@ -31,40 +29,34 @@ else if($id==0)
     echo "POST";
     if (isset($_FILES['files'])) {
         echo "$ _ FILES[files] is set";
-        $myFile = $_FILES['files'];
-        $fileCount = count($myFile["name"]);
+        $myFiles = $_FILES['files'];
+        $fileCount = count($myFiles["name"]);
 
         for ($i = 0; $i < $fileCount; $i++) {
             echo "File n°$i | $filename";
-            $filename = $myFile['name'][$i];
+            $filename = $myFiles['name'][$i];
             echo $filename;
-            $ext = getExtension($filename);
-            if (($ext == "txt")|| ($ext == "rtf") || ($ext = "tml") || ($ext == "htm") ||($ext == "stl"))
-            {
+            echo "ext" . ($ext = getExtension($filename));
+            if (isTexte($ext, null)) {
                 $mime = "text/plain";
-                
-            } else if(($ext == "jpg") || ($ext == "png") || ($ext == "gif")) {
-                $mime = "image/".$ext;
-            }    
-            $sql = "insert into blocnotes_data (filename, content_file, username, mime) values('".mysql_real_escape_string($myFile['name'][$i]).
-            "', '".mysql_real_escape_string(file_get_contents($myFile['tmp_name'][$i]))."', '".
-            mysql_real_escape_string($monutilisateur)."', '$mime')";
-            simpleQ($sql, $mysqli);
-            echo error_get_last();
+            } else if (isImage($ext)) {
+                $mime = "image/" . $ext;
+            } else {
+                $mime = "text/plain";
+            }
+            $content = file_get_contents($myFiles['tmp_name'][$i]);
+            $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNonveau, folder_id) values('" . mysqli_real_escape_string($mysqli, $filename) .
+                    "', '" . mysqli_real_escape_string($mysqli, $content) . "', '" .
+                    mysqli_real_escape_string($mysqli, $monutilisateur) . "', '$mime', now(), " . ((int) $folder) . ")";
+            if (simpleQ($sql, $mysqli)) {
+                echo "Fichier inséré avec succès" . $filename;
+            }
         }
     }
 }
-else
-{
-    echo "Mettre à jour la note";
-    connect();
-    $sql = "update blocnotes_data set content_file='".mysql_real_escape_string($content)."' where id=".$id;
-    simpleQ($sql, $mysqli);
-}
-echo $id." |  : | ".$content;
 ?>
 <ul>
-<li class="appdoc_button"><a href="../../page.xhtml.php?composant=browser">Naviguer</a></li>
-<li class="appdoc_button"><a href="../../page.xhtml.php?composant=create.db">Créer une autre note ou uploader des fichiers.</a></li>
+    <li class="appdoc_button"><a href="../../page.xhtml.php?composant=browser">Naviguer</a></li>
+    <li class="appdoc_button"><a href="../../page.xhtml.php?composant=create.db">Créer une autre note ou uploader des fichiers.</a></li>
 
 </ul>

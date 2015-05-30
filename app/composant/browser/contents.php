@@ -11,6 +11,9 @@ if ($dbdoc == "") {
     echo "Répertoire racine (par défaut)";
 }
 
+$docCourant = mysqli_fetch_assoc(getDBDocument($dbdoc));
+
+
 $filtre = filter_input(INPUT_GET, "filter");
 
 
@@ -21,6 +24,7 @@ if ($c == "Notes composees") {
     $composed = false;
 }
 ?><form action="" method="GET">
+    <h2 class="userInfo">Dossier: <?php echo $docCourant["filename"]; ?></h2>
     <h3>Classeurs en base de données</h3>
     Recherche<input type="text" name="filter" value="<?php echo $filtre; ?>"/>
     <input type="checkbox" name="composed" value="Notes composees" <?php echo $composed ? "checked" : ""; ?> />

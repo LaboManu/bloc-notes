@@ -20,7 +20,7 @@ if ($result != NULL) {
             $pdf->AddPage();
             $pdf->SetY(5);    // set the cursor at Y position 5
             $pdf->SetFont('Arial', 'B', 16);
-            $pdf->MultiCell(210,297, $contents);
+            multiCellText($pdf, $contents);
 
             $pdf->AddPage();
             $pdf->SetY(5);    // set the cursor at Y position 5
@@ -30,7 +30,7 @@ if ($result != NULL) {
             $pdf->AddPage();
             $pdf->SetY(5);    // set the cursor at Y position 5
             $docuurl = $urlApp . $pathSep . "composant" . $pathSep . "display" . $pathSep . "document.php?id=" . $matches[$i];
-            $pdf->Image(doc_slug($id, $filename), $docuurl,0,0,215,268,$ext, '', $doc['content_file']);
+            $pdf->Image(doc_slug($id, $filename), $docuurl,0,0,210,297,$ext, '', $doc['content_file']);
         }
         $pdf->Output();
     }

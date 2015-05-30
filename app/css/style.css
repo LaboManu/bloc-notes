@@ -36,10 +36,13 @@ ul#fg_membersite_content, ul#fg_membersite_content li
     height: 20px;
 } 
 
-.button_appdoc, .button_appdoc a, .button_help, .button_help a
+a.button_appdoc, .button_appdoc{
+    display: float;
+    float:left;
+}
+.button_appdoc a, .button_help, .button_help a
 
 {
-    /*display: float;*/
     padding: 5pt;
     margin : 5pt;
     color: whitesmoke;

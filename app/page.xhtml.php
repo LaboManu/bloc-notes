@@ -76,6 +76,8 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         <?php if ($composant != "") { ?>
             <!-- Barre du dessus -->
             <div id="context_menu_bar">
+                
+                <ul><li><a href="?composant=browser" class="appdoc_button"> Fichiers</a></li></ul>
             </div>
             <!-- Barre du dessus -->
             <div id="user_frame" ><?php echo $waiterString ?></div>
@@ -104,12 +106,12 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
                         $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
                     }
                 });
-                $("#context_menu_bar").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/menubar.php?", function (response, status, xhr) {
+                /*$("#context_menu_bar").load(url = urlAppJS + "/composant/<?php echo $composant; ?>/menubar.php?", function (response, status, xhr) {
                     if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         $("#error").html(msg + xhr.status + " " + xhr.statusText + url + <?php echo "'Composant + " . $composant + "'"; ?>);
                     }
-                });
+                });*/
 
             </script>
         <?php } ?>
