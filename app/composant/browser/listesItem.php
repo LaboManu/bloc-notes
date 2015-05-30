@@ -132,12 +132,12 @@ function getExtension($filename)
 }
 function isImage($ext, $mime="")
 {
- return in_array($ext, array("jpg","png","gif","bmp")) or (($mime!="")&&(substr($mime, 0, 5)=="image"));
+    return in_array($ext, array("jpg","png","gif","bmp")) or (($mime!="")&&(substr($mime, 0, 5)=="image"));
    
 }
 function isTexte($ext, $mime="")
 {
- return in_array($ext, array("txt")) or ($mime=="text/plain");
+    return in_array($ext, array("txt")) or ($mime=="text/plain");
    
 }
 

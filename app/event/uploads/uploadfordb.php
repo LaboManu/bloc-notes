@@ -37,14 +37,17 @@ if ($id == 0) {
         for ($i = 0; $i < $fileCount; $i++) {
             echo "File n°$i | $filename<br/>";
             $filename = $myFiles['name'][$i];
-            //echo "ext" . ($ext = getExtension($filename));
-            if (isTexte($ext, null)) {
-                $mime = "text/plain";
-            } else if (isImage($ext)) {
+            $ext = getExtension($filename);
+            if (isImage($ext, "")) {
                 $mime = "image/" . $ext;
-            } else {
+            } else if (isTexte($ext, "")) {
                 $mime = "text/plain";
+            } else {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+                $mime = finfo_file($finfo, $myFiles['tmp_name'][$i]) ;
+                finfo_close($finfo);
             }
+            
             $content = file_get_contents($myFiles['tmp_name'][$i]);
             $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNouveau, folder_id) values('" . mysqli_real_escape_string($mysqli, $filename) .
                     "', '" . mysqli_real_escape_string($mysqli, $content) . "', '" .
