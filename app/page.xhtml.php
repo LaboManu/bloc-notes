@@ -7,10 +7,13 @@ $document = rawurlencode($document1);
 /* @var $_GET type */
 
 $composant = filter_input(INPUT_GET, 'composant');
-
 if ($composant == "") {
     $composant = filter_input(INPUT_POST, 'composant');
 }
+if ($composant == "") {
+    $composant = "browser";
+}
+
 $id =(int) filter_input(INPUT_GET, 'id');
 $dbdoc = (int) filter_input(INPUT_GET, 'dbdoc');
 /*
