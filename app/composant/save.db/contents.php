@@ -1,6 +1,5 @@
 <?php
 
-require_once("../../config.php");
 require_once("../browser/listesItem.php");
 
 $type = rawurldecode(filter_input(INPUT_GET, "submit"));
@@ -16,7 +15,17 @@ $folder = (int)(rawurldecode(filter_input(INPUT_POST, 'folder')));
 }
 $content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 
-
+if($_GET["option"]=="move.doc") 
+    {
+        connect();
+        echo "Déplacer document";
+        echo htmlspecialchars($sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli, $folder)." where id=".$id." and username='".$monutilisateur."'");
+        if(simpleQ($sql, $mysqli))
+        {
+            echo "Note déplacée avec succès";
+        }
+        die();
+    }
 if($id==-2)
 {
     echo "Nouveau dossier";
@@ -81,6 +90,7 @@ else if($id==0)
 }
 else
 {
+    
     echo "Mettre à jour la note";
     connect();
     $doc = mysqli_fetch_assoc(getDBDocument($id));

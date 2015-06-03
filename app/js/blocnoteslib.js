@@ -60,10 +60,9 @@ function doNoteAction(note_id, selectedIndex)
     else if(selectedIndex==2)
     {
         document.location.href = "page.xhtml.php?composant=reader.db&dbdoc="+note_id;
-    }
+                ....................    }
     else if(selectedIndex==3) // Move
     {
-        alert("Déplacement pas encore autorisé");
         document.location.href = "page.xhtml.php?composant=move.db&dbdoc="+note_id;
     }
     else if(selectedIndex==4) // Copier

@@ -6,8 +6,7 @@ if(!$fgmembersite->CheckLogin())
 {
     $fgmembersite->RedirectToURL("login.php");
     exit;
-}
-?>
+}/*
       <script language="javascript" type="text/javascript" >
         url = "<?php echo $urldir; ?>";
         function erreurs()
@@ -100,12 +99,14 @@ function afficherListes(affListes)
 <div class="mainmenu" style="float: left;">
 
 <img src="images/logo-blocnotes-128.png"/><?php echo $appName ; ?>
+
+
 <ul id='fg_membersite_content' class="mainmenu">
 <li>
 <a class="button_appdoc" href="page.xhtml.php?composant=browser" title="Explorer les notes et les images">Explorer</a>
 </li>
 <li>
-<a class="button_appdoc" href="page.xhtml.php?composant=upload" title="Uploader des fichiers textes (*.txt) et images (jpg, png, gif)">Téléverser</a>
+<a class="button_appdoc" href="page.xhtml.php?composant=upload" title="Uploader des fichiers textes (*.txt) et images (jpg, png, gif) et autres fichiers">Téléverser</a>
 </li>
 </ul>
-</div>
+ */?>

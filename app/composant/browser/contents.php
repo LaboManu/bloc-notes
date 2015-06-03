@@ -23,6 +23,9 @@ if ($c == "Notes composees") {
 } else {
     $composed = false;
 }
+
+displayPath($dbdoc);
+
 ?><form action="" method="GET">
     <h2 class="userInfo">Dossier: <?php echo $docCourant["filename"]; ?></h2>
     <h3>Classeurs en base de données</h3>
