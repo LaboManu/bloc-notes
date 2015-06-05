@@ -58,25 +58,7 @@ $folderDoc = mysqli_fetch_assoc($folderRes);
     <input type="hidden" name="dbdoc"  value="0"/><br/>
     <fieldset>
         <label for="folder">Choisissez où mettre la note-fichier</label>
-    <select name="folder" class="user-control">
-        <?php
-        connect();
-        $res = getFolderList();
-        while(($row=  mysqli_fetch_assoc($res))!=NULL)
-        {
-            if($row["id"]==$folder)
-            {
-                $optionSel = "selected";
-            }
-            else {
-                $optionSel = "";
-     
-            }
-            echo "<option value='".$row['id']."' ".$optionSel." >".htmlspecialchars($row['filename'])."</option>";
-            
-        }
-        ?>
-    </select>
+    <?php                folder_field($doc["folder_id"]); ?>
      
     <fieldset>
         <label for="file[]">Choisissez des fichiers</label>
