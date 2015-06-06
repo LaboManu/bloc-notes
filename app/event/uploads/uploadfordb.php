@@ -48,10 +48,26 @@ if ($id == 0) {
                 finfo_close($finfo);
             }
             
-            $content = file_get_contents($myFiles['tmp_name'][$i]);
+
+            
             $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNouveau, folder_id) values('" . mysqli_real_escape_string($mysqli, $filename) .
-                    "', '" . mysqli_real_escape_string($mysqli, $content) . "', '" .
+                    "', ?, '" .
                     mysqli_real_escape_string($mysqli, $monutilisateur) . "', '$mime', now(), " . ((int) $folder) . ")";
+            
+            
+            $stmt = $mysqli->prepare($sql);
+            $null = NULL;
+            $stmt->bind_param("b", $null);
+            $fp = fopen($myFiles['tmp_name'][$i], "r");
+            while (!feof($fp)) {
+                $stmt->send_long_data(0, fread($fp, 8192));
+            }
+            fclose($fp);
+            $stmt->execute();
+
+            
+            /*
+            
             if ($res = simpleQ($sql, $mysqli)) {
                 echo "Fichier inséré : " . $filename;
             } else {
@@ -59,7 +75,7 @@ if ($id == 0) {
             }
             if ($res) {
                 mysqli_free_result($res);
-            };
+            };*/
         }
     }
 }
