@@ -1,6 +1,6 @@
-Version 25
-
-Vérifier les classes suivantes:
-- Bézier (courbe et surface)
-- Polynomiale simple (courbe et surface)
+Version 25
+
+Vérifier les classes suivantes:
+- Bézier (courbe et surface)
+- Polynomiale simple (courbe et surface)
 Vérifier: calcul par 1 pourcentage ou 2 double précision 3 dessin

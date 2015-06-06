@@ -315,14 +315,14 @@ function insertDB($basePath, $classeurOrNote) {
             .
             ",'" . $basePath . "', " . mysqli_real_query($mysqli, file_get_contents($basePath . "/" . $classeurOrNote)) . "')";
 }
-
+/*
 function selectDBFolders($needle) {
     global $monutilisateur;
     global $mysqli;
     echo $sql = "select distint folder_name, username from blocnotes_data where username ='" . mysqli_real_query($mysqli, $monutilisateur) . "' and folder_name like '%" . $needle . "%'";
     return mysql_query($sql);
 }
-
+*/
 function isDirectory($dbdoc) {
     global $tablePrefix;
     global $mysqli;
@@ -453,6 +453,16 @@ function getRootForUser() {
         echo "No root for user";
     }//echo "ID;; $id";
     return $id;
+}
+function createRootForUser()
+{
+    global $mysqli;
+    connect();
+    $sql = "insert into blocnotes_data (filename, folder_id, isDirectory) values ('Dossier racine', -1, TRUE)";
+    if(mysqli_query($mysqli, $sql))
+    {
+        echo "Fichier racine créé";
+    }
 }
 
 function deleteDBDoc($dbdoc) {

@@ -1,4 +1,4 @@
-title {
+﻿title {
     display: block;
 }
 body
@@ -219,4 +219,12 @@ input.filecheckbox
 .ui-state-highlight
 {
     background-color: yelllow;
+}
+span.path_array
+{
+	display: float;
+	float: right;
+	display: padding : 5px dotted blue;
+	background-color: blue;
+	color: white;
 }

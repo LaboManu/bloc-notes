@@ -1,3 +1,3 @@
-<div id="document" src="">
-    <img src="<?php echo $document;?>" />
-</div>
+<div id="document" src="">
+    <img src="<?php echo $document;?>" />
+</div>

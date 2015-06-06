@@ -1,4 +1,4 @@
-<div id="document">
-    <?php echo $document;?>
-</div>
-<?php
+<div id="document">
+    <?php echo $document;?>
+</div>
+<?php
