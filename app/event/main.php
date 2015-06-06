@@ -458,8 +458,8 @@ function createRootForUser()
 {
     global $mysqli;
     connect();
-    $sql = "insert into blocnotes_data (filename, folder_id, isDirectory) values ('Root Folder', 'Dossier racine', -1, TRUE);
-    if(mysqli_query($sql))
+    $sql = "insert into blocnotes_data (filename, folder_id, isDirectory) values ('Dossier racine', -1, TRUE)";
+    if(mysqli_query($mysqli, $sql))
     {
         echo "Fichier racine créé";
     }
