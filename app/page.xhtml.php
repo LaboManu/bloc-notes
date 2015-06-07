@@ -74,10 +74,12 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         <link rel="icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="profile" href="http://microformats.org/profile/hcalendar"/>
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script type="text/javascript" src="composant/browser/dnd.js"></script>
         <script type="text/javascript" src="js/blocnoteslib.js"></script>
+        <script type="text/javascript" src="js/playerJS/dist/player-0.0.10.min.js"></script>
+        <script src="js/ePub/build/epub.min.js"></script>
     </head>
     <body>
         <?php if ($composant != "") { ?>

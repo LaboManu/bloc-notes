@@ -57,9 +57,7 @@ else if($id==-1)
 else if($id==0)
 {
     print_r($_POST);
-    echo "Ajouter fichiers (images ou textes)";
     connect();
-    echo "TODO: Insert uploaded files.";
 
     echo $_SERVER['REQUEST_METHOD'];
     echo "POST";
@@ -73,18 +71,22 @@ else if($id==0)
             $filename = $myFile['name'][$i];
             echo $filename;
             $ext = getExtension($filename);
-            if (($ext == "txt")|| ($ext == "rtf") || ($ext = "tml") || ($ext == "htm") ||($ext == "stl"))
-            {
-                $mime = "text/plain";
-                
-            } else if(($ext == "jpg") || ($ext == "png") || ($ext == "gif")) {
-                $mime = "image/".$ext;
-            }    
+            $finfo = new finfo("", "");
+            echo $mime = finfo_buffer($finfo, file_get_contents($filename, false, null, -1, 2048), "", null);
+            
+            
+            
             echo $sql = "insert into blocnotes_data (filename, content_file, username, mime, quandNonveau, folder_id) values('".mysqli_real_escape_string($mysqli, $myFile['tmp_name'][$i]).
             "', '".mysqli_real_escape_string($mysqli, file_get_contents($myFile['tmp_name'][$i]))."', '".
             mysqli_real_escape_string($mysqli, $monutilisateur)."', '$mime', now(), " . mysqli_real_escape_string($mysqli, $folder). ")";
             simpleQ($sql, $mysqli);
             echo error_get_last();
+            
+            
+            
+            
+            echo "<a href='?composant=browser.db&dbdoc='".$folder."'>Retour au dossier</a>";
+            
         }
     }
 }

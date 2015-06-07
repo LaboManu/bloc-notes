@@ -94,22 +94,18 @@ function typeDB($filename, $content, $id, &$rowdoc = NULL) {
  <input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" /><a class='miniImg' href="<?= $urlaction ?>">
 <div class="miniImg">
             <?php 
-            if(isImage(getExtension($filename), $rowdoc["mime"]))
-            {
-                //echoImgBase64($content, $filename);
-                ?>
+            $mime = $rowdoc["mime"];
+            if(isImage(getExtension($filename), $mime))
+            {?>
             <img src ="composant/display/contents.php?id=<?= $id ?>" alt="<?= $filename ?>"/>
-            <?php
-                
-            }
- else if(isTexte(getExtension($filename), $rowdoc["mime"]))
-{
-     echo htmlspecialchars(substr($content, 0, 500));
- }
- else if($rowdoc['isDirectory']==1 || $rowdoc["mime"]=="directory")
- {
+            <?php } else if(isTexte(getExtension($filename), $mime)) {
+     echo htmlspecialchars(substr($content, 0, 500)); } else 
+         if($rowdoc['isDirectory']==1 || $mime=="directory") {
 ?><img src='images/alphabet.png' class="miniImg" alt="Icône dossier par défaut"><?php
-} ?></div><span class="filename"><?php echo $rowdoc["filename"]."|".$rowdoc["folder_name"]; ?></span></a></div>
+} else {
+    echo "<img src='http://www.stdicon.com/crystal/".$mime."'/>";
+}
+?></div><span class="filename"><?php echo $rowdoc["filename"]."|".$rowdoc["folder_name"]; ?></span></a></div>
     <?php }
 function echoImgBase64($content, $filename)
 {

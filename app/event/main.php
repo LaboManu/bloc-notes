@@ -358,7 +358,7 @@ function getFolderList() {
     global $monutilisateur;
     global $mysqli;
     $tablePrefix = $config->tablePrefix;
-    echo $sql = "select * from " . $tablePrefix . "_data where isDirectory=1 and username='" . $monutilisateur . "'";
+    $sql = "select * from " . $tablePrefix . "_data where isDirectory=1 and username='" . $monutilisateur . "'";
     $res = simpleQ($sql, $mysqli);
     return $res;
 }
@@ -505,17 +505,16 @@ function displayPath($id) {
     echo "</div>";
 }
 
-function folder_field($folder_id){
+function folder_field($folder_id, $field_name="folder"){
     ?>
-<select name="folder" class="user-control">
+<select name="<?php echo $field_name; ?>" class="user-control">
         <?php
-        connect();
         $res = getFolderList();
         while(($row=  mysqli_fetch_assoc($res))!=NULL)
         {
             if($row["id"]==$folder_id)
             {
-                $optionSel = "selected";
+                $optionSel = "selected='selected'";
             }
             else {
                 $optionSel = "";
@@ -524,6 +523,8 @@ function folder_field($folder_id){
            echo "<option value='".$row['id']."' ".$optionSel." >".htmlspecialchars($row['filename'])."</option>";
             
         }
+        
+        mysqli_free_result($res);
         ?>
     </select><br/><?php
  }

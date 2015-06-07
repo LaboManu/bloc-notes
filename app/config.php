@@ -109,3 +109,5 @@ function getDocumentFromFullname($document)
     return substr($document, $pos+1);
             
 }
+mb_internal_encoding('UTF-8');
+setlocale(LC_CTYPE, 'fr_FR.UTF-8');

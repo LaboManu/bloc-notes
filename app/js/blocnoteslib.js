@@ -59,8 +59,8 @@ function doNoteAction(note_id, selectedIndex)
     }
     else if(selectedIndex==2)
     {
-        document.location.href = "page.xhtml.php?composant=reader.db&dbdoc="+note_id;
-                ....................    }
+        document.location.href = "page.xhtml.php?composant=edit.db&dbdoc="+note_id;
+                }
     else if(selectedIndex==3) // Move
     {
         document.location.href = "page.xhtml.php?composant=move.db&dbdoc="+note_id;

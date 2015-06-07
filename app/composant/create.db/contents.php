@@ -9,8 +9,11 @@ connect();
 $folderRes= getDBDocument($folder);
 
 $folderDoc = mysqli_fetch_assoc($folderRes);
+
+
+$folder_id = $folderDoc["id"];
 ?>
-<h1><?php echo htmlspecialchars($folderDoc["filename"]); ?></h2>
+<h1><?php echo $folderDoc["filename"]; ?></h2>
 
 
 <form action="page.xhtml.php" method="GET">
@@ -22,26 +25,9 @@ $folderDoc = mysqli_fetch_assoc($folderRes);
     </fieldset>
     <fieldset>
         <label for="folder">Choisissez où mettre la note</label>
-    <select name="folder" class="user-control">
-        <?php
-        connect();
-        $res = getFolderList();
-        while(($row=  mysqli_fetch_assoc($res))!=NULL)
-        {
-            if($row["id"]==$folder)
-            {
-                $optionSel = "selected";
-            }
-            else {
-                $optionSel = "";
-     
-            }
-            echo "<option value='".$row['id']."' ".$optionSel." >".$row['filename']."</option>";
-            
-        }
-        ?>
-    </select>
-    </fieldset>
+       <?php
+ folder_field($folder_id);  ?>
+   </fieldset>
         
     <fieldset>
         <label for="contenu"></label>
@@ -57,9 +43,9 @@ $folderDoc = mysqli_fetch_assoc($folderRes);
     <input type="hidden" name="composant" value="save.db" />
     <input type="hidden" name="dbdoc"  value="0"/><br/>
     <fieldset>
-        <label for="folder">Choisissez où mettre la note-fichier</label>
-    <?php                folder_field($doc["folder_id"]); ?>
-     
+        <label for="folder2">Choisissez où mettre la note-fichier</label>
+     <?php
+ folder_field($folder_id);  ?>
     <fieldset>
         <label for="file[]">Choisissez des fichiers</label>
         <input type="file" name="files[]" multiple="multiple" class="user-control"/><br/>
