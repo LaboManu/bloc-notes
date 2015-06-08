@@ -69,7 +69,7 @@ div#fg_membersite {
 #user_frame
 {
     z-index: 2;
-    /*float: right; /
+    /*float: right; */
     height: 50px; 
     background-color: #00ffff; 
     color: #ff0000;  
@@ -87,13 +87,23 @@ div#fg_membersite {
     color: #0000ff;  
     border: 3px #009;
 }
+#context_menu_bar a:hover
+{
+    color: #FFFFFF;
+}
+#context_menu_bar a:visited
+{
+    color: #DDD;
+}
+
 #appdoc_menu{ 
-    /*float: left; */
+    float: left; 
     width: 30%; 
     background-color: #C0C0C0; 
     color: #0C0C0C; 
     border: 3px #009;
 }
+
 #contents{
     background-color: #FFFDDD; 
     color: #000444;  
@@ -224,7 +234,11 @@ span.path_array
 {
 	display: float;
 	float: right;
-	display: padding : 5px dotted blue;
+	padding : 5px dotted blue;
 	background-color: blue;
 	color: white;
+}
+doc_container
+{
+    width: 700px;
 }
