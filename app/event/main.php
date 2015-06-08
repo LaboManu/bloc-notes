@@ -484,7 +484,8 @@ function getPathArray($id) {
             $filename = $doc["filename"];
             $id = $doc["folder_id"];
             $id_old = $doc["id"];
-            $parray[$i++] = $filename;
+            $parray[$i] = array("filename" =>$filename, "id" => $id_old);
+            $i++;
             $norec = FALSE;
         } else {
             $norec = TRUE;
@@ -498,8 +499,8 @@ function displayPath($id) {
 
     echo "<div class='path_array'>";
 
-    foreach ($parray_fn as $i => $filename) {
-        echo "<span class='path_array'>" . $filename . "</span>";
+    foreach ($parray_fn as $i => $arra) {
+        echo "<span class='path_array'><a href='?composant=browser&dbdoc=".($parray_fn[$i]["id"])."'>" . $parray_fn[$i]["filename"] . "</a></span>";
     }
 
     echo "</div>";

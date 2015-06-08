@@ -23,7 +23,6 @@ if ($c == "Notes composees") {
     $composed = false;
 }
 
-displayPath($dbdoc);
 
 ?><form action="" method="GET">
     <h2 class="userInfo">Dossier: <?php echo $docCourant["filename"]; ?></h2>

@@ -1,6 +1,7 @@
 <?php
 require_once 'config.php';
 require_once(__DIR__ . "/access-controlled.php");
+require_once(__DIR__ . "/all-configured-and-secured-included.php");
 
 $document1 = filter_input(INPUT_GET, 'document');
 $document = rawurlencode($document1);
@@ -46,7 +47,8 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
                 . "&folder=" . rawurlencode(filter_input(INPUT_GET, "folder"));
     }
     if (($composant == "reader.db") || ($composant == "edit.db")) {
-        $paramsSuppl = "dbdoc=" . rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
+        $paramsSuppl = "dbdoc=" . rawurlencode((int) filter_input(INPUT_GET, "dbdoc"))
+            . "&viewer=" . rawurlencode((int) filter_input(INPUT_GET, "viewer"));
     }
     if (($composant == "save.db") || ($composant == "edit.db")|| ($composant == "move.db")) {
         $paramsSuppl = "dbdoc=" .
@@ -85,6 +87,9 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         <?php if ($composant != "") { ?>
             <!-- Barre du dessus -->
             <div id="context_menu_bar">
+<?php
+                displayPath($dbdoc);
+?>
                 <p style="background-color: blue;">&nbsp;</p>
             </div>
             <!-- Barre du dessus -->
