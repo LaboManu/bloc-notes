@@ -91,9 +91,13 @@ div#fg_membersite {
 {
     color: #FFFFFF;
 }
-#context_menu_bar a:visited
+#context_menu_bar a
 {
     color: #DDD;
+}
+#context_menu_bar a:visited
+{
+    color: #999;
 }
 
 #appdoc_menu{ 
