@@ -5,10 +5,9 @@ require_once("listesItem.php");
 
 connect();
 $dbdoc = (int) filter_input(INPUT_GET, "dbdoc");
-echo "dbdoc".$dbdoc;
 if ($dbdoc == "") {
     $dbdoc = getRootForUser();
-    echo "Répertoire racine (par défaut)";
+    echo "Répertoire racine (par défaut:$dbdoc)";
 }
 
 $docCourant = mysqli_fetch_assoc(getDBDocument($dbdoc));

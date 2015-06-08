@@ -40,7 +40,7 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
     }
     if (($composant == "create.txt")) {
     }
-    if($composant == "create.db")
+    if(($composant == "create.db")||($composant == "create.folder.db"))
     {
         $paramsSuppl = "dbdoc=" . rawurlencode(filter_input(INPUT_GET, "dbdoc"))
                 . "&folder=" . rawurlencode(filter_input(INPUT_GET, "folder"));
