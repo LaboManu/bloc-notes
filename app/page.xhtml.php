@@ -60,9 +60,18 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
         $paramsSuppl = "dbdoc=" .
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
     }
+    if($composant=="create.follow.db")
+    {
+            $paramsSuppl = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')))."&".
+        (int)(rawurldecode(filter_input(INPUT_POST, 'follow')));
+    }
+    if($composant=="follow.db")
+    {
+            $paramsSuppl = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')))."&".
+                (int)(rawurldecode(filter_input(INPUT_POST, 'follow')));
+    }
 
-
-$waiterString = ""; //Loading and not load that is definitively not the question.--MD";
+    $waiterString = ""; //Loading and not load that is definitively not the question.--MD";
 
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
@@ -86,16 +95,16 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     <body>
         <?php if ($composant != "") { ?>
             <!-- Barre du dessus -->
-            <div id="context_menu_bar">
-<?php
+            <div id="context_menu_bar" style="background-color: blue;">
+<p><?php
                 displayPath($dbdoc);
-?>
-                <p style="background-color: blue;">&nbsp;</p>
+?>&nbsp;</p>
+                
             </div>
-            <!-- Barre du dessus -->
-            <div id="user_frame" ><?php echo $waiterString ?></div>
-            <!-- Barre de gauche -->
-            <div id="appdoc_menu"><?php echo $waiterString ?></div>
+           <!-- Barre du dessus -->
+            <div id="user_frame" ></div>
+            +<!-- Barre de gauche -->
+            <div id="appdoc_menu"></div>
             <!-- Barre de gauche -->
             <div id="contents"><?php echo $waiterString ?></div>
             <div id="error"><?php echo $waiterString ?></div>

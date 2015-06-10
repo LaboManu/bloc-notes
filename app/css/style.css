@@ -68,12 +68,11 @@ div#fg_membersite {
 }
 #user_frame
 {
-    z-index: 2;
-    /*float: right; */
-    height: 50px; 
+    float: right;
+    width : 300px;
     background-color: #00ffff; 
     color: #ff0000;  
-    border: 3px #009;
+    border: 3px solid #009;
 }
 #user_frame p 
 {
@@ -83,6 +82,7 @@ div#fg_membersite {
 
 #context_menu_bar
 {
+    float: left;
     background-color: #ffff00; 
     color: #0000ff;  
     border: 3px #009;

@@ -7,7 +7,7 @@ connect();
 $dbdoc = (int) filter_input(INPUT_GET, "dbdoc");
 if ($dbdoc == "") {
     $dbdoc = getRootForUser();
-    echo "Répertoire racine (par défaut:$dbdoc)";
+    echo "\\";
 }
 
 $docCourant = mysqli_fetch_assoc(getDBDocument($dbdoc));
@@ -25,11 +25,11 @@ if ($c == "Notes composees") {
 
 
 ?><form action="" method="GET">
-    <h2 class="userInfo">Dossier: <?php echo $docCourant["filename"]; ?></h2>
-    <h3>Classeurs en base de données</h3>
-    Recherche<input type="text" name="filter" value="<?php echo $filtre; ?>"/>
+    <h2 class="userInfo">Catégorie: <?php echo $docCourant["filename"]; ?></h2>
+    <h3>Notes et images</h3>
+    <p>Rechercher<input type="text" name="filter" value="<?php echo $filtre; ?>"/>
     <input type="checkbox" name="composed" value="Notes composees" <?php echo $composed ? "checked" : ""; ?> />
-    <input type="hidden" name="composant" value="browser" />
+    <input type="hidden" name="composant" value="browser" /></p>
     <div id="dblisting" class="clearBoth">
         <?php
         listerNotesFromDB($filtre, $composed, $dbdoc);

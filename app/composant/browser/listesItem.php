@@ -90,7 +90,7 @@ function typeImg($cf) {
 function typeDB($filename, $content, $id, &$rowdoc = NULL) {
     $urlaction = "page.xhtml.php?composant=browser&dbdoc=" . $id;
     ?><div id="<?php echo "data-$id"; ?>" class="miniImgContainer" ondrop="drop(event, <?php echo $id ?>)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" >
-        <select onchange="doNoteAction(<?= $id ?>, this.selectedIndex);" name="file_menu" id="menu<?php echo $id; ?>"><option value="Rien">---</option><option value="Voir">Voir</option><option value="Modifier">Modifier</option><option value="Move">Déplacer</option><option value="Copier">Copier</option><option value="Coller">Coller</option><option value="Corbeille">Corbeille</option><option value="Assembler">Assembler</option><option name="copy" onclick="copyId(<?= $id ?>)">Copy:{{<?= $id ?>}}</option></select>
+        <select onchange="doNoteAction(<?= $id ?>, this.selectedIndex);" name="file_menu" id="menu<?php echo $id; ?>"><option value="Rien">---</option><option value="Voir">Voir</option><option value="Modifier">Modifier</option><option value="Move">Déplacer</option><option value="Copier">Copier</option><option value="Coller">Coller</option><option value="Corbeille">Corbeille</option><option value="Faire-suite">Faire suivre</option><option name="copy" onclick="copyId(<?= $id ?>)">Copy:{{<?= $id ?>}}</option></select>
  <input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" /><a class='miniImg' href="<?= $urlaction ?>">
 <div class="miniImg">
             <?php 

@@ -265,6 +265,49 @@ function getDBDocument($id) {
     return $result;
 }
 
+function getAllDocuments()
+{
+    global $monutilisateur;
+    global $mysqli;
+    connect();
+    
+    $docs = array();
+    
+    $q = "SELECT * FROM blocnotes_data " .
+            "WHERE isDeleted=0 and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "'";
+
+    $result = simpleQ($q, $mysqli);
+    
+    while(($doc=  mysqli_fetch_assoc($result))!=NULL)
+    {
+        $id = $doc["id"];
+        $docs[$id] = $doc;
+    }
+    
+    
+    return $result;
+}
+ function document_field_follow($id, $name, $docs)
+ {
+     echo "<select name='$name'>";
+     foreach($docs as $oid => $doc)
+     {
+         if($oid==$id)
+         {
+             $sel = " selected='selected'";
+             
+         }
+        else {
+            $sel =" ";
+        }
+        
+        echo "<option value='".$doc["id"]."'>{{".$doc["id"]."}}".$doc["filename"]."</option>";
+        
+        
+     }
+     
+        echo "</select>";
+ }
 function getField($row, $field) {
     global $monutilisateur;
     global $mysqli;
@@ -297,10 +340,12 @@ function updateLinks($oldname, $newname) {
 function createLink($nom_element_porteur, $nom_element_dependant) {
     global $mysqli;
     $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values (" .
-            (int) mysqli_real_query($mysqli, $nom_element_porteur, $link) . " , " .
-            (int) mysqli_real_query($mysqli, $nom_element_dependant, $link) . ")";
+            (int) mysqli_escape_string($mysqli, $nom_element_porteur) . " , " .
+            (int) mysqli_escape_string($mysqli, $nom_element_dependant) . ")";
 
-    mysqli_query($mysqli, $q);
+    
+    
+    return mysqli_query($mysqli, $q);
 }
 
 function insertDB($basePath, $classeurOrNote) {
@@ -529,3 +574,75 @@ function folder_field($folder_id, $field_name="folder"){
         ?>
     </select><br/><?php
  }
+ 
+ $ids = array();
+ 
+ // List od parents
+ function getLastLinked($id)
+ {
+     global $mysqli;
+     $sql="select id_element_porteur as id from blocnotes_link where nom_element_dependant=$id";
+     if($res=simpleQ($sql, $mysqli))
+     {
+         while(($id=mysqli_fetch_assoc($res))!=NULL)
+         {
+             $docs[$i++] = $id["id"];
+         }
+     }
+     return $docs;
+ }
+ // List od parents
+ function getNextLinked($id)
+ {
+     global $mysqli;
+     $sql="select id_element_dependant as id from blocnotes_link where nom_element_porteur=$id";
+     if($res=simpleQ($sql, $mysqli))
+     {
+         while(($id=mysqli_fetch_assoc($res))!=NULL)
+         {
+             $docs[$i++] = $id["id"];
+         }
+     }
+     return $docs;
+ }
+ 
+function parcoursInsert($docs, $id, &$tab)
+{
+    
+}
+$tab = array();
+
+// [numero serie][NO ORDRE] = doc
+ function showLinks($docs)
+ {
+     global $tab;
+     foreach($docs as $doc)
+     {
+        
+        $id = $doc["id"];
+        if($id!=NULL)
+        {
+        $nexts = getNextLinked($id);
+        $prevs = getLastLinked($id);
+             
+                echo "<table>";
+                
+         tableTableau($nexts);
+         tableTableau($prevs);
+
+                         echo "</table>";
+
+        }
+     }
+ }
+ 
+ function tableTableau($docs_id)
+ {
+     echo "<tr>";
+     for($i=0; $i<count($docs_id); $i++)
+     {
+         echo "<td>".$docs_id[$i]["id"]."/td>";
+     }
+     echo "</tr>";
+ }
+ 

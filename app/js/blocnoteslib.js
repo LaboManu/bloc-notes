@@ -79,11 +79,19 @@ function doNoteAction(note_id, selectedIndex)
     {
         if (confirm("L'élément va être supprimé. Confirmer?")) {
     document.location.href = "page.xhtml.php?composant=delete.db&dbdoc="+note_id;
-    }
-  }
-  else {
+    } else {
      alert ("Suppression annulée.")
   }
+    }
+    else if(selectedIndex==7) // Faire suite
+    {
+        document.location.href = "page.xhtml.php?composant=follow.db&dbdoc="+note_id;
+    }
+    else if(selectedIndex==8) // Vers presse-papier
+    {
+        copyId(note_id);
+    }
+ 
         
 }
 
