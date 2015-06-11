@@ -107,4 +107,11 @@ else
     }
         echo htmlspecialchars($sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli, $folder).", content_file='".mysqli_real_escape_string($mysqli, $content)."', filename='".mysqli_real_escape_string($mysqli, $filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."'");
         simpleQ($sql, $mysqli);
+        
+        ?>
+<ul>
+<li class='button_appdoc'><a href="?composant=edit.db&dbdoc=<?php echo $id; ?>">Retour à l'éditeur</a></li>
+<li class='button_appdoc'><a href="?composant=reader.db&dbdoc=<?php echo $id; ?>">Voir</a></li>
+</ul>
+    <?php
 }

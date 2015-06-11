@@ -43,6 +43,7 @@ if($form=="address")
     ?><form action="page.xhtml.php" method="GET">
        
         <fieldset >
+        <fieldset >
             <label for="url">URL de l'image</label>
             <input type="text" value="<?php echo $url?>"/>
         </fieldset>
@@ -50,6 +51,9 @@ if($form=="address")
         <input type="hidden" name="composant" value="addAndLinkImage"/>
         <input type="hidden" name="mode" value="submit"/>
         <input type="hidden" name="form" value="address"/>
+        <fieldset >
         <input type="submit" name="submit-new-link" value="Ajouter"/>
+        </fieldset>
+        </fieldset>
 </form>
 }

@@ -49,16 +49,20 @@ function connect() {
 
 $link = null;
 
-function createFile($filename, $mime, $data="", $isDirectory=FALSE) {
+function createFile($filename, $mime, $data="", $isDirectory=FALSE, $folder_id=-1) {
     global $monutilisateur;
     global $mysqli;
     global $tablePrefix;
     connect();
-    echo $q = "insert into blocnotes_data (username, filename, mime, content_file, isDirectory) values('" . 
+    if($folder_id==-1)
+    {
+        $folder_id = getRootForUser();
+    }
+    $q = "insert into blocnotes_data (username, filename, mime, content_file, isDirectory, folder_id) values('" . 
             mysqli_real_escape_string($mysqli, $monutilisateur) . "', '" .
             mysqli_real_escape_string($mysqli, $filename) . "', '" . mysqli_real_escape_string($mysqli, $mime) .
             "', '".mysqli_real_escape_string($mysqli, $data)."', ".
-            (($isDirectory==1)?1:0).")";
+            (($isDirectory==1)?1:0).", ".((int)($folder_id)).")";
     if(mysqli_query($mysqli, $q))
     {
     $id = mysqli_insert_id($mysqli);
@@ -391,7 +395,7 @@ function getDBDocumentAvecImagesEtTextes($id) {
     $id = (int) $id;
 
     $row = getDBDocument($id);
-    if (($doc = mysql_fetch_assoc($row)) != NULL) {
+    if (($doc = mysqli_fetch_assoc($row)) != NULL) {
         $myArray["id"] = $doc;
 
         $sql = "select l.nom_element_porteur as masterId, d.* "
@@ -403,7 +407,7 @@ function getDBDocumentAvecImagesEtTextes($id) {
 
         $myArray["data"] = array();
 
-        while (($doc2 = mysql_fetch_assoc($res)) != NULL) {
+        while (($doc2 = mysqli_fetch_assoc($res)) != NULL) {
             $myArray["data"][$doc2["id"]] = $doc2;
         }
         return $myArray;

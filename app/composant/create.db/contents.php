@@ -51,7 +51,7 @@ if(isset($_GET["CREATE_FROM"]))
 
 $date = date("Y-m-d-H-i-s");
 
-if(($id = createFile("Ma note", "text/plain", "--\nWho?".$monutilisateur.", \nThe date:".$date))>0)
+if(($id = createFile("Ma note", "text/plain", "--\nWho?".$monutilisateur.", \nThe date:".$date, 0, $folder))>0)
 {
 ?>
 <a href="?composant=edit.db&dbdoc=<?php echo $id; ?>">Editer la nouvelle note</a>
