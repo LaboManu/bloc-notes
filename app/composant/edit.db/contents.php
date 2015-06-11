@@ -1,9 +1,9 @@
 <?php
 require_once("../browser/listesItem.php");
-$id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
+$dbdoc = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
 
     connect();
-    $result = getDBDocument($id);
+    $result = getDBDocument($dbdoc);
     if(($doc=mysqli_fetch_assoc($result))!=NULL)
     {
         $filename = $doc['filename'];
@@ -14,7 +14,7 @@ $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
             ?>
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.db"/>
-    <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
+    <input type="hidden" name="dbdoc"  value="<?php echo $dbdoc; ?>"/>
     <?php                folder_field($doc["folder_id"]); ?>
     <input type="text" name="filename"  value="<?php echo $doc['filename']; ?>"/>
     <textarea rows="12" cols="40" name="contenu"><?php echo $doc["content_file"]; ?></textarea>
@@ -25,7 +25,7 @@ $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
          else if(isImage($ext, $doc["mime"])) {?>
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.db"/>
-    <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
+    <input type="hidden" name="dbdoc"  value="<?php echo $dbdoc; ?>"/>
     <?php                folder_field($doc["folder_id"]); ?>
     <input type="text" name="filename"  value="<?php echo $doc['filename']; ?>"/>
     <input type="submit" name="sauvegarder" value="Sauvergarder"/>
@@ -34,7 +34,7 @@ $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
         else {?>
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.db"/>
-    <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
+    <input type="hidden" name="dbdoc"  value="<?php echo $dbdoc; ?>"/>
     <?php                folder_field($doc["folder_id"]); ?>
     <input type="text" name="filename"  value="<?php echo $doc['filename']; ?>"/>
     <input type="submit" name="sauvegarder" value="Sauvergarder"/>
@@ -42,4 +42,5 @@ $id = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
         <?php
             
         }
-    }    
+    }    ?>
+    <a href="?composant=addAndLinkImage&dbdoc=<?php echo $dbdoc; ?>" target="NEW">Ajouter une image</a>

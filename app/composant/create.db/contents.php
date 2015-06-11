@@ -14,7 +14,13 @@ $folderDoc = mysqli_fetch_assoc($folderRes);
 $folder_id = $folderDoc["id"];
 ?>
 <h1><?php echo $folderDoc["filename"]; ?></h2>
+<?php
 
+// OLD CODE
+if(isset($_GET["CREATE_FROM"]))
+{
+
+?>
 
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.db"/>
@@ -37,7 +43,21 @@ $folder_id = $folderDoc["id"];
         <label for="submit">Envoyer</label>
     <input type="submit" name="submit" value="addData" class="user-control"/><br/>
     </fieldset>
+    
 </form>
+
+<?php
+}
+
+$date = date("Y-m-d-H-i-s");
+
+if(($id = createFile("Ma note", "text/plain", "--\nWho?".$monutilisateur.", \nThe date:".$date, 0, $folder))>0)
+{
+?>
+<a href="?composant=edit.db&dbdoc=<?php echo $id; ?>">Editer la nouvelle note</a>
+<?php
+}
+?>
 <hr/>
 <form action="event/uploads/uploadfordb.php" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="composant" value="save.db" />

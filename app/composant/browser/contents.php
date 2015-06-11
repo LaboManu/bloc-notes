@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once("listesItem.php");
 
 
@@ -26,8 +26,8 @@ if ($c == "Notes composees") {
 
 ?><form action="" method="GET">
     <h2 class="userInfo">Catégorie: <?php echo $docCourant["filename"]; ?></h2>
-    <h3>Notes et images</h3>
-    <p>Rechercher<input type="text" name="filter" value="<?php echo $filtre; ?>"/>
+    <h3>Images et notes, etc</h3>
+    Recherche textuelle <input type="text" name="filter" value="<?php echo $filtre; ?>"/>
     <input type="checkbox" name="composed" value="Notes composees" <?php echo $composed ? "checked" : ""; ?> />
     <input type="hidden" name="composant" value="browser" /></p>
     <div id="dblisting" class="clearBoth">

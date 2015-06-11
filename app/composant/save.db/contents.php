@@ -5,28 +5,41 @@ require_once("../browser/listesItem.php");
 $type = rawurldecode(filter_input(INPUT_GET, "submit"));
 if(isset($_GET['dbdoc']))
 {
-    $id = (int)(rawurldecode(filter_input(INPUT_GET, 'dbdoc')));
+    $dbdoc = (int)(rawurldecode(filter_input(INPUT_GET, 'dbdoc')));
     $filename = rawurldecode(filter_input(INPUT_GET, 'filename'));
 $folder = (int)(rawurldecode(filter_input(INPUT_GET, 'folder')));
 }
 else {
-    $id = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')));
+    $dbdoc = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')));
 $folder = (int)(rawurldecode(filter_input(INPUT_POST, 'folder')));
 }
 $content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 
-if($_GET["option"]=="move.doc") 
-    {
+if($_GET["option"]=="move.doc") {
         connect();
         echo "Déplacer document";
-        echo htmlspecialchars($sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli, $folder)." where id=".$id." and username='".$monutilisateur."'");
+        
+        $doc_orig = mysqli_fetch_assoc(getDBDocument($dbdoc));
+        
+        $folder_orig = $doc_orig['folder_id'];
+        
+        $sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli, $folder)." where id=".$dbdoc." and username='".$monutilisateur."'";
         if(simpleQ($sql, $mysqli))
-        {
-            echo "Note déplacée avec succès";
+        {?>
+        <h1>Note déplacée avec succès</h1>
+    <ul>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $folder_orig; ?>'>Retour au répertoire d'origine</a>
+        </li>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $folder; ?>'>Vers la destination</a>
+        </li>
+    </ul>
+
+        <?php
+        
         }
         die();
-    }
-if($id==-2)
+}
+if($dbdoc==-2)
 {
     echo "Nouveau dossier";
     connect();
@@ -45,7 +58,7 @@ if($id==-2)
         echo "Erreur technique";
     }
 }
-else if($id==-1)
+else if($dbdoc==-1)
 {
     connect();
     $folder_id = (int)rawurldecode(filter_input(INPUT_GET, 'folder'));
@@ -54,7 +67,7 @@ else if($id==-1)
     mysqli_real_escape_string($mysqli, $monutilisateur)."', 'text/plain', now(), ".  mysqli_real_escape_string($mysqli, $folder_id).")";
     simpleQ($sql, $mysqli);
 }
-else if($id==0)
+else if($dbdoc==0)
 {
     print_r($_POST);
     connect();
@@ -95,7 +108,7 @@ else
     
     echo "Mettre à jour la note";
     connect();
-    $doc = mysqli_fetch_assoc(getDBDocument($id));
+    $doc = mysqli_fetch_assoc(getDBDocument($dbdoc));
     
     if(isTexte($doc["filename"], $doc["mime"]))
     {
@@ -105,6 +118,13 @@ else
         $mime = "image/".getExtension($filename);
         
     }
-        echo htmlspecialchars($sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli, $folder).", content_file='".mysqli_real_escape_string($mysqli, $content)."', filename='".mysqli_real_escape_string($mysqli, $filename)."', mime='".$mime."',  quand=now() where id=".$id." and username='".$monutilisateur."'");
+        echo htmlspecialchars($sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli, $folder).", content_file='".mysqli_real_escape_string($mysqli, $content)."', filename='".mysqli_real_escape_string($mysqli, $filename)."', mime='".$mime."',  quand=now() where id=".$dbdoc." and username='".$monutilisateur."'");
         simpleQ($sql, $mysqli);
-}
+        
+        ?>
+<ul>
+<li class='button_appdoc'><a  class='button_appdoc' href="?composant=edit.db&dbdoc=<?php echo $dbdoc; ?>">Retour à l'éditeur</a></li>
+<li class='button_appdoc'><a  class='button_appdoc' href="?composant=reader.db&dbdoc=<?php echo $dbdoc; ?>">Voir</a></li>
+</ul>
+    <?php
+} 

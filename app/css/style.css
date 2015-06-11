@@ -85,7 +85,7 @@ div#fg_membersite {
     float: left;
     background-color: #ffff00; 
     color: #0000ff;  
-    border: 3px #009;
+    border: 3px solid #009;
 }
 #context_menu_bar a:hover
 {
@@ -149,6 +149,7 @@ span.miniImg
 }*/
 div#document
 {
+    width: 100%;
     display: block;
     font-size: 18pt;
     font-family: serif Whitney, Comics Sans;
@@ -238,8 +239,10 @@ span.path_array
 {
 	display: float;
 	float: right;
-	padding : 5px dotted blue;
-	background-color: blue;
+	border : 5px dotted gray;
+	padding: 5px;
+        margin: 5px;
+        background-color: gray;
 	color: white;
 }
 doc_container

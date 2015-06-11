@@ -60,6 +60,7 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
         $paramsSuppl = "dbdoc=" .
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
     }
+<<<<<<< HEAD
     if($composant=="create.follow.db")
     {
             $paramsSuppl = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')))."&".
@@ -69,6 +70,11 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
     {
             $paramsSuppl = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')))."&".
                 (int)(rawurldecode(filter_input(INPUT_POST, 'follow')));
+=======
+if ($composant == "addAndLinkImage") {
+        $paramsSuppl = "dbdoc=" .
+                rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
+>>>>>>> origin/master
     }
 
     $waiterString = ""; //Loading and not load that is definitively not the question.--MD";
@@ -96,10 +102,17 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         <?php if ($composant != "") { ?>
             <!-- Barre du dessus -->
             <div id="context_menu_bar" style="background-color: blue;">
+<<<<<<< HEAD
 <p><?php
                 displayPath($dbdoc);
 ?>&nbsp;</p>
                 
+=======
+<p ><?php
+                displayPath($dbdoc);
+?>
+                &nbsp;</p>
+>>>>>>> origin/master
             </div>
            <!-- Barre du dessus -->
             <div id="user_frame" ></div>

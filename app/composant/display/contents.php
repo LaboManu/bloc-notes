@@ -10,11 +10,15 @@ if ($result != NULL) {
         $filename = $doc['filename'];
         $content = $doc['content_file'];
         $ext = getExtension($filename);
+        
+        
+        
         if (isImage($ext, $doc['mime'])) {
             echoImgSelf($content, $filename);
         } else if (isTexte($ext, $doc["mime"])) {
             //preg_match ( string $pattern , string $subject [, array &$matches [, int $flags = 0 [, int $offset = 0 ]]] )
             $content =  htmlspecialchars($content);
+            $content = str_replace("\n", "\n<br/>", $content);
             $content = str_replace("[[", "<a target='NEW' href='", $content);
             $content = str_replace("]]", "'>Lien</a>", $content);
             $content = str_replace("{{", "<img src='composant/display/contents.php?id=", $content);
@@ -23,7 +27,7 @@ if ($result != NULL) {
             $content = str_replace("((", "<span class'included_doc'>include doc n0", $content);
             $content = str_replace("))", "</span>", $content);
             
-            
+            echo "<em>".$filename."</em>";
             echo $content;
             
         } else {
@@ -37,5 +41,6 @@ if ($result != NULL) {
 function echoImgSelf($content, $filename) {
     header('Content-type:image/' . getExtension($filename));
 
+    
     echo $content;
 }
