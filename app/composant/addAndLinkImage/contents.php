@@ -33,10 +33,11 @@ if($form=="address")
         $data = file_get_contents($url);
         
         $mime = getUrlMimeType($url);
-        
-        $idLinkedElement = createFile($filename, $mime, $data);
-        createLink($dbdoc, $idLinkedElement);
-              
+        if(isset($data) && isset($mime))
+        {
+            $idLinkedElement = createFile($filename, $mime, $data);
+            createLink($dbdoc, $idLinkedElement);
+        }     
     }   
     }
     ?><form action="page.xhtml.php" method="GET">
