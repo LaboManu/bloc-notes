@@ -33,9 +33,12 @@ else {
     
 }
 
-$elemSuite = getDBDocumentAvecImagesEtTextes($id);
+$elemSuite = getFollowings($id);
 
-print_r($elemSuite);
+while ($row = mysql_fetch_assoc($elemSuite)) {
+    displayNote($row["id"]);
+    echo "displayNote ".$row["id"];
+}
 
 
 $ReaderurlSchema = "?composant=reader.db&dbdoc=$dbdoc&viewer=";

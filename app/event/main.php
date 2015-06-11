@@ -404,17 +404,31 @@ function getDBDocumentAvecImagesEtTextes($id) {
                 . " on l.nom_element_porteur=d.nom_element_dependant "
                 . "where l.nom_element_porteur=$id";
         $res = simpleQ($sql, $mysqli);
-
-        $myArray["data"] = array();
-
+        if($res!=NULL)
+        {$myArray["data"] = array();
         while (($doc2 = mysqli_fetch_assoc($res)) != NULL) {
             $myArray["data"][$doc2["id"]] = $doc2;
+        }
         }
         return $myArray;
     } else
         return NULL;
 }
-
+function getFollowings($id)
+{
+    global $mysqli;
+    $sql = 
+    "select d2.* from blocnotes_data as d1 inner join blocnotes_link as l1 on ".
+        " blocnotes_data.id=blocnotes_link.id_element_porteur and "
+            . "blocnotes_link.id_element_porteur=".((int)($id))
+            . " inner join "
+            . "blocnotes_data as d2 on l1.id_element_dependant=d2.id";
+    
+    simpleQ($sql, $mysqli);
+        
+        
+         
+}
 function insereImageOuNote($id, $idDependant = -1, $filename, $data, $mime, $ordre) {
     global $mysqli;
     if ($idDependant <= 0) {
@@ -540,4 +554,15 @@ function getUrlMimeType($url) {
     $buffer = file_get_contents($url);
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     return $finfo->buffer($buffer);
+}
+function displayNote($dbdoc)
+{
+    // Master COde goes here.
+    
+    $doc = mysqli_fetch_assoc(getDBDocument($dbdoc));
+    
+    if($doc)
+    {
+        
+    }
 }
