@@ -257,7 +257,6 @@ function dbfile_getModificationsAsList($filename) {
         return $result;
     }
 
-<<<<<<< HEAD
 function getAllDocuments()
 {
     global $monutilisateur;
@@ -306,14 +305,12 @@ function getField($row, $field) {
     global $mysqli;
     return $row[$field];
 }
-=======
     function getDBDocument($id) {
         global $monutilisateur;
         global $mysqli;
         connect();
         $q = "SELECT * FROM blocnotes_data " .
                 "WHERE isDeleted=0 and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "' and id =" . mysqli_real_escape_string($mysqli, (int) $id);
->>>>>>> origin/master
 
         $result = simpleQ($q, $mysqli);
         return $result;
@@ -329,12 +326,12 @@ function getField($row, $field) {
         return $result;
     }
 
-    function getField($row, $field) {
+/*    function getField($row, $field) {
         global $monutilisateur;
         global $mysqli;
         return $row[$field];
     }
-
+*/
     function creationDate($filename = "") {
         global $monutilisateur;
         global $mysqli;
@@ -345,7 +342,6 @@ function getField($row, $field) {
         return getField($row, "moment");
     }
 
-<<<<<<< HEAD
 function createLink($nom_element_porteur, $nom_element_dependant) {
     global $mysqli;
     $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values (" .
@@ -356,8 +352,7 @@ function createLink($nom_element_porteur, $nom_element_dependant) {
     
     return mysqli_query($mysqli, $q);
 }
-=======
-    function updateLinks($oldname, $newname) {
+function updateLinks($oldname, $newname) {
         global $monutilisateur;
         global $mysqli;
         // Table : blocnotes_links
@@ -366,8 +361,6 @@ function createLink($nom_element_porteur, $nom_element_dependant) {
         // Exécuter les requêtes
 
         mysqli_query($mysqli, $q1);
->>>>>>> origin/master
-
         mysqli_query($mysqli, $q2);
     }
 
@@ -686,7 +679,6 @@ $tab = array();
      echo "</tr>";
  }
  
-    }
 
     function getUrlMimeType($url) {
         $buffer = file_get_contents($url);

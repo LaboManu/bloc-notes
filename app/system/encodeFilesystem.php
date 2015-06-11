@@ -85,9 +85,3 @@ function query2($username, $fichierParcouru, $dir) {
 
 
 
-// HARD 
-// MUST BE PROTECTEDget the code 
-$sql = "truncate blocnotes_data";
-simpleQ($sql, $mysqli);
-encodeFiles("lecomte mary", $allUserDataDir.$pathSep."lecomte mary");
-encodeFiles("Manu", $allUserDataDir.$pathSep."Manu");
