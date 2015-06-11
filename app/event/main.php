@@ -49,28 +49,24 @@ function connect() {
 
 $link = null;
 
-function createFile($filename, $mime, $data="", $isDirectory=FALSE, $folder_id=-1) {
+function createFile($filename, $mime, $data = "", $isDirectory = FALSE, $folder_id = -1) {
     global $monutilisateur;
     global $mysqli;
     global $tablePrefix;
     connect();
-    if($folder_id==-1)
-    {
+    if ($folder_id == -1) {
         $folder_id = getRootForUser();
     }
-    $q = "insert into blocnotes_data (username, filename, mime, content_file, isDirectory, folder_id) values('" . 
+    $q = "insert into blocnotes_data (username, filename, mime, content_file, isDirectory, folder_id) values('" .
             mysqli_real_escape_string($mysqli, $monutilisateur) . "', '" .
             mysqli_real_escape_string($mysqli, $filename) . "', '" . mysqli_real_escape_string($mysqli, $mime) .
-            "', '".mysqli_real_escape_string($mysqli, $data)."', ".
-            (($isDirectory==1)?1:0).", ".((int)($folder_id)).")";
-    if(mysqli_query($mysqli, $q))
-    {
-    $id = mysqli_insert_id($mysqli);
-    
-    return $id;
-    }
-    else
-    {
+            "', '" . mysqli_real_escape_string($mysqli, $data) . "', " .
+            (($isDirectory == 1) ? 1 : 0) . ", " . ((int) ($folder_id)) . ")";
+    if (mysqli_query($mysqli, $q)) {
+        $id = mysqli_insert_id($mysqli);
+
+        return $id;
+    } else {
         return -1;
     }
 }
@@ -194,375 +190,380 @@ function dbfile_getDeleteTime($filename) {
 function dbfile_getModificationsAsList($filename) {
     global $mysqli;
     ?><table><?php
-        $res = dbfile_getModifications($filename);
-        if ($res != null) {
-            while (($row = mysql_fetch_assoc($res)) != NULL) {
-                echo "<tr><td>Modification</td><td>" . $row['moment'] . "</td></tr>";
-            }
+    $res = dbfile_getModifications($filename);
+    if ($res != null) {
+        while (($row = mysql_fetch_assoc($res)) != NULL) {
+            echo "<tr><td>Modification</td><td>" . $row['moment'] . "</td></tr>";
         }
-        ?></table><?php
-}
-
-/* function getDocument($filename = "") {
-  global $mysqli;
-  $q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
-  " FROM blocnotes_items " .
-  "WHERE filename =  '" . mysqli_real_query($mysqli, $filename, $link) . "' " .
-  " ORDER BY MOMENT DESC " .
-  "LIMIT 1 )";
-  //echo $q;
-  $result = simpleQ($q, $mysqli);
-  return $result;
-  }
-
-  function getDocuments() {
-  global $monutilisateur;
-  $q = "SELECT * FROM blocnotes_items " .
-  "WHERE user='" . $monutilisateur . "'" .
-  " ORDER BY MOMENT DESC " .
-  "";
-  $result = simpleQ($q, $mysqli);
-  echo $q;
-  return $result;
-  }
- */
-
-function getDocumentsParClasseur($folder_id = "") {
-    if ($folder_id == "") {
-        $classeur = getRootForUser();
+    }
+    ?></table><?php
     }
 
-    global $monutilisateur;
-    $q = "SELECT * FROM blocnotes_data " .
-            "WHERE  isDeleted=0 and username='" . mysqli_real_query($mysqli, $monutilisateur) . "' ";
-    "'";
-    $result = simpleQ($q, $mysqli);
-    return $result;
-}
+    /* function getDocument($filename = "") {
+      global $mysqli;
+      $q = "SELECT * FROM blocnotes_items WHERE MOMENT = (SELECT moment" .
+      " FROM blocnotes_items " .
+      "WHERE filename =  '" . mysqli_real_query($mysqli, $filename, $link) . "' " .
+      " ORDER BY MOMENT DESC " .
+      "LIMIT 1 )";
+      //echo $q;
+      $result = simpleQ($q, $mysqli);
+      return $result;
+      }
 
-function getDocumentsFiltered($filtre, $composedOnly, $pathId) {
-    global $monutilisateur;
-    global $mysqli;
+      function getDocuments() {
+      global $monutilisateur;
+      $q = "SELECT * FROM blocnotes_items " .
+      "WHERE user='" . $monutilisateur . "'" .
+      " ORDER BY MOMENT DESC " .
+      "";
+      $result = simpleQ($q, $mysqli);
+      echo $q;
+      return $result;
+      }
+     */
 
-    if ($pathId == 0) {
-        $pathId = getRootForUser();
+    function getDocumentsParClasseur($folder_id = "") {
+        if ($folder_id == "") {
+            $classeur = getRootForUser();
+        }
+
+        global $monutilisateur;
+        $q = "SELECT * FROM blocnotes_data " .
+                "WHERE  isDeleted=0 and username='" . mysqli_real_query($mysqli, $monutilisateur) . "' ";
+        "'";
+        $result = simpleQ($q, $mysqli);
+        return $result;
     }
 
-    $q = "SELECT * FROM blocnotes_data " .
-            "WHERE username='" . mysqli_real_escape_string($mysqli, $monutilisateur) .
-            "' and ((filename like '%" . mysqli_real_escape_string($mysqli, $filtre) .
-            "%') or (content_file like'%" . mysqli_real_escape_string($mysqli, $filtre) .
-            "%') and (content_file like '%" .
-            ($composedOnly ? "{{" : "") . "%' )) and isDeleted=0 and "
-            . "folder_id=" . ( (int) $pathId);
+    function getDocumentsFiltered($filtre, $composedOnly, $pathId) {
+        global $monutilisateur;
+        global $mysqli;
 
-    $result = simpleQ($q, $mysqli);
+        if ($pathId == 0) {
+            $pathId = getRootForUser();
+        }
 
-    return $result;
-}
+        $q = "SELECT * FROM blocnotes_data " .
+                "WHERE username='" . mysqli_real_escape_string($mysqli, $monutilisateur) .
+                "' and ((filename like '%" . mysqli_real_escape_string($mysqli, $filtre) .
+                "%') or (content_file like'%" . mysqli_real_escape_string($mysqli, $filtre) .
+                "%') and (content_file like '%" .
+                ($composedOnly ? "{{" : "") . "%' )) and isDeleted=0 and "
+                . "folder_id=" . ( (int) $pathId);
 
-function getDBDocument($id) {
-    global $monutilisateur;
-    global $mysqli;
-    connect();
-    $q = "SELECT * FROM blocnotes_data " .
-            "WHERE isDeleted=0 and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "' and id =" . mysqli_real_escape_string($mysqli, (int) $id);
+        $result = simpleQ($q, $mysqli);
 
-    $result = simpleQ($q, $mysqli);
-    return $result;
-}
-
-function getField($row, $field) {
-    global $monutilisateur;
-    global $mysqli;
-    return $row[$field];
-}
-
-function creationDate($filename = "") {
-    global $monutilisateur;
-    global $mysqli;
-    $q = "SELECT * FROM blocnotes_items WHERE filename =  '" . mysqli_real_query($mysqli, $filename, $link) . "' ORDER BY MOMENT DESC";
-    //echo $q;
-    $result = simpleQ($q, $mysqli);
-    $row = mysql_fetch_assoc($result);
-    return getField($row, "moment");
-}
-
-function updateLinks($oldname, $newname) {
-    global $monutilisateur;
-    global $mysqli;
-    // Table : blocnotes_links
-    $q1 = "update blocnotes_link set nom_element_porteur=" . (int) mysqli_real_query($mysqli, $newname) . " where nom_element_porteur=" . (int) mysqli_real_query($mysqli, $oldname) . "";
-    $q2 = "update blocnotes_link set nom_element_dependant=" . (int) mysqli_real_query($mysqli, $newname) . " where nom_element_dependant=" . (int) mysqli_real_query($mysqli, $oldname) . "";
-    // Exécuter les requêtes
-
-    mysqli_query($mysqli, $q1);
-
-    mysqli_query($mysqli, $q2);
-}
-
-function createLink($nom_element_porteur, $nom_element_dependant) {
-    global $mysqli;
-    $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values (" .
-            (int) mysqli_real_query($mysqli, $nom_element_porteur, $link) . " , " .
-            (int) mysqli_real_query($mysqli, $nom_element_dependant, $link) . ")";
-
-    mysqli_query($mysqli, $q);
-}
-
-function insertDB($basePath, $classeurOrNote) {
-    global $mysqli;
-    while (id_exists($serid = randomSerId())) {
-        ;
+        return $result;
     }
-    $q = "insert " . $tablePrefix . "_items (filename, serid, classeur, contents) "
-            .
-            " values ('" . mysqli_real_query($mysqli, $classeurOrNote) . "', " .
-            ((int) $serid)
-            .
-            ",'" . $basePath . "', " . mysqli_real_query($mysqli, file_get_contents($basePath . "/" . $classeurOrNote)) . "')";
-}
-/*
-function selectDBFolders($needle) {
-    global $monutilisateur;
-    global $mysqli;
-    echo $sql = "select distint folder_name, username from blocnotes_data where username ='" . mysqli_real_query($mysqli, $monutilisateur) . "' and folder_name like '%" . $needle . "%'";
-    return mysql_query($sql);
-}
-*/
-function isDirectory($dbdoc) {
-    global $tablePrefix;
-    global $mysqli;
-    $sql = "select isDirectory from " . $tablePrefix . "_data where id=" . ((int) $dbdoc);
-    $res = simpleQ($sql, $mysqli);
-    if (($doc = mysql_fetch_assoc($res)) != NULL) {
-        return $doc["isDirectory"];
+
+    function getDBDocument($id) {
+        global $monutilisateur;
+        global $mysqli;
+        connect();
+        $q = "SELECT * FROM blocnotes_data " .
+                "WHERE isDeleted=0 and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "' and id =" . mysqli_real_escape_string($mysqli, (int) $id);
+
+        $result = simpleQ($q, $mysqli);
+        return $result;
     }
-    return FALSE;
-}
 
-function getDirectoryInfo($dbdoc) {
-    global $monutilisateur;
-    global $tablePrefix;
-    global $mysqli;
+    function getField($row, $field) {
+        global $monutilisateur;
+        global $mysqli;
+        return $row[$field];
+    }
 
-    $pathId = getDocument($dbdoc);
-    $pathId = $pathId["folder_id"];
-    if (isDirectory($dbdoc)) {
-        $sql = "select * from " . $tablePrefix . "_data where id=" . ((int) $pathId) . " and username='" . $monutilisateur . "'";
+    function creationDate($filename = "") {
+        global $monutilisateur;
+        global $mysqli;
+        $q = "SELECT * FROM blocnotes_items WHERE filename =  '" . mysqli_real_query($mysqli, $filename, $link) . "' ORDER BY MOMENT DESC";
+        //echo $q;
+        $result = simpleQ($q, $mysqli);
+        $row = mysql_fetch_assoc($result);
+        return getField($row, "moment");
+    }
+
+    function updateLinks($oldname, $newname) {
+        global $monutilisateur;
+        global $mysqli;
+        // Table : blocnotes_links
+        $q1 = "update blocnotes_link set nom_element_porteur=" . (int) mysqli_real_query($mysqli, $newname) . " where nom_element_porteur=" . (int) mysqli_real_query($mysqli, $oldname) . "";
+        $q2 = "update blocnotes_link set nom_element_dependant=" . (int) mysqli_real_query($mysqli, $newname) . " where nom_element_dependant=" . (int) mysqli_real_query($mysqli, $oldname) . "";
+        // Exécuter les requêtes
+
+        mysqli_query($mysqli, $q1);
+
+        mysqli_query($mysqli, $q2);
+    }
+
+    function createLink($nom_element_porteur, $nom_element_dependant) {
+        global $mysqli;
+        $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values (" .
+                (int) mysqli_real_query($mysqli, $nom_element_porteur, $link) . " , " .
+                (int) mysqli_real_query($mysqli, $nom_element_dependant, $link) . ")";
+
+        mysqli_query($mysqli, $q);
+    }
+
+    function insertDB($basePath, $classeurOrNote) {
+        global $mysqli;
+        while (id_exists($serid = randomSerId())) {
+            ;
+        }
+        $q = "insert " . $tablePrefix . "_items (filename, serid, classeur, contents) "
+                .
+                " values ('" . mysqli_real_query($mysqli, $classeurOrNote) . "', " .
+                ((int) $serid)
+                .
+                ",'" . $basePath . "', " . mysqli_real_query($mysqli, file_get_contents($basePath . "/" . $classeurOrNote)) . "')";
+    }
+
+    /*
+      function selectDBFolders($needle) {
+      global $monutilisateur;
+      global $mysqli;
+      echo $sql = "select distint folder_name, username from blocnotes_data where username ='" . mysqli_real_query($mysqli, $monutilisateur) . "' and folder_name like '%" . $needle . "%'";
+      return mysql_query($sql);
+      }
+     */
+
+    function isDirectory($dbdoc) {
+        global $tablePrefix;
+        global $mysqli;
+        $sql = "select isDirectory from " . $tablePrefix . "_data where id=" . ((int) $dbdoc);
         $res = simpleQ($sql, $mysqli);
         if (($doc = mysql_fetch_assoc($res)) != NULL) {
-            return $doc;
+            return $doc["isDirectory"];
         }
-    } else {
-        echo "Erreur n'est pas un répertoire";
+        return FALSE;
     }
-    return "";
-}
 
-function getFolderList() {
-    global $config;
-    global $monutilisateur;
-    global $mysqli;
-    $tablePrefix = $config->tablePrefix;
-    $sql = "select * from " . $tablePrefix . "_data where isDirectory=1 and username='" . $monutilisateur . "'";
-    $res = simpleQ($sql, $mysqli);
-    return $res;
-}
+    function getDirectoryInfo($dbdoc) {
+        global $monutilisateur;
+        global $tablePrefix;
+        global $mysqli;
 
-function getMimeType($id) {
-    global $mysqli;
-    connect();
-    $result = getDBDocument($id);
-    if ($result != NULL) {
-        if (($doc = mysqli_fetch_assoc($result)) != NULL) {
-            return $doc["mime"];
+        $pathId = getDocument($dbdoc);
+        $pathId = $pathId["folder_id"];
+        if (isDirectory($dbdoc)) {
+            $sql = "select * from " . $tablePrefix . "_data where id=" . ((int) $pathId) . " and username='" . $monutilisateur . "'";
+            $res = simpleQ($sql, $mysqli);
+            if (($doc = mysql_fetch_assoc($res)) != NULL) {
+                return $doc;
+            }
+        } else {
+            echo "Erreur n'est pas un répertoire";
         }
+        return "";
     }
-}
 
-/*
- * ** array ( 
- *      "id" => $doc, 
- *      "data" =>array(noOrdre => $row_data)
- *  Pas de récursivités;
- */
-
-function getDBDocumentAvecImagesEtTextes($id) {
-    global $mysqli;
-    $myArray;
-
-    $id = (int) $id;
-
-    $row = getDBDocument($id);
-    if (($doc = mysqli_fetch_assoc($row)) != NULL) {
-        $myArray["id"] = $doc;
-
-        $sql = "select l.nom_element_porteur as masterId, d.* "
-                . "from blocnotes_link as l"
-                . " inner join blocnotes_data as d "
-                . " on l.nom_element_porteur=d.nom_element_dependant "
-                . "where l.nom_element_porteur=$id";
+    function getFolderList() {
+        global $config;
+        global $monutilisateur;
+        global $mysqli;
+        $tablePrefix = $config->tablePrefix;
+        $sql = "select * from " . $tablePrefix . "_data where isDirectory=1 and username='" . $monutilisateur . "'";
         $res = simpleQ($sql, $mysqli);
-        if($res!=NULL)
-        {$myArray["data"] = array();
-        while (($doc2 = mysqli_fetch_assoc($res)) != NULL) {
-            $myArray["data"][$doc2["id"]] = $doc2;
-        }
-        }
-        return $myArray;
-    } else
-        return NULL;
-}
-function getFollowings($id)
-{
-    global $mysqli;
-    $sql = 
-    "select d2.* from blocnotes_data as d1 inner join blocnotes_link as l1 on ".
-        " blocnotes_data.id=blocnotes_link.id_element_porteur and "
-            . "blocnotes_link.id_element_porteur=".((int)($id))
-            . " inner join "
-            . "blocnotes_data as d2 on l1.id_element_dependant=d2.id";
-    
-    simpleQ($sql, $mysqli);
-        
-        
-         
-}
-function insereImageOuNote($id, $idDependant = -1, $filename, $data, $mime, $ordre) {
-    global $mysqli;
-    if ($idDependant <= 0) {
+        return $res;
+    }
 
-        $sql = "insert into blocnotes_data ( filename, content_file, mime )"
-                . " values ( '" . mysqli_real_query($mysqli, $filename) .
-                "' , '" . mysqli_real_query($mysqli, $data) . "' , '" .
-                mysqli_real_query($mysqli, $mime) . "')";
+    function getMimeType($id) {
+        global $mysqli;
+        connect();
+        $result = getDBDocument($id);
+        if ($result != NULL) {
+            if (($doc = mysqli_fetch_assoc($result)) != NULL) {
+                return $doc["mime"];
+            }
+        }
+    }
+
+    /*
+     * ** array ( 
+     *      "id" => $doc, 
+     *      "data" =>array(noOrdre => $row_data)
+     *  Pas de récursivités;
+     */
+
+    function getDBDocumentAvecImagesEtTextes($id) {
+        global $mysqli;
+        $myArray;
+
+        $id = (int) $id;
+
+        $row = getDBDocument($id);
+        if (($doc = mysqli_fetch_assoc($row)) != NULL) {
+            $myArray["id"] = $doc;
+
+            $sql = "select l.nom_element_porteur as masterId, d.* "
+                    . "from blocnotes_link as l"
+                    . " inner join blocnotes_data as d "
+                    . " on l.nom_element_porteur=d.nom_element_dependant "
+                    . "where l.nom_element_porteur=$id";
+            $res = simpleQ($sql, $mysqli);
+            if ($res != NULL) {
+                $myArray["data"] = array();
+                while (($doc2 = mysqli_fetch_assoc($res)) != NULL) {
+                    $myArray["data"][$doc2["id"]] = $doc2;
+                }
+            }
+            return $myArray;
+        } else
+            return NULL;
+    }
+
+    function getFollowings($id) {
+        global $mysqli;
+        $sql = "select d2.* from blocnotes_data as d1 inner join blocnotes_link as l1 on " .
+                " blocnotes_data.id=blocnotes_link.id_element_porteur and "
+                . "blocnotes_link.id_element_porteur=" . ((int) ($id))
+                . " inner join "
+                . "blocnotes_data as d2 on l1.id_element_dependant=d2.id";
+
         simpleQ($sql, $mysqli);
-        $idDependant = mysql_insert_id($link);
     }
-    createLink($id, $idDependant, $ordre);
-}
 
-function deleteImageOuNoteDependant($id, $idDependant) {
-    global $mysqli;
+    function insereImageOuNote($id, $idDependant = -1, $filename, $data, $mime, $ordre) {
+        global $mysqli;
+        if ($idDependant <= 0) {
 
-    $id = (int) $id;
-    $idDependant = (int) $idDependant;
-    $sql = "delete from blocnotes_link where " .
-            "nom_element_porteur=$id and "
-            . "   nom_element_dependant=$idDependant";
-    $res = simpleQ($sql, $mysqli);
-    return$res;
-}
-
-function getRootForUser() {
-    global $mysqli;
-    global $monutilisateur;
-    $sql = "select id from blocnotes_data where username like '" .
-            mysqli_real_escape_string($mysqli, $monutilisateur)
-            . "' and isRoot=1";
-
-    $result = simpleQ($sql, $mysqli);
-    if ($result) {
-        if ($arr = $result->fetch_assoc()) {
-            $id = $arr['id'];
-        } else {
-            $id = 0;
+            $sql = "insert into blocnotes_data ( filename, content_file, mime )"
+                    . " values ( '" . mysqli_real_query($mysqli, $filename) .
+                    "' , '" . mysqli_real_query($mysqli, $data) . "' , '" .
+                    mysqli_real_query($mysqli, $mime) . "')";
+            simpleQ($sql, $mysqli);
+            $idDependant = mysql_insert_id($link);
         }
-    } else {
-        $id = -1;
-        echo "No root for user";
-    }//echo "ID;; $id";
-    return $id;
-}
-function createRootForUser()
-{
-    global $mysqli;
-    connect();
-    $sql = "insert into blocnotes_data (filename, folder_id, isDirectory) values ('Dossier racine', -1, TRUE)";
-    if(mysqli_query($mysqli, $sql))
-    {
-        echo "Fichier racine créé";
-    }
-}
-
-function deleteDBDoc($dbdoc) {
-    global $mysqli;
-    global $monutilisateur;
-    echo $sql = "update blocnotes_data set isDeleted=1 where id=" . mysqli_real_escape_string($mysqli, $dbdoc) . " and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "'";
-    simpleQ($sql, $mysqli);
-}
-
-function getPathArray($id) {
-    $parray = array();
-
-
-    $norec = FALSE;
-    $i = 0;
-    while (($id_old != $id) && ($norec != TRUE)) {
-        $res0 = getDBDocument($id);
-        if (($res0!=NULL) && (($doc = mysqli_fetch_assoc($res0)) != NULL)) {
-            $filename = $doc["filename"];
-            $id = $doc["folder_id"];
-            $id_old = $doc["id"];
-            $parray[$i] = array("filename" =>$filename, "id" => $id_old);
-            $i++;
-            $norec = FALSE;
-        } else {
-            $norec = TRUE;
-        }
-    }
-    return $parray;
-}
-
-function displayPath($id) {
-    $parray_fn = getPathArray($id);
-
-    echo "<div class='path_array'>";
-
-    foreach ($parray_fn as $i => $arra) {
-        echo "<span class='path_array'><a href='?composant=browser&dbdoc=".($parray_fn[$i]["id"])."'>" . $parray_fn[$i]["filename"] . "</a></span>";
+        createLink($id, $idDependant, $ordre);
     }
 
-    echo "</div>";
-}
+    function deleteImageOuNoteDependant($id, $idDependant) {
+        global $mysqli;
 
-function folder_field($folder_id, $field_name="folder"){
-    ?>
-<select name="<?php echo $field_name; ?>" class="user-control">
-        <?php
-        $res = getFolderList();
-        while(($row=  mysqli_fetch_assoc($res))!=NULL)
-        {
-            if($row["id"]==$folder_id)
-            {
-                $optionSel = "selected='selected'";
+        $id = (int) $id;
+        $idDependant = (int) $idDependant;
+        $sql = "delete from blocnotes_link where " .
+                "nom_element_porteur=$id and "
+                . "   nom_element_dependant=$idDependant";
+        $res = simpleQ($sql, $mysqli);
+        return$res;
+    }
+
+    function getRootForUser() {
+        global $mysqli;
+        global $monutilisateur;
+        $sql = "select id from blocnotes_data where username like '" .
+                mysqli_real_escape_string($mysqli, $monutilisateur)
+                . "' and isRoot=1";
+
+        $result = simpleQ($sql, $mysqli);
+        if ($result) {
+            if ($arr = $result->fetch_assoc()) {
+                $id = $arr['id'];
+            } else {
+                $id = 0;
             }
-            else {
-                $optionSel = "";
-     
-            }
-           echo "<option value='".$row['id']."' ".$optionSel." >".htmlspecialchars($row['filename'])."</option>";
-            
+        } else {
+            $id = -1;
+            echo "No root for user";
+        }//echo "ID;; $id";
+        return $id;
+    }
+
+    function createRootForUser() {
+        global $mysqli;
+        connect();
+        $sql = "insert into blocnotes_data (filename, folder_id, isDirectory) values ('Dossier racine', -1, TRUE)";
+        if (mysqli_query($mysqli, $sql)) {
+            echo "Fichier racine créé";
         }
-        
-        mysqli_free_result($res);
+    }
+
+    function deleteDBDoc($dbdoc) {
+        global $mysqli;
+        global $monutilisateur;
+        echo $sql = "update blocnotes_data set isDeleted=1 where id=" . mysqli_real_escape_string($mysqli, $dbdoc) . " and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "'";
+        simpleQ($sql, $mysqli);
+    }
+
+    function getPathArray($id) {
+        $parray = array();
+
+
+        $norec = FALSE;
+        $i = 0;
+        while (($id_old != $id) && ($norec != TRUE)) {
+            $res0 = getDBDocument($id);
+            if (($res0 != NULL) && (($doc = mysqli_fetch_assoc($res0)) != NULL)) {
+                $filename = $doc["filename"];
+                $id = $doc["folder_id"];
+                $id_old = $doc["id"];
+                $parray[$i] = array("filename" => $filename, "id" => $id_old);
+                $i++;
+                $norec = FALSE;
+            } else {
+                $norec = TRUE;
+            }
+        }
+        return $parray;
+    }
+
+    function displayPath($id) {
+        $parray_fn = getPathArray($id);
+
+        echo "<div class='path_array'>";
+
+        foreach ($parray_fn as $i => $arra) {
+            echo "<span class='path_array'><a href='?composant=browser&dbdoc=" . ($parray_fn[$i]["id"]) . "'>" . $parray_fn[$i]["filename"] . "</a></span>";
+        }
+
+        echo "</div>";
+    }
+
+    function folder_field($folder_id, $field_name = "folder") {
         ?>
-    </select><br/><?php
- }
-function getUrlMimeType($url) {
-    $buffer = file_get_contents($url);
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    return $finfo->buffer($buffer);
-}
-function displayNote($dbdoc)
-{
-    // Master COde goes here.
-    
-    $doc = mysqli_fetch_assoc(getDBDocument($dbdoc));
-    
-    if($doc)
-    {
-        
+    <select name="<?php echo $field_name; ?>" class="user-control">
+    <?php
+    $res = getFolderList();
+    while (($row = mysqli_fetch_assoc($res)) != NULL) {
+        if ($row["id"] == $folder_id) {
+            $optionSel = "selected='selected'";
+        } else {
+            $optionSel = "";
+        }
+        echo "<option value='" . $row['id'] . "' " . $optionSel . " >" . htmlspecialchars($row['filename']) . "</option>";
     }
-}
+
+    mysqli_free_result($res);
+    ?>
+    </select><br/><?php
+    }
+
+    function getUrlMimeType($url) {
+        $buffer = file_get_contents($url);
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        return $finfo->buffer($buffer);
+    }
+
+    function displayNote($dbdoc) {
+        // Master COde goes here.
+        global $urlApp; $id  = $dbdoc;
+        $doc = mysqli_fetch_assoc(getDBDocument($dbdoc));
+        $filename = $doc['filename'];
+        $mime = $doc['mime'];
+        if ($doc) {
+            ?><div id="document"><?php if (isImage(getExtension($filename), $mime)) { ?>
+                <img src="<?php echo $urlApp . "/composant/display/contents.php?id=$id"; ?>"/><?php } else if (isTexte(getExtension($filename), $mime)) {
+                ?>
+                <script type="text/javascript">
+                    var urlAppJS = "<?php echo $urlApp; ?>";
+                    $("#document").load(url = urlAppJS + "/composant/display/contents.php?id=<?php echo $id; ?>", function (response, status, xhr) {
+                        if (status == "error") {
+                            var msg = "Sorry but there was an error: ";
+                            $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
+                        }
+                    });
+
+                </script>
+            <?php } ?></div><?php }}

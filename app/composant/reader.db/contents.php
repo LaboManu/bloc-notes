@@ -1,18 +1,18 @@
 <?php
 require_once("../browser/listesItem.php");
 
-$dbdoc = $id = (int) filter_input(INPUT_GET, "dbdoc");
+$dbdoc = (int) filter_input(INPUT_GET, "dbdoc");
 $viewer = (int) filter_input(INPUT_GET, "viewer");
 if($viewer==0)
 {
-    $viewer=1;
+    $viewer=2;
 }
 
 connect();
-$result = getDBDocument($id);
+$result = getDBDocument($dbdoc);
 
 
-echo $id;
+echo $dbdoc;
 
 
 
@@ -31,13 +31,6 @@ if ($result != NULL) {
 else {
     die("404 Fichier non trouvé");
     
-}
-
-$elemSuite = getFollowings($id);
-
-while ($row = mysql_fetch_assoc($elemSuite)) {
-    displayNote($row["id"]);
-    echo "displayNote ".$row["id"];
 }
 
 
@@ -102,7 +95,7 @@ chooseReader(0);
      <li id='reader1'>
 <?php if($viewer==1){ ?>
   <video id='video' preload="none">
-    <source src="<?php echo $urlApp."/composant/display/download.php?id=".$id; ?>" type="<?php echo $mime?>">
+    <source src="<?php echo $urlApp."/composant/display/download.php?id=".$dbdoc; ?>" type="<?php echo $mime?>">
   </video>
   <script src="<?php echo $urlApp."/"; ?>js/playerJS/dist/player-0.0.10.js"></scri
     var video = document.getElementById('video');
@@ -119,36 +112,12 @@ chooseReader(0);
 </li>
 
      <li id='reader2'>
-<?php if($viewer==2){ ?>
-
-        <div id="document" style="display:block; width: 300px;">
-            
-        </div>
-  
-  <?php 
-            if (isImage(getExtension($filename), $mime)) {
-                ?>
-                <img src="<?php echo $urlApp . "/composant/display/contents.php?id=$id"; ?>"/>
-                <?php
-            } else if (isTexte(getExtension($filename), $mime)) { ?>
-            <script type="text/javascript">
-                var urlAppJS = "<?php echo $urlApp; ?>";
-                $("#document").load(url = urlAppJS + "/composant/display/contents.php?id=<?php echo $id; ?>", function (response, status, xhr) {
-                    if (status == "error") {
-                        var msg = "Sorry but there was an error: ";
-                        $("#error").html(msg + xhr.status + " " + xhr.statusText + url);
-                    }
-                });
-
-            </script>
-            <?php
-            }
-  
-        
+<?php if($viewer==2){ 
     
+     displayNote($dbdoc);
+}
+?>
 
-    ?>
-         <?php } ?>
 </li>
      <li id='reader3'>
 <?php if($viewer==3){ ?>
@@ -175,13 +144,13 @@ chooseReader(0);
         </li>
     <li id='reader4'>
 <?php if($viewer==4){ ?>
-<br/><iframe src = "js/ViewerJS/#<?php echo $urlApp."/composant/display/document.php?id=".$id; ?>" width='490' height='490' allowfullscreen webkitallowfullscreen></iframe>
+<br/><iframe src = "js/ViewerJS/#<?php echo $urlApp."/composant/display/document.php?id=".$dbdoc; ?>" width='490' height='490' allowfullscreen webkitallowfullscreen></iframe>
     <?php } ?>
 </li>
 <li id='reader5'>
     <?php if($viewer==5){ ?>
 
-<br/><iframe src = "js/ViewerJS/#<?php echo $urlApp."/composant/display/download.php?id=".$id; ?>" width='490' height='490' allowfullscreen webkitallowfullscreen></iframe>
+<br/><iframe src = "js/ViewerJS/#<?php echo $urlApp."/composant/display/download.php?id=".$dbdoc; ?>" width='490' height='490' allowfullscreen webkitallowfullscreen></iframe>
     <?php } ?>
 </li>
 </ol>
@@ -189,3 +158,20 @@ chooseReader(0);
 
 
 </div>
+
+<?php
+
+$elemSuite = getFollowings($dbdoc);
+if($elemSuite==NULL)
+{
+  echo "Pas d'éléments suivants ou erreur";  
+}
+else
+{
+while ($row = mysqli_fetch_assoc($elemSuite)) {
+    displayNote($row["id"]);
+    echo "displayNote ".$row["id"];
+}
+}
+
+?>
