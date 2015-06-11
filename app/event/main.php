@@ -52,11 +52,13 @@ $link = null;
 function createFile($filename, $mime, $data="", $isDirectory=FALSE) {
     global $monutilisateur;
     global $mysqli;
+    global $tablePrefix;
     connect();
-    $q = "insert into blocnotes_items (username, filename, mime, data) values('" . 
+    echo $q = "insert into blocnotes_data (username, filename, mime, content_file, isDirectory) values('" . 
             mysqli_real_escape_string($mysqli, $monutilisateur) . "', '" .
             mysqli_real_escape_string($mysqli, $filename) . "', '" . mysqli_real_escape_string($mysqli, $mime) .
-            "', '".mysqli_real_escape_string($mysqli, $data)."'";
+            "', '".mysqli_real_escape_string($mysqli, $data)."', ".
+            (($isDirectory==1)?1:0).")";
     if(mysqli_query($mysqli, $q))
     {
     $id = mysqli_insert_id($mysqli);
