@@ -60,6 +60,10 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
         $paramsSuppl = "dbdoc=" .
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
     }
+if ($composant == "addAndLinkImage") {
+        $paramsSuppl = "dbdoc=" .
+                rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
+    }
 
 
 $waiterString = ""; //Loading and not load that is definitively not the question.--MD";

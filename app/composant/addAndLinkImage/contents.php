@@ -24,49 +24,31 @@ else
 <a target="NEW" href="?composant=addAndLinkImage&mode=showform&form=webcam" accesskey="a"><img src="images/image.jpg"/>Prendre un cliché</a>
 
 <?php 
-function imageCreateFromAny($filepath) { 
-    $type = exif_imagetype($filepath); // [] if you don't have exif you could use getImageSize() 
-    $allowedTypes = array( 
-        1,  // [] gif 
-        2,  // [] jpg 
-        3,  // [] png 
-        6   // [] bmp 
-    ); 
-    if (!in_array($type, $allowedTypes)) { 
-        return false; 
-    } 
-    switch ($type) { 
-        case 1 : 
-            $im = imageCreateFromGif($filepath); 
-        break; 
-        case 2 : 
-            $im = imageCreateFromJpeg($filepath); 
-        break; 
-        case 3 : 
-            $im = imageCreateFromPng($filepath); 
-        break; 
-        case 6 : 
-            $im = imageCreateFromBmp($filepath); 
-        break; 
-    }    
-    return $im;  
-} 
 
 if($form=="address")
 {
     if($mode=="submit")
     {
         $url = rawurldecode(filter_input(INPUT_GET, "url"));
-        imageCreateFromAny($url);
+        $data = file_get_contents($url);
+        
+        $mime = getUrlMimeType($url);
+        
+        $idLinkedElement = createFile($filename, $mime, $data);
+        createLink($dbdoc, $idLinkedElement);
+              
     }   
     }
-    ?><form action="?composant=addAndLinkImage&mode=submit&form=address" method="GET">
+    ?><form action="page.xhtml.php" method="GET">
        
         <fieldset >
             <label for="url">URL de l'image</label>
             <input type="text" value="<?php echo $url?>"/>
         </fieldset>
-        <input type="hidden" value="<?php echo $dbdoc;?>"/>
+        <input type="hidden" name="dbdoc" value="<?php echo $dbdoc;?>"/>
+        <input type="hidden" name="composant" value="addAndLinkImage"/>
+        <input type="hidden" name="mode" value="submit"/>
+        <input type="hidden" name="form" value="address"/>
         <input type="submit" name="submit-new-link" value="Ajouter"/>
 </form>
 }

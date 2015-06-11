@@ -33,6 +33,11 @@ else {
     
 }
 
+$elemSuite = getDBDocumentAvecImagesEtTextes($id);
+
+print_r($elemSuite);
+
+
 $ReaderurlSchema = "?composant=reader.db&dbdoc=$dbdoc&viewer=";
         ?>
 <ol>

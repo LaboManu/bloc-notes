@@ -49,23 +49,24 @@ function connect() {
 
 $link = null;
 
-function createFile($filename, $date = "") {
-    if ($date == "") {
-        $date = date("Y-m-d-H-i-s");
-    }
-    global $mysqli;
+function createFile($filename, $mime, $data="", $isDirectory=FALSE) {
     global $monutilisateur;
-
-    while (id_exists($serid = randomSerId())) {
-        ;
-    }
-
+    global $mysqli;
     connect();
-    $q = "insert into blocnotes_items (user, filename, moment, type, serid) values('" . mysqli_real_query($mysqli, $monutilisateur, $link) . "', '" .
-            mysqli_real_query($mysqli, $filename, $link) . "', '" . mysqli_real_query($mysqli, $date, $link) . "', 'file.creation', $serid);";
-    //echo $q;
-
-    mysql_query($q);
+    $q = "insert into blocnotes_items (username, filename, mime, data) values('" . 
+            mysqli_real_escape_string($mysqli, $monutilisateur) . "', '" .
+            mysqli_real_escape_string($mysqli, $filename) . "', '" . mysqli_real_escape_string($mysqli, $mime) .
+            "', '".mysqli_real_escape_string($mysqli, $data)."'";
+    if(mysqli_query($mysqli, $q))
+    {
+    $id = mysqli_insert_id($mysqli);
+    
+    return $id;
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 function updateFile($filename, $date = "", $contenu = "") {
@@ -368,8 +369,8 @@ function getMimeType($id) {
     connect();
     $result = getDBDocument($id);
     if ($result != NULL) {
-        if (($doc = mysql_fetch_assoc($result)) != NULL) {
-            return $doc["filename"];
+        if (($doc = mysqli_fetch_assoc($result)) != NULL) {
+            return $doc["mime"];
         }
     }
 }
@@ -529,3 +530,8 @@ function folder_field($folder_id, $field_name="folder"){
         ?>
     </select><br/><?php
  }
+function getUrlMimeType($url) {
+    $buffer = file_get_contents($url);
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    return $finfo->buffer($buffer);
+}
