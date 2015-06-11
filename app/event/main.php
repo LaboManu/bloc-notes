@@ -267,6 +267,16 @@ function dbfile_getModificationsAsList($filename) {
         $result = simpleQ($q, $mysqli);
         return $result;
     }
+    function getDeletedDocuments($id) {
+        global $monutilisateur;
+        global $mysqli;
+        connect();
+        $q = "SELECT * FROM blocnotes_data " .
+                "WHERE isDeleted=1 and username='" . mysqli_real_escape_string($mysqli, $monutilisateur)."'";
+
+        $result = simpleQ($q, $mysqli);
+        return $result;
+    }
 
     function getField($row, $field) {
         global $monutilisateur;
@@ -483,8 +493,9 @@ function dbfile_getModificationsAsList($filename) {
     function deleteDBDoc($dbdoc) {
         global $mysqli;
         global $monutilisateur;
-        echo $sql = "update blocnotes_data set isDeleted=1 where id=" . mysqli_real_escape_string($mysqli, $dbdoc) . " and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "'";
-        simpleQ($sql, $mysqli);
+        $sql = "update blocnotes_data set isDeleted=1 where id=" . mysqli_real_escape_string($mysqli, $dbdoc) . " and username='" . mysqli_real_escape_string($mysqli, $monutilisateur) . "'";
+        return simpleQ($sql, $mysqli);
+        
     }
 
     function getPathArray($id) {
@@ -545,7 +556,11 @@ function dbfile_getModificationsAsList($filename) {
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         return $finfo->buffer($buffer);
     }
-
+function getFolder($dbdoc)
+{
+    global $mysqli;
+    return mysqli_fetch_assoc(simpleQ("select * from blocnotes_data where folder_id=".((int)$dbdoc), $mysqli));
+}
     function displayNote($dbdoc) {
         // Master COde goes here.
         global $urlApp; $id  = $dbdoc;

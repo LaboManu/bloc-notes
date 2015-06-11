@@ -1,11 +1,14 @@
 <?php
 require_once("../../all-configured-and-secured-included.php");
 
-echo "DBDOC: " . ($dbdoc = (int)filter_input(INPUT_GET, "dbdoc"));
+$dbdoc = (int)filter_input(INPUT_GET, "dbdoc");
 
 connect();
 
 if(deleteDBDoc($dbdoc))
-{
-    echo "Element mis en suppression";
+{?>
+    <p>Element supprimé : <?php echo $dbdoc; ?></p>
+    <ul><li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo getFolder( $dbdoc)["id"]; ?>'>Retour</a></li></ul>
+<?php
+
 }
