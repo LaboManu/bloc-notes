@@ -69,11 +69,11 @@ div#fg_membersite {
 #user_frame
 {
     z-index: 2;
-    /*float: right; */
+    float: right;
     height: 50px; 
     background-color: #00ffff; 
     color: #ff0000;  
-    border: 3px #009;
+    border: 3px solid #009;
 }
 #user_frame p 
 {
@@ -85,7 +85,7 @@ div#fg_membersite {
 {
     background-color: #ffff00; 
     color: #0000ff;  
-    border: 3px #009;
+    border: 3px solid #009;
 }
 #context_menu_bar a:hover
 {
@@ -149,6 +149,7 @@ span.miniImg
 }*/
 div#document
 {
+    width: 100%;
     display: block;
     font-size: 18pt;
     font-family: serif Whitney, Comics Sans;

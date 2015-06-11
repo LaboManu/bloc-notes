@@ -37,6 +37,8 @@ $folder_id = $folderDoc["id"];
         <label for="submit">Envoyer</label>
     <input type="submit" name="submit" value="addData" class="user-control"/><br/>
     </fieldset>
+    
+    <a href="?composant=addAndLinkImage&dbdoc=<?php echo $dbdoc; ?>" target="NEW">Ajouter une image</a>
 </form>
 <hr/>
 <form action="event/uploads/uploadfordb.php" method="POST" enctype="multipart/form-data">

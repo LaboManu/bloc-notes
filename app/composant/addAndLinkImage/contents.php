@@ -1,5 +1,5 @@
 <?php
-require_once '../all-configured-and-secured-included.php';
+require_once '../../all-configured-and-secured-included.php';
 
 
 if(isset($_POST["form"]))
@@ -60,12 +60,13 @@ if($form=="address")
         imageCreateFromAny($url);
     }   
     }
-    ?><form action="?composant=addAndLinkImage&mode=submit&form=address">
+    ?><form action="?composant=addAndLinkImage&mode=submit&form=address" method="GET">
        
         <fieldset >
             <label for="url">URL de l'image</label>
             <input type="text" value="<?php echo $url?>"/>
         </fieldset>
         <input type="hidden" value="<?php echo $dbdoc;?>"/>
+        <input type="submit" name="submit-new-link" value="Ajouter"/>
 </form>
 }

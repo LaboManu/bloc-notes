@@ -86,11 +86,11 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     <body>
         <?php if ($composant != "") { ?>
             <!-- Barre du dessus -->
-            <div id="context_menu_bar">
-<?php
+            <div id="context_menu_bar" style="background-color: blue;">
+<p ><?php
                 displayPath($dbdoc);
 ?>
-                <p style="background-color: blue;">&nbsp;</p>
+                &nbsp;</p>
             </div>
             <!-- Barre du dessus -->
             <div id="user_frame" ><?php echo $waiterString ?></div>
