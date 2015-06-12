@@ -1,5 +1,4 @@
 <?php
-require_once 'config.php';
 require_once(__DIR__ . "/access-controlled.php");
 require_once(__DIR__ . "/all-configured-and-secured-included.php");
 
@@ -69,6 +68,7 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
     {
             $paramsSuppl = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')))."&".
                 (int)(rawurldecode(filter_input(INPUT_POST, 'follow')));
+    }
 if ($composant == "addAndLinkImage") {
         $paramsSuppl = "dbdoc=" .
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));
@@ -101,10 +101,12 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
             <div id="context_menu_bar" style="background-color: blue;">
 <p ><?php
                 displayPath($dbdoc);
-        }
         ?>
                 &nbsp;</p>
             </div>
+            <?php
+            }
+        ?>
            <!-- Barre du dessus -->
             <div id="user_frame" ></div>
             +<!-- Barre de gauche -->
@@ -140,6 +142,5 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
                 });*/
 
             </script>
-        <?php } ?>
     </body>
 </html>
