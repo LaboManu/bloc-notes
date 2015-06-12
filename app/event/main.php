@@ -1,4 +1,4 @@
-ï»¿<?php
+<?php
 require_once(__DIR__ . "/../all-configured-and-secured-included.php");
 
 function randomSerId() {
@@ -44,7 +44,7 @@ function connect() {
     }
 
 
-    //echo 'SuccÃ¨s... ' . $mysqli->host_info . "\n";
+    //echo 'Succès... ' . $mysqli->host_info . "\n";
 }
 
 $link = null;
@@ -342,33 +342,23 @@ function getField($row, $field) {
         return getField($row, "moment");
     }
 
-function createLink($nom_element_porteur, $nom_element_dependant) {
-    global $mysqli;
-    $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values (" .
-            (int) mysqli_escape_string($mysqli, $nom_element_porteur) . " , " .
-            (int) mysqli_escape_string($mysqli, $nom_element_dependant) . ")";
-
-    
-    
-    return mysqli_query($mysqli, $q);
-}
 function updateLinks($oldname, $newname) {
         global $monutilisateur;
         global $mysqli;
         // Table : blocnotes_links
         $q1 = "update blocnotes_link set nom_element_porteur=" . (int) mysqli_real_query($mysqli, $newname) . " where nom_element_porteur=" . (int) mysqli_real_query($mysqli, $oldname) . "";
         $q2 = "update blocnotes_link set nom_element_dependant=" . (int) mysqli_real_query($mysqli, $newname) . " where nom_element_dependant=" . (int) mysqli_real_query($mysqli, $oldname) . "";
-        // ExÃ©cuter les requÃªtes
+        // Exécuter les requêtes
 
         mysqli_query($mysqli, $q1);
         mysqli_query($mysqli, $q2);
     }
 
-    function createLink($nom_element_porteur, $nom_element_dependant) {
+    function createLink($id_element_porteur, $id_element_dependant) {
         global $mysqli;
-        $q = "insert into blocnotes_link (nom_element_porteur, nom_element_dependant) values (" .
-                (int) mysqli_real_query($mysqli, $nom_element_porteur, $link) . " , " .
-                (int) mysqli_real_query($mysqli, $nom_element_dependant, $link) . ")";
+        $q = "insert into blocnotes_link (id_element_porteur, id_element_dependant) values (" .
+                (int) mysqli_real_query($mysqli, $id_element_porteur, $link) . " , " .
+                (int) mysqli_real_query($mysqli, $id_element_dependant, $link) . ")";
 
         mysqli_query($mysqli, $q);
     }
@@ -420,7 +410,7 @@ function updateLinks($oldname, $newname) {
                 return $doc;
             }
         } else {
-            echo "Erreur n'est pas un rÃ©pertoire";
+            echo "Erreur n'est pas un répertoire";
         }
         return "";
     }
@@ -450,7 +440,7 @@ function updateLinks($oldname, $newname) {
      * ** array ( 
      *      "id" => $doc, 
      *      "data" =>array(noOrdre => $row_data)
-     *  Pas de rÃ©cursivitÃ©s;
+     *  Pas de récursivités;
      */
 
     function getDBDocumentAvecImagesEtTextes($id) {
@@ -543,7 +533,7 @@ function updateLinks($oldname, $newname) {
         connect();
         $sql = "insert into blocnotes_data (filename, folder_id, isDirectory) values ('Dossier racine', -1, TRUE)";
         if (mysqli_query($mysqli, $sql)) {
-            echo "Fichier racine crÃ©Ã©";
+            echo "Fichier racine créé";
         }
     }
 

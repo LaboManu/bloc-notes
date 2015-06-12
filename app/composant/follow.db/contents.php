@@ -14,7 +14,7 @@ $currentDoc = mysqli_fetch_assoc($dbdocRes);
 $id = $currentDoc["id"];
 
 
-$docs = getAllDocument();
+$docs = getAllDocuments();
 
 ?>
 <h1><?php echo $currentDoc["filename"]; ?></h2>
