@@ -13,14 +13,153 @@ else {
     $dbdoc = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')));
 $folder = (int)(rawurldecode(filter_input(INPUT_POST, 'folder')));
 }
-$content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 
+$content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
+$option = (int)(rawurldecode(filter_input(INPUT_GET, 'option')));
+
+if($_GET["option"]=="aucunemethodechoisie.doc") {
+    die();
+}
+if($_GET["option"]=="samefolder_move.doc") {
+        connect();
+        echo "Déplacer document";
+        //intervertirDossierSecurized($dbdoc, $folder);
+
+        /**
+         * What moves?
+         */
+        $doc_what = mysqli_fetch_assoc(getDBDocument($dbdoc));
+        $what = $doc_what["id"];
+        $folder_id_what = $doc_what["folder_id"];
+        
+        /** 
+         * where to move in?
+         */
+        $doc_where = mysqli_fetch_assoc(getDBDocument($folder));
+        $where = $doc_where["id"];
+        $folder_id_where = $doc_where["folder_id"];
+        
+        /**
+         * Check for same origin;
+         */
+        if(($folder_id_what==$folder_id_where) && ($folder_id_what!=NULL)
+                && ($what!=NULL)&&($where!=NULL)){
+            
+        $sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli,(int) $where)." where id=".$what." and username='".$monutilisateur."'";
+        if(simpleQ($sql, $mysqli))
+        {?>
+        <h1>Note déplacée avec succès</h1>
+    <ul>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $what; ?>'>Retour au répertoire d'origine</a>
+        </li>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo where; ?>'>Vers la destination</a>
+        </li>
+    </ul>
+
+        <?php
+        
+        }
+ else {
+        echo "Erreur s'est produite base de onnées lors du déplacement , la requête n'a pas pu être effectuée.";
+        die();
+     
+ }
+        }
+        else
+            {
+        echo "Erreur s'est produite fichiers non valides.";
+        die();
+        }
+        
+        die();
+    }
+if($_GET["option"]=="parentfolder_move.doc") {
+        connect();
+        echo "Déplacer document";
+        //intervertirDossierSecurized($dbdoc, $folder);
+
+        /**
+         * What moves?
+         */
+        $doc_what = mysqli_fetch_assoc(getDBDocument($dbdoc));
+        $what = $doc_what["id"];
+        $folder_id_what = $doc_what["folder_id"];
+        
+        /** 
+         * where to move in?
+         */
+        $doc_where = mysqli_fetch_assoc(getDBDocument($folder_id_what));
+        $where = $doc_where["folder_id"];
+        $folder_id_where = $doc_where["folder_id"];
+        
+        /**
+         * Check for same origin;
+         */
+        if(($folder_id_where!=NULL)){
+            
+        $sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli,(int) $where)." where id=".$what." and username='".$monutilisateur."'";
+        if(simpleQ($sql, $mysqli))
+        {?>
+        <h1>Note déplacée avec succès</h1>
+    <ul>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $what; ?>'>Retour au répertoire d'origine</a>
+        </li>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $where; ?>'>Vers la destination</a>
+        </li>
+    </ul>
+
+        <?php
+        
+        }
+ else {
+        echo "Erreur s'est produite base de onnées lors du déplacement , la requête n'a pas pu être effectuée.";
+        die();
+     
+ }
+        }
+        else
+            {
+        echo "Erreur s'est produite fichiers non valides.";
+        die();
+        }
+        
+        die();
+    }
+/*if($_GET["option"]=="move_new.doc") {
+        connect();
+        echo "Déplacer document";
+        ;
+        if(deplacerDocumentSecurized($dbdoc, $folder))
+        {?>
+        <h1>Note déplacée avec succès</h1>
+    <ul>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $folder_orig; ?>'>Retour au répertoire d'origine</a>
+        </li>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $folder; ?>'>Vers la destination</a>
+        </li>
+    </ul>
+
+        <?php
+        
+        }
+        die();
+}
 if($_GET["option"]=="move.doc") {
         connect();
         echo "Déplacer document";
-        
+        //intervertirDossierSecurized($dbdoc, $folder);
+
         $doc_orig = mysqli_fetch_assoc(getDBDocument($dbdoc));
         
+        
+        $mime_orig = getField($doc_orig, "mime");
+        
+        if($mime_orig=="directory")
+        {
+            echo "Erreur ne peut déplacer un répertoire. Attends la version"
+            . " suivante!";
+            die();
+        }
         $folder_orig = $doc_orig['folder_id'];
         
         $sql = "update blocnotes_data set folder_id=".  mysqli_real_escape_string($mysqli, $folder)." where id=".$dbdoc." and username='".$monutilisateur."'";
@@ -39,6 +178,8 @@ if($_GET["option"]=="move.doc") {
         }
         die();
 }
+ * */
+ 
 if($dbdoc==-2)
 {
     echo "Nouveau dossier";
@@ -103,7 +244,7 @@ else if($dbdoc==0)
         }
     }
 }
-else
+else if($option=="edit.db")
 {
     
     echo "Mettre à jour la note";

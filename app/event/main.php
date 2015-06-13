@@ -1,6 +1,9 @@
 <?php
 require_once(__DIR__ . "/../all-configured-and-secured-included.php");
 
+
+connect();
+
 function randomSerId() {
     return rand(1, 9999999);
 }
@@ -582,7 +585,7 @@ function displayPath($id) {
 
 function folder_field($folder_id, $field_name = "folder") {
     ?>
-    <select name="<?php echo $field_name; ?>" class="user-control">
+<fieldset> <select name="<?php echo $field_name; ?>" class="user-control">
     <?php
     $res = getFolderList();
     while (($row = mysqli_fetch_assoc($res)) != NULL) {
@@ -596,7 +599,7 @@ function folder_field($folder_id, $field_name = "folder") {
 
     mysqli_free_result($res);
     ?>
-    </select><br/><?php
+    </select><fieldset><?php
     }
 
     $ids = array();
@@ -693,4 +696,100 @@ function folder_field($folder_id, $field_name = "folder") {
                 </script>
         <?php } ?></div><?php
     }
+}
+
+function showActionFichier($controlType="Dropdown", $mimeType=NULL, $dbdoc=NULL)
+{
+    if($mimeType==NULL)
+    {
+        $doc = getDBDocument($dbdoc);
+        
+        $mimeType = $doc["mime"];
+    }
+    
+    $list = getJSFunctionsOnDocsList($mime);
+    switch($controlType)
+    {
+        case "Dropdown":
+            break;
+    }
+}
+
+/***
+ * Déplacer un dossier A dans un dossier B quels sont les pièges à éviter
+ * à l'utilisateur? Comment lui faciliter la vie en supprimant dès maintenant
+ * les bogues qu'on n'aura pas à corriger puisque prévus par le déveloopeur?
+ * 
+ * Fichier Racine (orphelin le pauvre il a mangé "pauvre" même son parent)
+ *  Dossier A 
+ *  Dossier B
+ * 
+ * Mettre A dans B.
+ * 
+ * Erreur 1: A et B ne sont pas des dossiers. Mais OK on va quand même déplacer
+ * => FEATURE1
+ * Erreur 2 est fichier racine ou contient B dans sa structure.
+ *  Par contre A contient B. Ca ne semble pas possible
+ * de déplacer 
+ * => Erreur.
+ */
+function intervertirDossierSecurized($IDfolderA, $IDfolderB)
+{
+    echo "Fonction désactivée";
+    die();
+    // Mauvaise feuille.
+    global $mysqli;
+    $docA = mysqli_fetch_assoc(getDBDocument($IDfolderA));
+    if($docA==NULL){error_log("Dossier A n'existe pas dans deplacerDossierSecurized");return FALSE;}
+    $docB = mysqli_fetch_assoc(getDBDocument($IDfolderB));
+    if($docB==NULL){error_log("Dossier B n'existe pas dans deplacerDossierSecurized");return FALSE;}
+    $folderA = getFolder($docA);
+    $folderB = getFolder($docB);
+    $sql1 = "update blocnotes_data set folder_id=".$folderB." where id=".$docA["id"];
+    $sql2 = "update blocnotes_data set folder_id=".$folderA." where id=".$docB["id"];
+    if (simpleQ($sql1, $mysqli) && simpleQ($sql2, $mysqli)) {
+    
+        return TRUE;
+    }
+    error_log("Erreur DB dans deplacerDossierSecurized");return FALSE;
+}
+function inPath($docWhat, $inpathID)
+{
+    $inpath= getPathArray($docWhat);
+    
+    return (in_array($docWhat, $inpath));
+}
+
+
+function deplacerDocumentSecurized(/**WHAT*/$IDfolderA, /** DANS IN */ $IDfolderB)
+{
+    echo "Fonction désativée Erreur";
+    die();
+    // Mauvaise feuille.
+    global $mysqli;
+    $docA = mysqli_fetch_assoc(getDBDocument($IDfolderA));
+    if($docA==NULL){error_log("Dossier A n'existe pas dans deplacerDossierSecurized");return FALSE;}
+    $docB = mysqli_fetch_assoc(getDBDocument($IDfolderB));
+    if($docB==NULL){error_log("Dossier B n'existe pas dans deplacerDossierSecurized");return FALSE;}
+    $folderA = getFolder($docA);
+    $folderB = getFolder($docB);
+    
+    /** Réaction en chaîne...*/
+    if(inPath($docB, $IDfolderB))
+    {
+        error_log("L'appication ne peut déplacer un dossier dans lui-même");
+        return FALSE;
+    }
+    
+    $sql1 = "update blocnotes_data set folder_id=".$IDfolderB." where id=".$docA["id"];
+    /*if($docB["folder_id"]==$docA)
+    {
+        $sql2 = "update blocnotes_data set folder_id=".$folderA." where id=".$docB["id"];
+    }
+/   */
+    if (simpleQ($sql1, $mysqli) && simpleQ($sql1, $mysqli)) {
+    
+        return TRUE;
+    }
+    error_log("Erreur DB dans deplacerDossierSecurized");return FALSE;
 }

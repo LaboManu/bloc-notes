@@ -120,7 +120,12 @@ chooseReader(0);
 
 </li>
      <li id='reader3'>
-<?php if($viewer==3){ ?>
+<?php if($viewer==3){ 
+    if($doc["mime"]!="text/plain")
+    {            
+        echo "<p><em>".($doc["filename"])."</em></p>";
+    
+    }?>
          <script src="<?php echo $urlApp ; ?>/js/ePub/build/epub.min.js" language="JavaScript" type="text/javascript"></script>
          <script src="<?php echo $urlApp ; ?>/js/ePub/build/hooks.min.js" language="JavaScript" type="text/javascript"></script>
          <script src="<?php echo $urlApp ; ?>/js/ePub/build/reader.min.js" language="JavaScript" type="text/javascript"></script>

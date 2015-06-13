@@ -35,9 +35,16 @@ if(($doc = mysqli_fetch_assoc($docRes))!=NULL)
 <form action="page.xhtml.php" method="GET">
     <input type="hidden" name="composant" value="save.db"/>
     <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
-    <input type="hidden" name="option"  value="move.doc"/>
+    <fieldset>
+    <br/><input type="radio" name="option"  value="aucunemetodechosie.doc" selected='selected'>Choisir une des deux méthodes suivantes
+    <br/><input type="radio" name="option"  value="samefolder_move.doc">Méthode sûre ! Je crois.
+    <br/><input type="radio" name="option"  value="parentfolder_move.doc">Déplacer vers le dossier parent.
+    
+    </fieldset>
     <?php folder_field($folder); ?>
-    <input type="submit" name="sauvegarder" value="Sauvergarder"/>
+    <fieldset>
+        <input type="submit" name="sauvegarder" value="Sauvergarder"/>
+    </fieldset>
 </form>
     <?php
     }

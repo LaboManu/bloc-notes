@@ -16,6 +16,12 @@ if ($composant == "") {
 
 $id =(int) filter_input(INPUT_GET, 'id');
 $dbdoc = (int) filter_input(INPUT_GET, 'dbdoc');
+
+if ($dbdoc == "") {
+    $dbdoc = getRootForUser();
+    echo "\\";
+}
+
 /*
 if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
     $composant = "browser";
@@ -40,6 +46,9 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
     }
     if (($composant == "create.txt")) {
     }
+
+    
+    
     if(($composant == "create.db")||($composant == "create.folder.db"))
     {
         $paramsSuppl = "dbdoc=" . rawurlencode(filter_input(INPUT_GET, "dbdoc"))
@@ -54,7 +63,7 @@ if (!file_exists($appDir . "/composant/" . $composant."/contents.php")) {
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc")) . "&contenu=" .
                 rawurlencode(filter_input(INPUT_GET, "contenu")) . "&filename=" . rawurlencode(filter_input(INPUT_GET, "filename"))
                 . "&folder=" . rawurlencode(filter_input(INPUT_GET, "folder")). "&option=". rawurlencode(filter_input(INPUT_GET, "option"));
-    }
+}
     if ($composant == "delete.db") {
         $paramsSuppl = "dbdoc=" .
                 rawurlencode((int) filter_input(INPUT_GET, "dbdoc"));

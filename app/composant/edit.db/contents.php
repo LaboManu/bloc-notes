@@ -13,6 +13,7 @@ $dbdoc = rawurldecode(filter_input(INPUT_GET, 'dbdoc'));
 
             ?>
 <form action="page.xhtml.php" method="GET">
+    <input type="hidden" name="option" value="edit.db"/>
     <input type="hidden" name="composant" value="save.db"/>
     <input type="hidden" name="dbdoc"  value="<?php echo $dbdoc; ?>"/>
     <?php                folder_field($doc["folder_id"]); ?>
