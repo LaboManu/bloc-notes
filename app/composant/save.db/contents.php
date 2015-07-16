@@ -7,11 +7,11 @@ if(isset($_GET['dbdoc']))
 {
     $dbdoc = (int)(rawurldecode(filter_input(INPUT_GET, 'dbdoc')));
     $filename = rawurldecode(filter_input(INPUT_GET, 'filename'));
-$folder = (int)(rawurldecode(filter_input(INPUT_GET, 'folder')));
+    $folder = (int)(rawurldecode(filter_input(INPUT_GET, 'folder')));
 }
 else {
     $dbdoc = (int)(rawurldecode(filter_input(INPUT_POST, 'dbdoc')));
-$folder = (int)(rawurldecode(filter_input(INPUT_POST, 'folder')));
+    $folder = (int)(rawurldecode(filter_input(INPUT_POST, 'folder')));
 }
 
 $content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
@@ -190,7 +190,24 @@ else if($dbdoc==-2)
     mysqli_real_escape_string($mysqli, $monutilisateur)."', 1, 'directory', now(), ".mysqli_real_escape_string($mysqli, $folder).")";
     if(simpleQ($sql, $mysqli))
     {
-        echo "Répertoire crée";
+        $id = mysqli_insert_id($mysqli);
+        
+        $dbdoc = getDBDocument($id);
+        
+        $doc = mysqli_fetch_assoc($dbdoc);
+        
+        $folder = $doc["folder_id"];
+        
+        ?>
+        <h1>Répertoire crée</h1>
+    <ul>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $id; ?>'>Dossier</a>
+        </li>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $folder; ?>'>Dossier parent</a>
+        </li>
+    </ul>
+
+        <?php
         // $doc = getLastDBDoc();
         // echo "<a href=?composant=reader.db&dbdoc=".($doc['id']);
     }
