@@ -73,7 +73,7 @@ if($_GET["option"]=="samefolder_move.doc") {
         
         die();
     }
-if($_GET["option"]=="parentfolder_move.doc") {
+else if($_GET["option"]=="parentfolder_move.doc") {
         connect();
         echo "Déplacer document";
         //intervertirDossierSecurized($dbdoc, $folder);
@@ -180,7 +180,7 @@ if($_GET["option"]=="move.doc") {
 }
  * */
  
-if($dbdoc==-2)
+else if($dbdoc==-2)
 {
     echo "Nouveau dossier";
     connect();
