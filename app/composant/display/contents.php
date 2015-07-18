@@ -17,9 +17,9 @@ if ($result != NULL) {
             echoImgSelf($content, $filename);
         } else if (isTexte($ext, $doc["mime"])) {
             //preg_match ( string $pattern , string $subject [, array &$matches [, int $flags = 0 [, int $offset = 0 ]]] )
-            $content =  htmlspecialchars($content);
-            $content = "<p>".$content."</p>";
-            $content = str_replace("\n", "</p>\n<p>", $content);
+            //$content =  htmlspecialchars($content);
+            //$content = "<p>".$content."</p>";
+            //$content = str_replace("\n", "</p>\n<p>", $content);
             $content = str_replace("[[", "<a target='NEW' href='", $content);
             $content = str_replace("]]", "'>Lien</a>", $content);
             $content = str_replace("{{", "<img src='composant/display/contents.php?id=", $content);
