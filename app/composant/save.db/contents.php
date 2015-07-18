@@ -17,10 +17,10 @@ else {
 $content = rawurldecode(filter_input(INPUT_GET, 'contenu'));
 $option = (int)(rawurldecode(filter_input(INPUT_GET, 'option')));
 
-if($_GET["option"]=="aucunemethodechoisie.doc") {
+if($_GET["option"]=="aucunemethodechosie.doc") {
     die();
 }
-if($_GET["option"]=="samefolder_move.doc") {
+else if($_GET["option"]=="samefolder_move.doc") {
         connect();
         echo "Déplacer document";
         //intervertirDossierSecurized($dbdoc, $folder);

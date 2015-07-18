@@ -36,7 +36,7 @@ if(($doc = mysqli_fetch_assoc($docRes))!=NULL)
     <input type="hidden" name="composant" value="save.db"/>
     <input type="hidden" name="dbdoc"  value="<?php echo $id; ?>"/>
     <fieldset>
-    <br/><input type="radio" name="option"  value="aucunemetodechosie.doc" selected='selected'>Choisir une des deux méthodes suivantes
+        <br/><input type="radio" name="option"  value="aucunemethodechosie.doc" selected='selected' checked="checked">Choisir une des deux méthodes suivantes
     <br/><input type="radio" name="option"  value="samefolder_move.doc">Méthode sûre ! Je crois.
     <br/><input type="radio" name="option"  value="parentfolder_move.doc">Déplacer vers le dossier parent.
     
