@@ -99,7 +99,7 @@ function typeDB($filename, $content, $id, &$rowdoc = NULL) {
             <?php } else if(isTexte(getExtension($filename), $mime)) {
      echo "<span class='typeTextBlock'>". htmlspecialchars(substr($content, 0, 500))."</span>"; } else 
          if($rowdoc['isDirectory']==1 || $mime=="directory") {
-?><img src='images/alphabet.png' class="miniImg" alt="Icône dossier par défaut"><?php
+?><img src='images/dossier-gris.png' class="miniImg" alt="Icône dossier par défaut"><?php
 } else {
     echo "<img src='http://www.stdicon.com/crystal/".$mime."'/>";
 }
