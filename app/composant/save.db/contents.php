@@ -50,9 +50,9 @@ else if($_GET["option"]=="samefolder_move.doc") {
         {?>
         <h1>Note déplacée avec succès</h1>
     <ul>
-        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $what; ?>'>Retour au répertoire d'origine</a>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $folder_id_what; ?>'>Retour au répertoire d'origine</a>
         </li>
-        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo where; ?>'>Vers la destination</a>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $where; ?>'>Vers la destination</a>
         </li>
     </ul>
 
