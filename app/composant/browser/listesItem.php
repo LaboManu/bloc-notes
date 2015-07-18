@@ -89,23 +89,24 @@ function typeImg($cf) {
 }
 function typeDB($filename, $content, $id, &$rowdoc = NULL) {
     $urlaction = "page.xhtml.php?composant=browser&dbdoc=" . $id;
-    ?><div id="<?php echo "data-$id"; ?>" class="miniImgContainer" ondrop="drop(event, <?php echo $id ?>)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" >
-        <select onchange="doNoteAction(<?= $id ?>, this.selectedIndex);" name="file_menu" id="menu<?php echo $id; ?>"><option value="Rien">---</option><option value="Voir">Voir</option><option value="Modifier">Modifier</option><option value="Move">Déplacer</option><option value="Copier">Copier</option><option value="Coller">Coller</option><option value="Corbeille">Corbeille</option><option value="Faire-suite">Faire suivre</option><option name="copy" onclick="copyId(<?= $id ?>)">Copy:{{<?= $id ?>}}</option></select>
- <input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" /><a class='miniImg' href="<?= $urlaction ?>">
-<div class="miniImg">
+    ?><div class="miniImgContainer">
+        <a class='miniImg' href="<?= $urlaction ?>"><span class="filename"><em><?php echo $rowdoc["filename"]."|".$rowdoc["folder_name"]; ?></em></span><br/>
             <?php 
             $mime = $rowdoc["mime"];
             if(isImage(getExtension($filename), $mime))
             {?>
             <img src ="composant/display/contents.php?id=<?= $id ?>" alt="<?= $filename ?>"/>
             <?php } else if(isTexte(getExtension($filename), $mime)) {
-     echo htmlspecialchars(substr($content, 0, 500)); } else 
+     echo "<span class='typeTextBlock'>". htmlspecialchars(substr($content, 0, 500))."</span>"; } else 
          if($rowdoc['isDirectory']==1 || $mime=="directory") {
 ?><img src='images/alphabet.png' class="miniImg" alt="Icône dossier par défaut"><?php
 } else {
     echo "<img src='http://www.stdicon.com/crystal/".$mime."'/>";
 }
-?></div><span class="filename"><?php echo $rowdoc["filename"]."|".$rowdoc["folder_name"]; ?></span></a></div>
+?></a><div id="<?php echo "data-$id"; ?>" class="miniImgContainer" ondrop="drop(event, <?php echo $id ?>)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ><select onchange="doNoteAction(<?= $id ?>, this.selectedIndex);" name="file_menu" id="menu<?php echo $id; ?>"><option value="Rien">---</option><option value="Voir">Voir</option><option value="Modifier">Modifier</option><option value="Move">Déplacer</option><option value="Copier">Copier</option><option value="Coller">Coller</option><option value="Corbeille">Corbeille</option><option value="Faire-suite">Faire suivre</option><option name="copy" onclick="copyId(<?= $id ?>)">Copy:{{<?= $id ?>}}</option></select>
+ <input class="filecheckbox" type="checkbox" name="files[]" value="<?php echo "TXT_".substr($cf, 0, -4); ?>" /></div>
+
+</div>
     <?php }
 function echoImgBase64($content, $filename)
 {

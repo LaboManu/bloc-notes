@@ -115,7 +115,7 @@ div#fg_membersite {
 #error{
 
 }
-.miniImg img, .miniImg div
+.miniImgContainer img, .miniImg div, typeTextBlock
 {
     width: 200px; 
     height: 200px; 
@@ -128,6 +128,8 @@ div.miniImgContainer
     height: 260px;
     float: left;
 }
+
+
 a.miniImg
 {
     display: block;
@@ -135,6 +137,21 @@ a.miniImg
     width: 220px;
     height: 240px;
     overflow-x: hidden;
+}
+a.miniImg span.filename
+
+{
+    text-decoration: none;
+    color: black;
+    text-transform: capitalize;
+    text-decoration-style: dashed;
+    
+}
+a.miniImg .typeTextBlock
+{
+    text-decoration: none;
+    color: black;
+    
 }
 span.miniImg
 {

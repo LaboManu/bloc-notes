@@ -192,16 +192,16 @@ else if($dbdoc==-2)
     {
         $id = mysqli_insert_id($mysqli);
         
-        $dbdoc = getDBDocument($id);
+        $dbdoc_ref = getDBDocument($id);
         
-        $doc = mysqli_fetch_assoc($dbdoc);
+        $dbdoc = mysqli_fetch_assoc($dbdoc);
         
         $folder = $doc["folder_id"];
         
         ?>
         <h1>Répertoire crée</h1>
     <ul>
-        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $id; ?>'>Dossier</a>
+        <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $dbdoc; ?>'>Dossier</a>
         </li>
         <li class='button_appdoc'><a class='button_appdoc' href='?composant=browser&dbdoc=<?php echo $folder; ?>'>Dossier parent</a>
         </li>
