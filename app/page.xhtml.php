@@ -99,6 +99,33 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         <link rel="profile" href="http://microformats.org/profile/hcalendar"/>
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="js/tinymce/jquery.tinymce.min.js"></script>
+        <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+        <!-- place in header of your html document -->
+<script>
+tinymce.init({
+    selector: "textarea#text_editor",
+    theme: "modern",
+    width: 300,
+    height: 300,
+    plugins: [
+         "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+         "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+         "save table contextmenu directionality emoticons template paste textcolor"
+   ],
+  //content_css: "js/tinymce/css/content.css",
+   toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons", 
+   style_formats: [
+        {title: 'Bold text', inline: 'b'},
+        {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+        {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+        {title: 'Example 1', inline: 'span', classes: 'example1'},
+        {title: 'Example 2', inline: 'span', classes: 'example2'},
+        {title: 'Table styles'},
+        {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+    ]
+ }); 
+</script>
         <script type="text/javascript" src="composant/browser/dnd.js"></script>
         <script type="text/javascript" src="js/blocnoteslib.js"></script>
         <script type="text/javascript" src="js/playerJS/dist/player-0.0.10.min.js"></script>
