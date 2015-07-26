@@ -26,8 +26,9 @@ tinymce.init({
          "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
          "save table contextmenu directionality emoticons template paste textcolor"
    ],
+
   //content_css: "js/tinymce/css/content.css",
-   toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons", 
+   toolbar: "addFile insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons", 
    style_formats: [
         {title: 'Bold text', inline: 'b'},
         {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
@@ -71,4 +72,4 @@ tinymce.init({
             
         }
     }    ?>
-    <a href="?composant=addAndLinkImage&dbdoc=<?php echo $dbdoc; ?>" target="NEW">Ajouter une image</a>
+    <a href="?composant=browser&file=all&type=selection&mode=multiple&dbdoc=<?php echo $dbdoc; ?>" target="NEW">Ajouter un fichier</a>
