@@ -25,3 +25,4 @@ nbproject/private/*
 public/*
 app/pass.php
 *.db
+.idea/vcs.xml
